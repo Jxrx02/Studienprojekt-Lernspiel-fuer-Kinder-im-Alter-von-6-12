@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5583691885647169895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5583691885647169890}
+  - component: {fileID: 2706487223238100141}
+  - component: {fileID: 2499025783482028177}
+  - component: {fileID: 8310121852015837664}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5583691885647169890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583691885647169895}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2706487223238100141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583691885647169895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e862040ad674645858b55785f87c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cur_coins: 0
+  start_coins: 60
+  cur_health: 0
+  start_health: 10
+  pauseCanvas: {fileID: 0}
+  gameCanvas: {fileID: 0}
+  deathScreen: {fileID: 0}
+  questionPanel: {fileID: 0}
+  endScreen: {fileID: 0}
+  txt_money: {fileID: 0}
+  txt_health: {fileID: 0}
+  towerUIPrefab: {fileID: 3380573641664216553, guid: 8e8139f78b78ef347aa5d5122ca3391a, type: 3}
+  waveManager: {fileID: 0}
+  clickToStartGameObject: {fileID: 0}
+  dialogCanvasPrefab: {fileID: -8127509642545285705, guid: 84bb7601a80166647a81b07b7ec09f10, type: 3}
+  img_doubleTime: {fileID: 4009284081192125275, guid: 9bf0d24d96d56f34dbf74e614b80d332, type: 3}
+  img_normspeed: {fileID: 5830344958925785552, guid: 9bf0d24d96d56f34dbf74e614b80d332, type: 3}
+  btn_image_fastForward: {fileID: 0}
+  img_pause: {fileID: -6460607209241108654, guid: 9bf0d24d96d56f34dbf74e614b80d332, type: 3}
+  img_play: {fileID: 1008705478319212569, guid: 9bf0d24d96d56f34dbf74e614b80d332, type: 3}
+  btn_image_pause: {fileID: 0}
+  heroFielded: 0
+--- !u!114 &2499025783482028177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583691885647169895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc44b3cff82d434ab5bf8e2c4ce630b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towers: []
+  enemies: []
+  selectedTower: {fileID: 0}
+--- !u!114 &8310121852015837664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5583691885647169895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926c94f8986330541ad95d6990b0a156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
