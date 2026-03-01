@@ -8,7 +8,7 @@ Das beigefügte Demo-Video zeigt den aktuellen Funktionsumfang und zentrale Game
 
 ---
 
-## Gezeigte Inhalte im Demo
+## Gezeigte Inhalte im Demo-Video
 
 ### Allgemein
 - **Hauptmenü**
@@ -59,8 +59,5 @@ Level 2 erweitert das Gameplay um zusätzliche Systeme:
 - Grundlage für ein Lernspiel für Kinder im Alter von **6–12 Jahren**
 
 ---
-## Demo
-
-Ein kurzes Demo-Video ist beigefügt und zeigt die oben beschriebenen Funktionen in Aktion.
 
 Hinweis: für diese Demo wurde der Login-Prozess für die ursprüngliche Lernplattform Octolearn entnommen.
