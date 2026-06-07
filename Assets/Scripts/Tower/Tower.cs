@@ -55,6 +55,7 @@ public abstract class Tower : MonoBehaviour
     private StatDiffDisplay statDiffDisplay;
 
     protected (GameObject, int) target;
+	private List<GameObject> _enemiesInRange = new List<GameObject>();
 
     public abstract void Attack((GameObject, int) _target);
 
@@ -136,7 +137,12 @@ public abstract class Tower : MonoBehaviour
 
     protected virtual void UpdateLookDirection(Vector3 targetPos)
     {
-
+		Quaternion canvasRot = GetComponentInChildren<Canvas>().transform.rotation;
+		bool faceRight = targetPos.x > transform.position.x;
+		transform.rotation = faceRight
+			? new Quaternion(0, 180, 0, 1)
+			: Quaternion.identity;
+		GetComponentInChildren<Canvas>().transform.rotation = canvasRot;
     }
 
     protected void Shoot()
@@ -150,17 +156,18 @@ public abstract class Tower : MonoBehaviour
     }
 
     
-    public (GameObject, int) FindTargetInRange(List<GameObject> enemies)
-    {
-        // Finde alle Gegner in Reichweite
-        var enemiesInRange = enemies.Where(e => e != null && IsObjectInRange(e.gameObject)).ToList();
-
-        if (enemiesInRange.Count == 0) return (null,0); // Kein Ziel in Reichweite
-
-        // Wende die Zielpräferenz an
-        return FindTargetByPreference(enemiesInRange);
-    }
-
+	public (GameObject, int) FindTargetInRange(List<GameObject> enemies)
+	{
+		_enemiesInRange.Clear(); 
+		for (int i = 0; i < enemies.Count; i++)
+		{
+			if (enemies[i] != null && IsObjectInRange(enemies[i]))
+				_enemiesInRange.Add(enemies[i]);
+		}
+		if (_enemiesInRange.Count == 0) return (null, 0); // Kein Ziel in Reichweite
+		// Wende die Zielpräferenz an
+		return FindTargetByPreference(_enemiesInRange);
+	}
     public Boolean IsObjectInRange(GameObject obj)
     {
         float distance = Vector3.Distance(transform.position, obj.transform.position);

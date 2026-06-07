@@ -39,7 +39,7 @@ public class SpriteAnim : MonoBehaviour
     private float mElapsedTime = 0f;
     private int mCurrentFrame = 0;
     [HideInInspector]public Boolean destroyOnEndDeadAnimation;
-    [SerializeField]public AnimationState animState { get; set; }
+    [field: SerializeField] public AnimationState animState { get; set; }
     
     [HideInInspector]
     public Action OnIdleAnimationComplete, OnAttackAnimationComplete, OnWalkAnimationComplete, OnDeadAnimationComplete;

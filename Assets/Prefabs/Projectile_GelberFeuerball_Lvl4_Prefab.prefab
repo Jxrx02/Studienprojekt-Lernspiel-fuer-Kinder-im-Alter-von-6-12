@@ -69,6 +69,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5348737445018799021
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -87,6 +88,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -108,9 +111,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 852797597
   m_SortingLayer: 3
   m_SortingOrder: 1
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -7586656710049900386, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -120,7 +125,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &86453873008715454
 MonoBehaviour:
@@ -131,28 +135,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2159509553888471292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 805c7219ec061d84bbcd4a1a6125f6e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c06338dcf3f3834e9ea0d40eccd0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
   loopThrough: 0
   mTimePerFrame: 0.125
   loop: 1
-  idle_sprites:
-  - {fileID: -7586656710049900386, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -1900018413430205300, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -7335076771778643851, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 8168887782852279359, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  idle_sprites: []
   attack_sprites: []
   evolve_sprites: []
-  dead_sprites:
-  - {fileID: 6792740060124559268, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 298642312524087457, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -4398213354934423465, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -8813527081589083923, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -282015664129683493, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  dead_sprites: []
   walk_sprites: []
   destroyOnEndDeadAnimation: 0
+  <animState>k__BackingField: 0
 --- !u!114 &3157586847572755076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAngleOffset: 0
   doRotation: 1
+  lookAtTarget: 1
   hideTilCollision: 0
   canFindNewTarget: 2
   speed: 5

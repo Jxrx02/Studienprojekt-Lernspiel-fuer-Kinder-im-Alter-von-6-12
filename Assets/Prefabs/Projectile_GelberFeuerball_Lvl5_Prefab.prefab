@@ -41,6 +41,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1079738662024387062
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -59,6 +60,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,9 +83,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 852797597
   m_SortingLayer: 3
   m_SortingOrder: 1
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -92,7 +97,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &4155822962700921757
 MonoBehaviour:
@@ -103,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1708488697088072388}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 805c7219ec061d84bbcd4a1a6125f6e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c06338dcf3f3834e9ea0d40eccd0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
@@ -113,19 +117,10 @@ MonoBehaviour:
   idle_sprites: []
   attack_sprites: []
   evolve_sprites: []
-  dead_sprites:
-  - {fileID: 5783611933954846060, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 5783611933954846060, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 521321670712509736, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -1918692315844204990, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -1918692315844204990, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 521321670712509736, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 521321670712509736, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -8072102918417722308, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: -1556518603800245044, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 99376022423236556, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  dead_sprites: []
   walk_sprites: []
   destroyOnEndDeadAnimation: 0
+  <animState>k__BackingField: 0
 --- !u!114 &8743388905135105463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAngleOffset: 0
   doRotation: 0
+  lookAtTarget: 1
   hideTilCollision: 1
   canFindNewTarget: 3
   speed: 50

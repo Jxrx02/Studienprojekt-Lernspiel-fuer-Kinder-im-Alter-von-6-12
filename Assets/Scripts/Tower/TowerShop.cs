@@ -16,6 +16,12 @@ public class TowerShop : MonoBehaviour
 
     private GameObject selectedTower;
     private bool isPlacingTower = false; // Flag, um zu prüfen, ob der Tower gerade platziert wird
+	private Camera _mainCamera;
+
+	private void Awake()
+	{
+		_mainCamera = Camera.main;
+	}
 
     public void BuyTower(GameObject towerPrefab)
     {
@@ -77,7 +83,7 @@ public class TowerShop : MonoBehaviour
         if (isPlacingTower && selectedTower != null)
         {
             // Bewege den Tower zur Mausposition
-            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0; 
             selectedTower.transform.position = mousePosition;
             

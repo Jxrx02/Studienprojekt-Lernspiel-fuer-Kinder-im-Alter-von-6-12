@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class OneClickInWorldListener : MonoBehaviour
 {
     private static OneClickInWorldListener instance;
+	private Camera _mainCamera;
 
     // Statt nur einer Funktion → Liste
     private List<Action<Vector3>> clickCallbacks = new List<Action<Vector3>>();
@@ -15,6 +16,9 @@ public class OneClickInWorldListener : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
+		
+		_mainCamera = Camera.main; 
+
     }
 
     private void Update()
@@ -24,7 +28,7 @@ public class OneClickInWorldListener : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 worldClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 worldClick = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             worldClick.z = 0;
 
             // Alle registrierten Callbacks aufrufen

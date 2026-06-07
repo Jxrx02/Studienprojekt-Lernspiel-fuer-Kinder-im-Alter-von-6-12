@@ -14,6 +14,8 @@ namespace TowerDefense
 
         private Tower tower;
 
+		private Camera _mainCamera;
+
         private void OnDrawGizmosSelected()
         {
             // Collider in der Szene zeichnen
@@ -25,6 +27,8 @@ namespace TowerDefense
         private void Awake()
         {
             tower = GetComponent<Tower>();
+			_mainCamera = Camera.main;
+
         }
 
         private void Update()
@@ -38,7 +42,7 @@ namespace TowerDefense
                     return;
                 }
                 
-                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 
                 if (IsPointInsideCollider(mouseWorldPos))
                 {
