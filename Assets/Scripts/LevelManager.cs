@@ -1,6 +1,7 @@
 namespace TowerDefense
 {
     using System;
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -8,13 +9,19 @@ namespace TowerDefense
     {
         public static LevelManager instance;
 
-        [Header("current Game-Variables")] private bool doubleTime;
+        [Header("Current Game-Variables")]
+        private bool doubleTime;
         public int cur_coins;
         public int start_coins = 35;
         public int cur_health;
         public int start_health = 20;
 
-        [Header("GameObjctlinking ")] public GameObject pauseCanvas;
+        [Header("Frühstart-Bonus")]
+        [Tooltip("Maximaler Bonus")]
+        public int maxEarlyBonus = 120;
+
+        [Header("GameObject-Linking")]
+        public GameObject pauseCanvas;
         public GameObject gameCanvas;
         public GameObject deathScreen;
         public GameObject questionPanel;
@@ -22,67 +29,181 @@ namespace TowerDefense
 
         public Text txt_money;
         public Text txt_health;
+
+        [Tooltip("Text der den Frühstart-Bonus anzeigt, z.B. '+ 85 Gold'")]
+        public Text txt_earlyBonus;
+        [Tooltip("Button zum manuellen Starten der nächsten Welle")]
+        public Button btn_startWave;
+
         public GameObject towerUIPrefab;
         public GameObject waveManager;
         public GameObject clickToStartGameObject;
         [SerializeField] private DialogCanvas dialogCanvasPrefab;
 
-        [Header("Texturelinking ")] public Sprite img_doubleTime;
+        [Header("Texture-Linking")]
+        public Sprite img_doubleTime;
         public Sprite img_normspeed;
         public GameObject btn_image_fastForward;
-
         public Sprite img_pause;
         public Sprite img_play;
         public GameObject btn_image_pause;
 
         public Boolean heroFielded;
 
+        // ── Frühstart-State ───────────────────────────────────────
+        private float _earlyStartTimer = 0f;
+        private bool _earlyStartActive = false;
+        private Coroutine _earlyStartCoroutine;
 
         void Start()
         {
-            Actions.onEnemyReachedEnd += LoseHealth;
-            Actions.onEnemyDeath += GainCoins;
-            Actions.onLvlComplete += LvlCompleted;
-            Actions.onWaveSpawnComplete += OnWaveSpawnComplete ;
+            Actions.onEnemyReachedEnd  += LoseHealth;
+            Actions.onEnemyDeath       += GainCoins;
+            Actions.onLvlComplete      += LvlCompleted;
+            Actions.onWaveSpawnComplete += OnWaveSpawnComplete;
+
+            // Neues Event: wird vom WaveManager gefeuert wenn eine Welle vollständig
+            // besiegt wurde (alle Gegner tot/entkommen) → Frühstart-Fenster öffnen
+            Actions.onWaveCleared      += OnWaveCleared;
 
             cur_health = start_health;
-            cur_coins = start_coins;
+            cur_coins  = start_coins;
             UpdateStats();
-// StartCoroutine(GetComponent<SceneFadeIn>().Fade(true));
 
-            if (TowerUI.Instance == null)
-            {
-                Instantiate(towerUIPrefab);
-            }
+            if (TowerUI.Instance == null)       Instantiate(towerUIPrefab);
+            if (DialogCanvas.instance == null)  Instantiate(dialogCanvasPrefab);
+            if (instance == null)               instance = this;
+            else                                Destroy(gameObject);
 
-            if (DialogCanvas.instance == null)
-            {
-                Instantiate(dialogCanvasPrefab);
-            }
+            // Frühstart-Button zu Beginn verstecken
+            SetStartWaveButtonVisible(false);
 
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-
+            // Warte auf den ersten Weltklick, dann erste Welle freigeben
             OnStartWaveClick();
         }
 
-        private Boolean allwavesSpawned = false;
+        // ── Wave-Events ───────────────────────────────────────────
+
+        private Boolean _allWavesSpawned = false;
         private void OnWaveSpawnComplete()
         {
-            allwavesSpawned = true;
+            _allWavesSpawned = true;
         }
+
+        /// <summary>
+        /// Wird aufgerufen wenn alle Gegner einer Welle besiegt wurden.
+        /// Startet das Frühstart-Fenster.
+        /// </summary>
+        private void OnWaveCleared()
+        {
+            if (_allWavesSpawned) return; // letzte Welle – kein Frühstart nötig
+
+            if (_earlyStartCoroutine != null)
+                StopCoroutine(_earlyStartCoroutine);
+
+            _earlyStartCoroutine = StartCoroutine(EarlyStartCountdown());
+        }
+
+        private IEnumerator EarlyStartCountdown()
+        {
+            var waveManagerComponent = waveManager.GetComponent<WaveManager>();
+
+            if (waveManagerComponent == null || waveManagerComponent.waveConfig == null)
+            {
+                Debug.LogError("WaveManager oder WaveConfig nicht gefunden.");
+                yield break;
+            }
+
+            _earlyStartTimer = waveManagerComponent.waveConfig.timeBetweenWaves;
+            _earlyStartActive = true;
+            SetStartWaveButtonVisible(true);
+
+            while (_earlyStartTimer > 0f)
+            {
+                _earlyStartTimer -= Time.deltaTime;
+                UpdateEarlyBonusDisplay();
+                yield return null;
+            }
+
+            // Zeit abgelaufen → nächste Welle startet automatisch ohne Bonus
+            _earlyStartActive = false;
+            SetStartWaveButtonVisible(false);
+            TriggerNextWave(earlyBonus: 0);
+        }
+
+        /// <summary>
+        /// Spieler klickt manuell auf „Welle starten" → Bonus wird ausbezahlt.
+        /// Diesen Aufruf an den Button im Inspector hängen.
+        /// </summary>
+        public void OnEarlyStartClick()
+        {
+            if (!_earlyStartActive) return;
+
+            if (_earlyStartCoroutine != null)
+                StopCoroutine(_earlyStartCoroutine);
+
+            int bonus = CalculateEarlyBonus();
+            _earlyStartActive = false;
+            SetStartWaveButtonVisible(false);
+
+            cur_coins += bonus;
+            UpdateStats();
+
+            if (bonus > 0)
+                ShowBonusPopup(bonus); // optional visuelles Feedback
+
+            TriggerNextWave(earlyBonus: bonus);
+        }
+
+        // ── Hilfsmethoden ─────────────────────────────────────────
+
+        private int CalculateEarlyBonus()
+        {
+            var waveManagerComponent = waveManager.GetComponent<WaveManager>();
+            
+            int bonus = Mathf.RoundToInt(_earlyStartTimer * waveManagerComponent.waveConfig.goldPerSecondEarlyStart);
+            return Mathf.Clamp(bonus, 0, maxEarlyBonus);
+        }
+
+        private void UpdateEarlyBonusDisplay()
+        {
+            if (txt_earlyBonus == null) return;
+            int bonus = CalculateEarlyBonus();
+            txt_earlyBonus.text = bonus > 0 ? $"+ {bonus} Gold" : "";
+        }
+
+        private void SetStartWaveButtonVisible(bool visible)
+        {
+            if (btn_startWave != null)
+                btn_startWave.gameObject.SetActive(visible);
+            if (txt_earlyBonus != null)
+                txt_earlyBonus.gameObject.SetActive(visible);
+        }
+
+        /// <summary>
+        /// Signalisiert dem WaveManager die nächste Welle zu starten.
+        /// Passe dies an deine WaveManager-API an.
+        /// </summary>
+        private void TriggerNextWave(int earlyBonus)
+        {
+            Debug.Log($"Nächste Welle gestartet. Frühstart-Bonus: {earlyBonus} Gold.");
+            var waveManagerComponent = waveManager.GetComponent<WaveManager>();
+
+            waveManagerComponent.StartNextWave();
+        }
+
+        private void ShowBonusPopup(int bonus)
+        {
+            // Optional: FloatingText, Animation etc. hier einfügen
+            Debug.Log($"Frühstart! +{bonus} Gold");
+        }
+
+        // ── Bestehende Methoden (unverändert) ────────────────────
 
         private void LvlCompleted()
         {
-            if(!allwavesSpawned) return;
+            if (!_allWavesSpawned) return;
             FindAnyObjectByType<LevelUnlocker>().CompleteLevel();
-            Debug.Log("nächstes lvl freigeschaltet");
             endScreen.gameObject.SetActive(true);
         }
 
@@ -91,78 +212,54 @@ namespace TowerDefense
             OneClickInWorldListener.ListenOnce((Vector3 pos) =>
             {
                 clickToStartGameObject.SetActive(false);
-                waveManager.SetActive(true);
+                waveManager.gameObject.SetActive(true);
 
-                Vector3 dummy = pos;
-                Debug.Log("Starting game");
+                // Erste Welle freigeben
+                
+                waveManager.GetComponent<WaveManager>()?.OnGameStarted();
+                Debug.Log("Game gestartet");
             });
         }
 
-        public Boolean CanPurchase(int price)
-        {
-            if ((cur_coins - price) < 0) return false;
-            else return true;
-        }
+        public Boolean CanPurchase(int price)  => (cur_coins - price) >= 0;
 
         public Boolean DoPurchase(int price)
         {
-            if (CanPurchase(price) == false) return false;
+            if (!CanPurchase(price)) return false;
             cur_coins -= price;
             UpdateStats();
             return true;
         }
 
-private void UpdateStats()
-{
-    if (txt_money != null)
-        txt_money.text = cur_coins.ToString();
-    else
-        Debug.LogWarning("txt_money ist zerstört oder nicht zugewiesen!");
+        private void UpdateStats()
+        {
+            if (txt_money  != null) txt_money.text  = cur_coins.ToString();
+            else Debug.LogWarning("txt_money ist zerstört oder nicht zugewiesen!");
 
-    if (txt_health != null)
-        txt_health.text = cur_health.ToString();
-    else
-        Debug.LogWarning("txt_health ist zerstört oder nicht zugewiesen!");
-}
-
+            if (txt_health != null) txt_health.text = cur_health.ToString();
+            else Debug.LogWarning("txt_health ist zerstört oder nicht zugewiesen!");
+        }
 
         public void Button_DoubleTime()
         {
             doubleTime = !doubleTime;
-            if (doubleTime)
-            {
-                btn_image_fastForward.GetComponent<Image>().sprite = img_doubleTime;
-                Time.timeScale = 3;
-
-            }
-            else
-            {
-                btn_image_fastForward.GetComponent<Image>().sprite = img_normspeed;
-                Time.timeScale = 1;
-
-            }
+            btn_image_fastForward.GetComponent<Image>().sprite =
+                doubleTime ? img_doubleTime : img_normspeed;
+            Time.timeScale = doubleTime ? 3 : 1;
         }
 
         public void Pause()
         {
             btn_image_pause.GetComponent<Image>().sprite = img_pause;
             pauseCanvas.gameObject.SetActive(true);
-
             Time.timeScale = 0;
-
         }
 
         public void UnPause()
         {
             pauseCanvas.gameObject.SetActive(false);
-
-            if (doubleTime)
-                Time.timeScale = 3;
-            else
-                Time.timeScale = 1;
-
+            Time.timeScale = doubleTime ? 3 : 1;
             btn_image_pause.GetComponent<Image>().sprite = img_play;
-
         }
 
         public void LoseHealth(GameObject enemy)
@@ -170,10 +267,7 @@ private void UpdateStats()
             if (cur_health > 0)
                 cur_health -= enemy.GetComponent<Enemy>().currentHealth;
             else
-            {
                 ShowDeathScreen();
-            }
-
             UpdateStats();
         }
 
@@ -187,9 +281,7 @@ private void UpdateStats()
         {
             deathScreen.gameObject.SetActive(true);
             Time.timeScale = 0;
-
         }
-       
 
         public void ReviveFailed()
         {
@@ -197,12 +289,10 @@ private void UpdateStats()
             questionPanel.gameObject.SetActive(false);
             deathScreen.GetComponentInChildren<Button>().interactable = false;
             deathScreen.gameObject.SetActive(true);
-
         }
+
         public void DoRevive()
         {
-            //entfere die letzten 3 gegner
-
             for (int i = 0; i < 6; i++)
             {
                 try
@@ -211,18 +301,13 @@ private void UpdateStats()
                     TowerHeroManager.instance.UnregisterEnemy(enemy);
                     Destroy(enemy);
                 }
-                catch
-                {
-
-                }
-
+                catch { }
             }
 
             cur_health += 5;
             UpdateStats();
             deathScreen.gameObject.SetActive(false);
             questionPanel.gameObject.SetActive(false);
-
             Time.timeScale = 1;
         }
     }

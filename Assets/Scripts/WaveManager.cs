@@ -1,51 +1,92 @@
 ﻿using System.Collections;
-using System.Linq;
 using TowerDefense;
 using ScriptableObjects;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
     public WaveConfig waveConfig;
     public Transform spawnPoint;
-    [HideInInspector]
-    public int currentWaveIndex = 0;
+    [HideInInspector] public int currentWaveIndex = 0;
     public GameObject enemyPrefab;
-
-    public GameObject[] walkPath; // Path the enemy follows
+    public GameObject[] walkPath;
     public Text txt_wave;
+
+    private int _activeEnemyCount = 0;
+    private bool _waveInProgress   = false;
+    private bool _nextWaveReady     = false; // wartet auf StartNextWave()
 
     void Start()
     {
-        txt_wave.text = $"{currentWaveIndex+1}/{waveConfig.waves.Count}";
+        Actions.onEnemyDeath        += OnEnemyRemoved;
+        Actions.onEnemyReachedEnd   += OnEnemyRemoved;
 
-        StartCoroutine(SpawnWaves());
+        UpdateWaveText();
+        StartCoroutine(RunWaves());
     }
 
-    private IEnumerator SpawnWaves()
+    // Wird von LevelManager aufgerufen sobald das Spiel per Klick gestartet wird
+    public void OnGameStarted()
+    {
+        _nextWaveReady = true;
+    }
+
+    private void OnDestroy()
+    {
+        Actions.onEnemyDeath        -= OnEnemyRemoved;
+        Actions.onEnemyReachedEnd   -= OnEnemyRemoved;
+    }
+
+    // ── Hauptschleife ─────────────────────────────────────────────
+
+    private IEnumerator RunWaves()
     {
         for (currentWaveIndex = 0; currentWaveIndex < waveConfig.waves.Count; currentWaveIndex++)
         {
-            WaveConfig.Wave currentWave = waveConfig.waves[currentWaveIndex];
-            yield return StartCoroutine(SpawnBursts(currentWave));
+            Debug.Log("Waiting for wave start");
 
-            if (currentWaveIndex < waveConfig.waves.Count - 1)
-            {
-                yield return new WaitForSeconds(waveConfig.timeBetweenWaves);
-            }
-            txt_wave.text = $"{currentWaveIndex+1}/{waveConfig.waves.Count}";
+            yield return new WaitUntil(() => _nextWaveReady);
 
+            _nextWaveReady = false;
 
+            Debug.Log($"Starting wave {currentWaveIndex + 1}");
+
+            UpdateWaveText();
+
+            _waveInProgress = true;
+            _activeEnemyCount = 0;
+
+            yield return StartCoroutine(SpawnWave(waveConfig.waves[currentWaveIndex]));
+
+            yield return new WaitUntil(() => _activeEnemyCount <= 0);
+
+            _waveInProgress = false;
+
+            if (currentWaveIndex >= waveConfig.waves.Count - 1)
+                Actions.onWaveSpawnComplete?.Invoke();
+            else
+                Actions.onWaveCleared?.Invoke();
         }
-
-        Debug.Log("Alle Wellen sind gespawnt!");
-        Actions.onWaveSpawnComplete.Invoke();
     }
 
-    private IEnumerator SpawnBursts(WaveConfig.Wave wave)
+    // ── Wird vom LevelManager aufgerufen ─────────────────────────
+
+    /// <summary>
+    /// Startet die nächste Welle – entweder durch Frühstart-Button
+    /// oder automatisch wenn das Frühstart-Fenster abläuft.
+    /// </summary>
+    public void StartNextWave()
+    {
+        Debug.Log("StartNextWave");
+
+        if (!_waveInProgress)
+            _nextWaveReady = true;
+    }
+
+    // ── Spawn-Logik (unverändert) ─────────────────────────────────
+
+    private IEnumerator SpawnWave(WaveConfig.Wave wave)
     {
         foreach (var burst in wave.bursts)
         {
@@ -60,25 +101,37 @@ public class WaveManager : MonoBehaviour
         {
             for (int i = 0; i < burstConfig.spawnCount; i++)
             {
-                // Gegner instanziieren
                 GameObject enemyInstance = Instantiate(
                     enemyPrefab,
-                    spawnPoint.transform.position,  // Beispielhafte Spawn-Position
+                    spawnPoint.transform.position,
                     Quaternion.identity
                 );
-                
-                Enemy enemy = enemyInstance.AddComponent<Enemy>();  
-                enemy.walkPath = this.walkPath;
+
+                Enemy enemy = enemyInstance.GetComponent<Enemy>() 
+                           ?? enemyInstance.AddComponent<Enemy>();
+                enemy.walkPath    = this.walkPath;
                 enemy.enemyConfig = burstConfig.enemyConfig;
 
                 TowerHeroManager.instance.RegisterEnemy(enemyInstance);
-                
-                // Wartezeit zwischen den Gegnern
+                _activeEnemyCount++;
+
                 yield return new WaitForSeconds(burstConfig.spawnInterval);
             }
         }
     }
 
+    // ── Gegner-Tracking ───────────────────────────────────────────
 
+    private void OnEnemyRemoved(GameObject enemy)
+    {
+        _activeEnemyCount = Mathf.Max(0, _activeEnemyCount - 1);
+    }
 
+    // ── UI ────────────────────────────────────────────────────────
+
+    private void UpdateWaveText()
+    {
+        if (txt_wave != null)
+            txt_wave.text = $"{currentWaveIndex + 1}/{waveConfig.waves.Count}";
+    }
 }

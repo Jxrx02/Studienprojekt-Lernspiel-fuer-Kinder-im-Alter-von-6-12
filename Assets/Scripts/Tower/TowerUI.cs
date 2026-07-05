@@ -156,13 +156,13 @@ namespace TowerDefense
                     string pathName = selectedTower.upgradePaths[i].towerName;
                     string upgradeName = upgrade.upgradeName;
 
-                    bool isUnlocked = TowerDefense.Research.ResearchManager.Instance
-                        .unlockedResearch.Any(t =>
-                            t.researchedPaths.Any(p => p.pathName.Contains(pathName)) &&
-                            t.researchedPaths.Any(p =>
-                                p.unlockedUpgrades.Contains(upgradeName)
-                            )
-                        );
+                    var researchManager = TowerDefense.Research.ResearchManager.Instance;
+
+                    bool isUnlocked = researchManager == null || researchManager.unlockedResearch.Any(t =>
+                        t.researchedPaths.Any(p => p.pathName.Contains(pathName)) &&
+                        t.researchedPaths.Any(p => p.unlockedUpgrades.Contains(upgradeName))
+                    );
+                    
 
                     switch (i)
                     {

@@ -30,5 +30,6 @@ namespace ScriptableObjects
         public List<Wave> waves;
         [Tooltip("Zeit zwischen zwei Wellen")]
         public float timeBetweenWaves;
+        public int goldPerSecondEarlyStart = 3;
     }
 }

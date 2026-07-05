@@ -8,174 +8,224 @@ using Random = UnityEngine.Random;
 
 namespace TowerDefense
 {
-   
-public class Enemy : MonoBehaviour
-{
-    public EnemyConfig enemyConfig; // Referenz auf die Konfiguration
-
-    public int currentHealth;
-    private bool isDead;
-
-    
-    //Path
-    private int waypointIndex = 0; // Der aktuelle Zielpunkt auf dem Pfad
-    public GameObject[] walkPath; // Der Pfad, dem der Gegner folgt
-    private SpriteAnim _spriteAnim;
-
-    private void Start()
+    public class Enemy : MonoBehaviour
     {
-        ApplyConfig();
+        public EnemyConfig enemyConfig;
 
-    }
+        public int currentHealth;
+        private bool isDead;
 
+        // Path
+        private int waypointIndex = 0;
+        public GameObject[] walkPath;
+        private SpriteAnim _spriteAnim;
 
-    /// <summary>
-    /// Wendet die Werte aus der EnemyConfig auf diesen Gegner an.
-    /// </summary>
-    private void ApplyConfig()
-    {
-        if (enemyConfig == null)
+        // ── Status-Effekte ────────────────────────────────────────
+        private float slowMultiplier = 1f;       // 1 = normal, 0.5 = halb so schnell
+        private Coroutine slowCoroutine;
+
+        private bool isKnockbacking = false;     // Wird von Projectile per Coroutine gesetzt
+
+        private bool isBeingPulled = false;      // Black Hole zieht den Gegner
+        public bool IsBeingPulled
         {
-            Debug.LogError("EnemyConfig ist nicht zugewiesen!", this);
-            return;
+            get => isBeingPulled;
+            set => isBeingPulled = value;
         }
 
-        Light2D light = gameObject.GetComponentInChildren<Light2D>();
-        if (enemyConfig.hasLight)
+        private void Start()
         {
-            light.color = enemyConfig.lightColor;
-            light.gameObject.SetActive(true);
+            ApplyConfig();
         }
-        else
+
+        private void ApplyConfig()
         {
-            light.gameObject.SetActive(false);
-        }
-        _spriteAnim = GetComponent<SpriteAnim>();
-        _spriteAnim.walk_sprites = enemyConfig.walkAnim;
-        _spriteAnim.dead_sprites = enemyConfig.deadAnim;
-        this._spriteAnim.animState = AnimationState.Walk_Animation;
-        
-        // Grundwerte initialisieren
-        currentHealth = enemyConfig.health;
-        isDead = false;
-        
-        Actions.onEnemySpawn(this.gameObject);
-
-    }
-
-    /// <summary>
-    /// Verarbeitet Schaden basierend auf den Resistenzen des Gegners.
-    /// </summary>
-    public void TakeDamage(float damage, string damageType = "physical")
-    {
-        if (isDead) return;
-
-        float finalDamage = damage;
-
-        // Resistenzen und Schwächen anwenden
-        if (damageType == "fire")
-            finalDamage *= 1 - enemyConfig.fireResistance;
-        else if (damageType == "ice")
-            finalDamage *= 1 + enemyConfig.iceWeakness;
-        else if (damageType == "poison" && enemyConfig.poisonImmunity > 0)
-            finalDamage = 0;
-        
-        
-        float evasionRoll = Random.Range(0f, 100f);
-        if (evasionRoll < enemyConfig.evasionChance)
-        {
-            if (enemyConfig.evasionEffect != null)
+            if (enemyConfig == null)
             {
-                Instantiate(enemyConfig.evasionEffect, transform.position, Quaternion.identity);
+                Debug.LogError("EnemyConfig ist nicht zugewiesen!", this);
+                return;
             }
-            Debug.Log($"{enemyConfig.name} ist ausgewichen");
-            return; // Schaden wird nicht angewendet
+
+            Light2D light = gameObject.GetComponentInChildren<Light2D>();
+            if (enemyConfig.hasLight)
+            {
+                light.color = enemyConfig.lightColor;
+                light.gameObject.SetActive(true);
+            }
+            else
+            {
+                light.gameObject.SetActive(false);
+            }
+
+            _spriteAnim = GetComponent<SpriteAnim>();
+            _spriteAnim.walk_sprites = enemyConfig.walkAnim;
+            _spriteAnim.dead_sprites = enemyConfig.deadAnim;
+            _spriteAnim.animState = AnimationState.Walk_Animation;
+
+            currentHealth = enemyConfig.health;
+            isDead = false;
+
+            Actions.onEnemySpawn(this.gameObject);
         }
 
+        // ── Schaden ───────────────────────────────────────────────
 
-        finalDamage = Mathf.Max(finalDamage, 0); // Schaden kann nicht negativ sein
-        currentHealth -= Mathf.RoundToInt(finalDamage);
+        /// <summary>
+        /// Verarbeitet Schaden – jetzt mit int-Überladung für Rückwärtskompatibilität
+        /// mit Projectile.cs (das int damage übergibt).
+        /// </summary>
+        public void TakeDamage(int damage, string damageType = "physical")
+            => TakeDamage((float)damage, damageType);
 
-        // Treffer-Effekte abspielen
-        if (enemyConfig.hitEffect != null)
+        public void TakeDamage(float damage, string damageType = "physical")
         {
-            Instantiate(enemyConfig.hitEffect, transform.position, Quaternion.identity);
+            if (isDead) return;
+
+            float finalDamage = damage;
+
+            if (damageType == "fire")
+                finalDamage *= 1 - enemyConfig.fireResistance;
+            else if (damageType == "ice")
+                finalDamage *= 1 + enemyConfig.iceWeakness;
+            else if (damageType == "poison" && enemyConfig.poisonImmunity > 0)
+                finalDamage = 0;
+
+            float evasionRoll = Random.Range(0f, 100f);
+            if (evasionRoll < enemyConfig.evasionChance)
+            {
+                if (enemyConfig.evasionEffect != null)
+                    Instantiate(enemyConfig.evasionEffect, transform.position, Quaternion.identity);
+                Debug.Log($"{enemyConfig.name} ist ausgewichen");
+                return;
+            }
+
+            finalDamage = Mathf.Max(finalDamage, 0);
+            currentHealth -= Mathf.RoundToInt(finalDamage);
+
+            if (enemyConfig.hitEffect != null)
+                Instantiate(enemyConfig.hitEffect, transform.position, Quaternion.identity);
+
+            if (currentHealth <= 0)
+                Die();
         }
 
-        if (currentHealth <= 0)
+        private void Die()
         {
-            // Todes-Effekte
             if (enemyConfig.deathEffect != null)
-            {
                 Instantiate(enemyConfig.deathEffect, transform.position, Quaternion.identity);
-            }
-            // Belohnung
+
             Actions.onEnemyDeath?.Invoke(this.gameObject);
-            
             _spriteAnim.TriggerDeadAnimation(true);
             isDead = true;
         }
-    }
-    
-    void Update()
-    {
-        // Bewegungsgeschwindigkeit anwenden, falls nötig
-        if (!isDead && enemyConfig.movementSpeed > 0 && walkPath != null)
-        {
-            MoveAlongPath();
-        }
-    }
 
-    /// <summary>
-    /// Bewegt den Gegner entlang seines vordefinierten Pfads.
-    /// </summary>
-    private void MoveAlongPath()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, walkPath[waypointIndex].transform.position, enemyConfig.movementSpeed * Time.deltaTime);
-        rotateToObject(walkPath[waypointIndex].transform.position);
+        // ── Status-Effekte ────────────────────────────────────────
 
-        if (Vector2.Distance(transform.position, walkPath[waypointIndex].transform.position) < 0.1f)
+        /// <summary>
+        /// Verlangsamt den Gegner. amount=0.5 → halbierte Geschwindigkeit.
+        /// amount=0 und duration=0 hebt den Slow auf (wird von Chain genutzt).
+        /// </summary>
+        public void ApplySlow(float amount, float duration)
         {
-            if (waypointIndex < walkPath.Length - 1)
-                waypointIndex++;
-            else
+            if (slowCoroutine != null)
+                StopCoroutine(slowCoroutine);
+
+            if (duration <= 0f)
             {
-                //Hat ziel erreicht; Leben geht runter
-                Debug.Log($"{enemyConfig.description} hat ziel erreicht und veursacht {enemyConfig.penaltyOnReachingEnd} Schaden.");
-                
-                Actions.onEnemyReachedEnd(this.gameObject);
-                Destroy(this.gameObject);
+                slowMultiplier = 1f; // Slow direkt aufheben
+                return;
+            }
 
+            slowMultiplier = 1f - Mathf.Clamp01(amount);
+            slowCoroutine = StartCoroutine(SlowTimer(duration));
+        }
+
+        private IEnumerator SlowTimer(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            slowMultiplier = 1f;
+        }
+
+        /// <summary>
+        /// Bewegt den Gegner um einen Offset (wird von Knockback genutzt).
+        /// Deaktiviert kurz die normale Pfadbewegung.
+        /// </summary>
+        public void ApplyPositionOffset(Vector3 offset, float duration)
+        {
+            if (!isDead)
+                StartCoroutine(KnockbackMove(offset, duration));
+        }
+
+        private IEnumerator KnockbackMove(Vector3 offset, float duration)
+        {
+            isKnockbacking = true;
+            Vector3 start = transform.position;
+            Vector3 dest  = transform.position + offset;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                transform.position = Vector3.Lerp(start, dest, elapsed / duration);
+                yield return null;
+            }
+            isKnockbacking = false;
+        }
+
+        // ── Update / Bewegung ─────────────────────────────────────
+
+        void Update()
+        {
+            // Black Hole oder Knockback übernehmen kurzzeitig die Kontrolle
+            if (isBeingPulled || isKnockbacking) return;
+
+            if (!isDead && enemyConfig.movementSpeed > 0 && walkPath != null)
+                MoveAlongPath();
+        }
+
+        private void MoveAlongPath()
+        {
+            float effectiveSpeed = enemyConfig.movementSpeed * slowMultiplier;
+
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                walkPath[waypointIndex].transform.position,
+                effectiveSpeed * Time.deltaTime);
+
+            rotateToObject(walkPath[waypointIndex].transform.position);
+
+            if (Vector2.Distance(transform.position, walkPath[waypointIndex].transform.position) < 0.1f)
+            {
+                if (waypointIndex < walkPath.Length - 1)
+                    waypointIndex++;
+                else
+                {
+                    Debug.Log($"{enemyConfig.description} hat Ziel erreicht und verursacht {enemyConfig.penaltyOnReachingEnd} Schaden.");
+                    Actions.onEnemyReachedEnd(this.gameObject);
+                    Destroy(this.gameObject);
+                }
+            }
+        }
+
+        // ── Rotation ──────────────────────────────────────────────
+
+        public bool canRotateOnZAxis = false, faceToDir = true;
+
+        void rotateToObject(Vector3 toObject)
+        {
+            if (faceToDir)
+            {
+                Vector3 dir = toObject - transform.position;
+                transform.rotation = dir.x > 0
+                    ? new Quaternion(0, 0, 0, 0)
+                    : new Quaternion(0, 180, 0, 0);
+            }
+            else if (canRotateOnZAxis)
+            {
+                Vector3 dir = toObject - transform.position;
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
     }
-
-
-    
-    public bool canRotateOnZAxis = false, faceToDir = true;
-
-    void rotateToObject(Vector3 toObject)
-    {
-        if (faceToDir)
-        {
-            Vector3 dir = toObject - transform.position;
-            if(dir.x > 0)
-            {
-                transform.rotation = new Quaternion(0,0,0,0);
-            }
-            else
-                transform.rotation = new Quaternion(0, 180, 0, 0);
-        }
-        else if (canRotateOnZAxis)
-        {
-            Vector3 dir = toObject - transform.position;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-
-    }
 }
-    
-
-}
-

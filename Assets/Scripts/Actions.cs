@@ -15,7 +15,7 @@ public static class Actions
 
     public static Action onLvlComplete;
     public static Action onWaveSpawnComplete;
-
+    public static Action onWaveCleared;
 
     public static Action onPlayerDeath;
     

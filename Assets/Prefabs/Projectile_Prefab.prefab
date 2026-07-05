@@ -175,7 +175,35 @@ MonoBehaviour:
   lookAtTarget: 1
   hideTilCollision: 0
   canFindNewTarget: 0
-  speed: 2
+  speed: 2.75
+  mode: 1
+  aoeRadius: 1.5
+  aoeVfxPrefab: {fileID: 0}
+  dotDuration: 2
+  dotInterval: 0.5
+  dotDamagePerTick: 1
+  slowDuration: 2
+  slowAmount: 0.725
+  chainCount: 3
+  chainDamageFalloff: 0.503
+  chainRadius: 3
+  knockbackDistance: 1.5
+  knockbackDuration: 0.2
+  splitterCount: 3
+  splitterPrefab: {fileID: 3476404959106327209, guid: a488f35dbc112f746b4769e7dfb3f191, type: 3}
+  splitterDamage: 1
+  pierceCount: 3
+  orbitProjectilePrefab: {fileID: 3476404959106327209, guid: a488f35dbc112f746b4769e7dfb3f191, type: 3}
+  orbitDuration: 3
+  orbitDamagePerSecond: 10
+  blackHolePullDuration: 2
+  blackHoleRadius: 3
+  blackHoleVfxPrefab: {fileID: 0}
+  stickyDelay: 2
+  stickyAoeRadius: 1.5
+  chainLinkRadius: 4
+  chainSlowAmount: 0.4
+  chainLinkDamage: 1
 --- !u!1 &6871623523393184788
 GameObject:
   m_ObjectHideFlags: 0
