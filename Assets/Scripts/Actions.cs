@@ -20,6 +20,7 @@ public static class Actions
     public static Action onPlayerDeath;
     
     public static Action onGridChanged;
-    
-    
+    public static Action<GameObject> TowerPlaced;
+
+
 }

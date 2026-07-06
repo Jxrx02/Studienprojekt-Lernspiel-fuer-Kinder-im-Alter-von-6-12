@@ -5,7 +5,7 @@ namespace ScriptableObjects
 {
     public enum EnemyType
     {
-        Stubborn,   // berechnet einmal, ignoriert Änderungen
+        IgnoreWalls,   // berechnet einmal, ignoriert Änderungen
         Adaptive,   // recalculates bei Blockänderung
         Clever      // rechnet regelmäßig + optional optimiert
     }
@@ -20,12 +20,20 @@ namespace ScriptableObjects
         public string description; // Description of the enemy
         public Sprite[] walkAnim; // Walk animation sprites
         public Sprite[] deadAnim; // Walk animation sprites
+        public Sprite[] attackAnim; // Walk animation sprites
 
         [Header("Core Stats")]
         public int health; // Health points
         public int tenacity; // Resistance to crowd control effects (percentage reduction)
         public int movementSpeed; // Movement speed (units per second)
         public int xpDrop;
+
+        [Header("Combat Stats")] 
+        public int attackRange;
+        public int attackCooldown;
+        public int attackDamage;
+        public Boolean isMeele=true;
+        public GameObject projectile;
         
         [Header("Special Attributes")]
         public int evasionChance; // Chance to dodge attacks (percentage)

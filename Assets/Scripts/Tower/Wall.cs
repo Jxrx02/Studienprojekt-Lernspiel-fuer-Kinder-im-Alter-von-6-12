@@ -10,6 +10,7 @@ namespace TowerDefense
         [SerializeField] private float spikeCooldown = 1f;
         [SerializeField] private bool hasSpikes = false;
 
+
         private float spikeTimer;
 
         void Start()

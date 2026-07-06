@@ -47,7 +47,7 @@ namespace TowerDefense.GridMovement
                 return;
 
             node.walkable = false;
-
+            
             NotifyGridChanged();
         }
 

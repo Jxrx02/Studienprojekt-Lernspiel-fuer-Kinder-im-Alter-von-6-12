@@ -534,6 +534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 1.49, y: 2.3}
   offset: {x: 0, y: 0.62}
+  _enabled: 1
 --- !u!114 &5202487448468226290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,7 +592,7 @@ MonoBehaviour:
   towerInitPrice: 30
   placementType: 1
   blocksPath: 1
-  statHealthPoints: 100
+  statHealthPoints: 3
   currentHealth: 3
   range: 0.74
   damage: 0

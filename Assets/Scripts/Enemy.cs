@@ -21,6 +21,9 @@ namespace TowerDefense
         private int pathIndex;
         private Transform target;
 
+        private GameObject attackTarget;
+        private bool reachedFinalTarget;
+
         // ── Visual / Animation ──────────────────────────────
         private SpriteAnim _spriteAnim;
         private SpriteRenderer _spriteRenderer;
@@ -41,6 +44,8 @@ namespace TowerDefense
             get => isBeingPulled;
             set => isBeingPulled = value;
         }
+
+        private bool isAttacking;
 
         // ───────────────── INIT ─────────────────────────────
 
@@ -63,7 +68,6 @@ namespace TowerDefense
             if (enemyConfig == null)
                 return;
 
-            // Light
             Light2D light = GetComponentInChildren<Light2D>();
             if (enemyConfig.hasLight)
             {
@@ -75,11 +79,11 @@ namespace TowerDefense
                 light.gameObject.SetActive(false);
             }
 
-            // Animation
             if (_spriteAnim != null)
             {
                 _spriteAnim.walk_sprites = enemyConfig.walkAnim;
                 _spriteAnim.dead_sprites = enemyConfig.deadAnim;
+                _spriteAnim.attack_sprites = enemyConfig.attackAnim;
                 _spriteAnim.animState = AnimationState.Walk_Animation;
             }
 
@@ -93,14 +97,44 @@ namespace TowerDefense
 
         private void CalculatePath()
         {
-            if (target == null) return;
+            if (target == null)
+                return;
 
-            currentPath = PathfindingManager.Instance.FindPath(
+            PathResult result = PathfindingManager.Instance.FindPath(
                 transform.position,
                 target.position
             );
 
             pathIndex = 0;
+            currentPath = result?.path;
+
+            attackTarget = result?.attackTarget;
+            reachedFinalTarget = result != null && result.reachedTarget;
+
+            if (attackTarget == null && currentPath == null)
+            {
+                // kompletter Fail → nichts erreichbar
+                Debug.Log("Enemy stuck: no path and no attack target");
+            }
+        }
+
+        // ───────────────── UPDATE ───────────────────────────
+
+        private void Update()
+        {
+            if (isDead || isKnockbacking || isBeingPulled)
+                return;
+
+            UpdatePathing();
+
+            if (attackTarget != null)
+            {
+                Attack();
+                return;
+            }
+
+            if (enemyConfig != null && enemyConfig.movementSpeed > 0)
+                MoveAlongPath();
         }
 
         private void UpdatePathing()
@@ -109,7 +143,7 @@ namespace TowerDefense
 
             switch (enemyConfig.enemyType)
             {
-                case EnemyType.Stubborn:
+                case EnemyType.IgnoreWalls:
                     return;
 
                 case EnemyType.Adaptive:
@@ -127,17 +161,82 @@ namespace TowerDefense
             }
         }
 
-        // ───────────────── UPDATE ───────────────────────────
+        // ───────────────── ATTACK ─────────────────────────
 
-        private void Update()
+        public void Attack()
         {
-            if (isDead || isKnockbacking || isBeingPulled)
+            if (attackTarget == null)
                 return;
 
-            UpdatePathing();
+            if (currentPath == null || pathIndex < currentPath.Count)
+                return;
 
-            if (enemyConfig != null && enemyConfig.movementSpeed > 0)
-                MoveAlongPath();
+            if (isAttacking)
+                return;
+
+            isAttacking = true;
+            StartCoroutine(BaseAttackCoroutine(Shoot));
+        }
+
+        protected IEnumerator BaseAttackCoroutine(Action onShoot = null)
+        {
+            if (attackTarget != null)
+            {
+                Rotate(attackTarget.transform.position);
+
+                _spriteAnim.SetAttackSpeed(1);
+                _spriteAnim.animState = AnimationState.Attack_Animation;
+
+                bool animationComplete = false;
+
+                void AnimationFinished() => animationComplete = true;
+
+                _spriteAnim.OnAttackAnimationComplete += AnimationFinished;
+
+                yield return new WaitUntil(() => animationComplete);
+
+                _spriteAnim.OnAttackAnimationComplete -= AnimationFinished;
+
+                onShoot?.Invoke();
+
+                yield return new WaitForSeconds(enemyConfig.attackCooldown);
+
+                isAttacking = false;
+            }
+            else
+            {
+                isAttacking = false;
+                _spriteAnim.animState = AnimationState.Walk_Animation;
+            }
+        }
+
+        protected virtual void Shoot()
+        {
+            if (attackTarget == null)
+                return;
+
+            Wall wall = attackTarget.GetComponent<Wall>();
+
+            if (wall == null)
+                return;
+
+            if (enemyConfig.isMeele)
+            {
+                wall.TakeDamage(enemyConfig.attackDamage);
+            }
+            else
+            {
+                Instantiate(enemyConfig.projectile, transform.position, Quaternion.identity)
+                    .GetComponent<Projectile>()
+                    .Init((attackTarget, 0), enemyConfig.attackDamage);
+            }
+
+            if (wall.currentHealth <= 0)
+            {
+                attackTarget = null;
+                CalculatePath();
+                _spriteAnim.animState = AnimationState.Walk_Animation;
+            }
         }
 
         // ───────────────── MOVEMENT ─────────────────────────

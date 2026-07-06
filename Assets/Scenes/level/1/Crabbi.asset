@@ -28,6 +28,11 @@ MonoBehaviour:
   tenacity: 1
   movementSpeed: 1
   xpDrop: 40
+  attackRange: 1
+  attackCooldown: 1
+  attackDamage: 1
+  isMeele: 1
+  projectile: {fileID: 0}
   evasionChance: 0
   fireResistance: 0
   iceWeakness: 0

@@ -15,6 +15,7 @@ namespace TowerDefense
         
         public List<GameObject> towers = new List<GameObject>();
         public List<GameObject> enemies = new List<GameObject>();
+        [HideInInspector] public List<GameObject> walls = new List<GameObject>();
 
         public Tower selectedTower;
 
@@ -60,20 +61,42 @@ namespace TowerDefense
 
         public void RegisterTower(GameObject tower)
         {
-            if (!towers.Contains(tower.gameObject))
+            if (tower.GetComponent<Tower>() is Wall)
             {
-                towers.Add(tower);
+                if (!walls.Contains(tower.gameObject))
+                {
+                    walls.Add(tower);
+                }
             }
+            else
+            {
+                if (!towers.Contains(tower.gameObject))
+                {
+                    towers.Add(tower);
+                }
+            }
+
         }
         public void UnRegisterTower(GameObject tower)
         {
-            if (towers.Contains(tower.gameObject))
+            if (tower.GetComponent<Tower>() is Wall)
             {
-                towers.Remove(tower);
+                if (walls.Contains(tower.gameObject))
+                {
+                    walls.Remove(tower);
+                }
             }
+            else
+            {
+                if (towers.Contains(tower.gameObject))
+                {
+                    towers.Remove(tower);
+                }
+            }
+
             
         }
-
+        
 
         public void RegisterEnemy(GameObject enemy)
         {
