@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 998680a2070d3c5478e4f1cbbd4f93f9, type: 3}
   m_Name: Octopus
   m_EditorClassIdentifier: 
+  enemyType: 2
   description: Octi
   walkAnim:
   - {fileID: 3920217247466374561, guid: 5f2dc977e23ee4d438e0d50584aa8949, type: 3}

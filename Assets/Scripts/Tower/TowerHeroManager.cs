@@ -1,9 +1,13 @@
-﻿    using System;
-    using System.Collections.Generic;
-    using TowerDefense;
-    using Unity.VisualScripting;
-    using UnityEngine;
-    using UnityEngine.EventSystems;
+﻿using System;
+using System.Collections.Generic;
+using TowerDefense;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+namespace TowerDefense
+{
+        
 
     public class TowerHeroManager : MonoBehaviour
     {
@@ -97,7 +101,7 @@
         
         
         
-        public void SelectTower(Tower tower)
+        public void SelectTower(TowerDefense.Tower tower)
         {
             // Falls ein Turm bereits ausgewählt ist, deaktivieren
             if (instance.selectedTower != null && instance.selectedTower != tower)
@@ -123,5 +127,8 @@
             // UI ausblenden
             TowerUI.Instance.gameObject.SetActive(false);
         }
+
+
     }
 
+}

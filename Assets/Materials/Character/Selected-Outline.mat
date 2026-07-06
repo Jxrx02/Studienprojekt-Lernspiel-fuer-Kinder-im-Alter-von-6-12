@@ -113,7 +113,7 @@ Material:
     - _StencilWriteMask: 255
     - _Surface: 1
     - _Thickness: 0.005
-    - _Tickness: 0.0007
+    - _Tickness: 0
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
     - _ZTest: 4
@@ -122,7 +122,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0, g: 0.77695227, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

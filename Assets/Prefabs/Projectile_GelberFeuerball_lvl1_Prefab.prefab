@@ -114,7 +114,11 @@ MonoBehaviour:
   loopThrough: 0
   mTimePerFrame: 0.125
   loop: 1
-  idle_sprites: []
+  idle_sprites:
+  - {fileID: 4454897236482938335, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  - {fileID: -9185399177367980035, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  - {fileID: 2969069972332344831, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  - {fileID: -5787989110592691503, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
   attack_sprites: []
   evolve_sprites: []
   dead_sprites: []
@@ -139,6 +143,29 @@ MonoBehaviour:
   hideTilCollision: 0
   canFindNewTarget: 0
   speed: 3
+  mode: 0
+  aoeRadius: 1.5
+  aoeVfxPrefab: {fileID: 0}
+  dotDuration: 3
+  dotInterval: 0.5
+  dotDamagePerTick: 5
+  chainCount: 3
+  chainDamageFalloff: 0.2
+  chainRadius: 3
+  knockbackDistance: 1.5
+  knockbackDuration: 0.2
+  splitterCount: 5
+  splitterPrefab: {fileID: 0}
+  splitterDamage: 10
+  pierceCount: 5
+  blackHolePullDuration: 2
+  blackHoleRadius: 3
+  blackHoleVfxPrefab: {fileID: 0}
+  stickyDelay: 2
+  stickyAoeRadius: 1.5
+  chainLinkRadius: 4
+  chainSlowAmount: 0.4
+  chainLinkDamage: 5
 --- !u!1 &1748765948790871181
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,9 +3,19 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
+    public enum EnemyType
+    {
+        Stubborn,   // berechnet einmal, ignoriert Änderungen
+        Adaptive,   // recalculates bei Blockänderung
+        Clever      // rechnet regelmäßig + optional optimiert
+    }
+    
     [CreateAssetMenu(fileName = "New Enemy", menuName = "ScriptableObjects/Enemy")]
     public class EnemyConfig : ScriptableObject
     {
+        [Header("AI Type")]
+        public EnemyType enemyType;
+        
         [Header("Basic Info")]
         public string description; // Description of the enemy
         public Sprite[] walkAnim; // Walk animation sprites

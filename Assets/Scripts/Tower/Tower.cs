@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ScriptableObjects;
+using TowerDefense.GridMovement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,48 +17,75 @@ namespace TowerDefense
         Nearest
     }
 
+    public enum PlacementType
+    {
+        Tower,
+        Wall
+    }
     public abstract class Tower : MonoBehaviour
     {
+        [Header("Identity")]
         [SerializeField] public string towerName;
         [SerializeField] public string towerDesc;
         [SerializeField] public int towerInitPrice;
+
+        [Header("Placement / World Interaction")]
+        [SerializeField] public PlacementType placementType = PlacementType.Tower;
+        [SerializeField] public bool blocksPath = false;
+
+        [Header("Health")]
+        [SerializeField] public float statHealthPoints;
+        public float currentHealth;
+
+        [Header("Combat Stats")]
         [SerializeField] public float range;
         [SerializeField] public int damage;
-        [Range(0.1f, 50f)][SerializeField] public float timeInBetweenShots;
+        [Range(0.1f, 50f)]
+        [SerializeField] public float timeInBetweenShots;
         [SerializeField] public float attackSpeedMultiplier = 1f;
-
-        [SerializeField] private SpriteRenderer rangeIndicator;
+        
+        [Header("Visuals")]
+        [SerializeField] public SpriteRenderer rangeIndicator;
         [SerializeField] private Vector3 rangeIndicatorOffset;
+        [SerializeField] public Material outlineMaterial;
+        [SerializeField] public TargetType targetPreference = TargetType.Nearest;
+        private Material notOutlinedMaterial;
+        protected internal SpriteAnim spriteAnim;
+        protected SpriteRenderer sr;
+        private StatDiffDisplay statDiffDisplay;
 
-        [SerializeField] public float statCoinsEarnedPerSecond, statHealthRegenPerSecond,
-            statRangeMultiplier, statDmgMultiplier, statAttackSpeedMultiplier, statSlowMultiplier;
+        [Header("Economic / Utility Stats")]
+        [SerializeField] public float statCoinsEarnedPerSecond;
+        [SerializeField] public float statHealthRegenPerSecond;
 
+        [Header("Multipliers")]
+        [SerializeField] public float statRangeMultiplier;
+        [SerializeField] public float statDmgMultiplier;
+        [SerializeField] public float statAttackSpeedMultiplier;
+        [SerializeField] public float statSlowMultiplier;
+
+        [Header("Upgrades")]
         [SerializeField] protected Transform spawnProjectileOffsetPoint;
         public UpgradePath[] upgradePaths = new UpgradePath[3];
         public int[] pathLevels = new int[5];
 
+        [Header("Progression")]
         [HideInInspector] public int level = 1;
         [HideInInspector] public int experience;
         [HideInInspector] public int requiredExperience;
         public LevelConfig levelConfig;
+        
         [HideInInspector] public Boolean isAttacking;
         public GameObject projectilePrefab;
 
-        [SerializeField] protected Boolean isSelected;
-
-        protected internal SpriteAnim spriteAnim;
-        protected SpriteRenderer sr;
-
-        private Material notOutlinedMaterial;
-        [SerializeField] private Material outlineMaterial;
-        [SerializeField] public TargetType targetPreference = TargetType.Nearest;
-
-        private StatDiffDisplay statDiffDisplay;
+        [Header("Targeting")]
+        protected Boolean isSelected;
+        protected Boolean isPlaceable;
 
         protected (GameObject, int) target;
         private List<GameObject> _enemiesInRange = new List<GameObject>();
 
-        public abstract void Attack((GameObject, int) _target);
+        // ───────────────── INIT ─────────────────
 
         public void Awake()
         {
@@ -71,6 +99,8 @@ namespace TowerDefense
             DrawRangeIndicatior();
         }
 
+
+        // ───────────────── XP / LEVEL / Health ─────────────────
         private void IncreaseExp(GameObject enemy)
         {
             if (this == null || !this.gameObject) return;
@@ -100,6 +130,17 @@ namespace TowerDefense
         {
             requiredExperience = levelConfig.GetRequiredExp(level);
         }
+        public virtual void TakeDamage(int damage)
+        {
+            currentHealth -= damage;
+
+            if (currentHealth <= 0)
+                DestroyTower();
+        }
+
+        // ───────────────── ATTACK CORE ─────────────────
+
+        public abstract void Attack((GameObject, int) _target);
 
         protected IEnumerator BaseAttackCoroutine(Action onShoot = null)
         {
@@ -152,9 +193,9 @@ namespace TowerDefense
             if (proj == null) return;
 
             // Schaden vom Turm berechnen (Multiplikatoren anwenden)
-            int finalDamage = Mathf.RoundToInt(damage * Mathf.Max(1f, statDmgMultiplier));
+            int finalTowerDamage = Mathf.RoundToInt(damage * Mathf.Max(1f, statDmgMultiplier));
 
-            proj.Init(target, finalDamage);
+            proj.Init(target, finalTowerDamage);
             
         }
 
@@ -169,6 +210,8 @@ namespace TowerDefense
             if (_enemiesInRange.Count == 0) return (null, 0);
             return FindTargetByPreference(_enemiesInRange);
         }
+
+        // ───────────────── TARGETING ─────────────────
 
         public Boolean IsObjectInRange(GameObject obj)
         {
@@ -230,6 +273,20 @@ namespace TowerDefense
             }
             return (nearest, bestPos);
         }
+        public void NextTargetType()
+        {
+            targetPreference = (TargetType)(((int)targetPreference + 1) %
+                                            System.Enum.GetValues(typeof(TargetType)).Length);
+            TowerUI.Instance.txtTargetPreference.text = targetPreference.ToString();
+        }
+
+        public void PreviousTargetType()
+        {
+            int count = System.Enum.GetValues(typeof(TargetType)).Length;
+            targetPreference = (TargetType)(((int)targetPreference - 1 + count) % count);
+            TowerUI.Instance.txtTargetPreference.text = targetPreference.ToString();
+        }
+        // ───────────────── UI / SELECTION ─────────────────
 
         public void SetIsSelected(Boolean _isSelected)
         {
@@ -284,6 +341,7 @@ namespace TowerDefense
                 float oldFireRate         = 1f / timeInBetweenShots;
                 float oldCoinsPerSecond   = statCoinsEarnedPerSecond;
                 float oldRegen            = statHealthRegenPerSecond;
+                float oldHealth           = statHealthRegenPerSecond;
                 float oldDmgMult          = statDmgMultiplier;
                 float oldRangeMult        = statRangeMultiplier;
                 float oldAtkSpeedMult     = statAttackSpeedMultiplier;
@@ -300,6 +358,9 @@ namespace TowerDefense
 
                 statCoinsEarnedPerSecond += lvl.coinsEarnedPerSecond;
                 statHealthRegenPerSecond += lvl.healthRegenPerSecond;
+                statHealthPoints  += lvl.healthpoints;
+
+                
                 statRangeMultiplier      += lvl.rangeMultiplier;
                 statDmgMultiplier        += lvl.dmgMultiplier;
                 statAttackSpeedMultiplier+= lvl.attackSpeedMultiplier;
@@ -318,6 +379,7 @@ namespace TowerDefense
                     statDiffDisplay.ShowDiff("Abklingzeit",   oldFireRate,       1f / timeInBetweenShots);
                     statDiffDisplay.ShowDiff("Gold/sec",      oldCoinsPerSecond, statCoinsEarnedPerSecond);
                     statDiffDisplay.ShowDiff("Regen/sec",     oldRegen,          statHealthRegenPerSecond);
+                    statDiffDisplay.ShowDiff("Health",     oldHealth,          statHealthPoints);
                     statDiffDisplay.ShowDiff("Dmg Mult.",     oldDmgMult,        statDmgMultiplier);
                     statDiffDisplay.ShowDiff("Range Mult.",   oldRangeMult,      statRangeMultiplier);
                     statDiffDisplay.ShowDiff("AtkSpeed Mult.",oldAtkSpeedMult,   statAttackSpeedMultiplier);
@@ -335,30 +397,27 @@ namespace TowerDefense
             DrawRangeIndicatior();
         }
 
-        public void NextTargetType()
-        {
-            targetPreference = (TargetType)(((int)targetPreference + 1) %
-                System.Enum.GetValues(typeof(TargetType)).Length);
-            TowerUI.Instance.txtTargetPreference.text = targetPreference.ToString();
-        }
 
-        public void PreviousTargetType()
-        {
-            int count = System.Enum.GetValues(typeof(TargetType)).Length;
-            targetPreference = (TargetType)(((int)targetPreference - 1 + count) % count);
-            TowerUI.Instance.txtTargetPreference.text = targetPreference.ToString();
-        }
 
+        // ───────────────── SELL ─────────────────
+
+        protected virtual void DestroyTower()
+        {
+
+            Actions.onEnemyDeath -= this.IncreaseExp;
+            TowerHeroManager.instance.UnRegisterTower(this.gameObject);
+            TowerHeroManager.instance.DeselectTower();
+
+            Destroy(this.gameObject);
+        }
         public void SellTower()
         {
             LevelManager.instance.cur_coins += CalculateSellPrice();
             if (this is Hero && LevelManager.instance.heroFielded)
                 LevelManager.instance.heroFielded = false;
 
-            Actions.onEnemyDeath -= this.IncreaseExp;
-            TowerHeroManager.instance.UnRegisterTower(this.gameObject);
-            TowerHeroManager.instance.DeselectTower();
-            Destroy(this.gameObject);
+            DestroyTower();
+
         }
 
         public int CalculateSellPrice()

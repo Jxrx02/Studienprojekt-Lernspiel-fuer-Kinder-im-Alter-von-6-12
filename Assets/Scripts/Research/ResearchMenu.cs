@@ -116,7 +116,9 @@ namespace TowerDefense.Research
                 stats += $"+{upgrade.coinsEarnedPerSecond:F1} Münzen/Sek\n";
             if (upgrade.healthRegenPerSecond != 0)
                 stats += $"+{upgrade.healthRegenPerSecond:F1} Heilung/Sek\n";
-
+            if (upgrade.healthpoints != 0)
+                stats += $"+{upgrade.healthpoints:F1} Leben\n";
+            
             if (upgrade.rangeMultiplier != 0)
                 stats += $"x{upgrade.rangeMultiplier:F2} Reichweite\n";
             if (upgrade.dmgMultiplier != 0)

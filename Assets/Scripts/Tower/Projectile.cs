@@ -25,7 +25,8 @@ namespace TowerDefense
 
     public class Projectile : MonoBehaviour
     {
-        [Header("Basis")]
+        [Header("Basis")] 
+        public int baseDmg=1;
         public float rotationAngleOffset;
         public bool doRotation = true;
         public bool lookAtTarget = true;
@@ -90,7 +91,7 @@ namespace TowerDefense
         public void Init((GameObject, int) target, int damage)
         {
             this.target = target;
-            this.damage = damage;
+            this.damage = baseDmg+damage;
             this.targetIndex = target.Item2;
             remainingPierce = pierceCount;
         }

@@ -19,5 +19,7 @@ public static class Actions
 
     public static Action onPlayerDeath;
     
+    public static Action onGridChanged;
+    
     
 }

@@ -8,9 +8,11 @@ public class WaveManager : MonoBehaviour
 {
     public WaveConfig waveConfig;
     public Transform spawnPoint;
+    public Transform target;
+
     [HideInInspector] public int currentWaveIndex = 0;
     public GameObject enemyPrefab;
-    public GameObject[] walkPath;
+
     public Text txt_wave;
 
     private int _activeEnemyCount = 0;
@@ -76,9 +78,9 @@ public class WaveManager : MonoBehaviour
     /// Startet die nächste Welle – entweder durch Frühstart-Button
     /// oder automatisch wenn das Frühstart-Fenster abläuft.
     /// </summary>
-    public void StartNextWave()
+    public void AllowNextWave()
     {
-        Debug.Log("StartNextWave");
+        Debug.Log("AllowNextWave");
 
         if (!_waveInProgress)
             _nextWaveReady = true;
@@ -109,8 +111,8 @@ public class WaveManager : MonoBehaviour
 
                 Enemy enemy = enemyInstance.GetComponent<Enemy>() 
                            ?? enemyInstance.AddComponent<Enemy>();
-                enemy.walkPath    = this.walkPath;
                 enemy.enemyConfig = burstConfig.enemyConfig;
+                enemy.SetTarget(target);
 
                 TowerHeroManager.instance.RegisterEnemy(enemyInstance);
                 _activeEnemyCount++;

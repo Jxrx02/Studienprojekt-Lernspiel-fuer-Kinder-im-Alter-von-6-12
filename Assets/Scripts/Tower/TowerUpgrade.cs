@@ -21,8 +21,10 @@ namespace ScriptableObjects
         public float attackSpeedIncrease; // Feuerratenerhöhung
         public float timeInBetweenShotsDecrease;// Feuerratenerhöhung
 
+        
         [Header("Mine")] 
         public float coinsEarnedPerSecond;
+        public int healthpoints;
         public float healthRegenPerSecond;
 
         [Header("Support")] 

@@ -356,14 +356,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerName: Bogenheld
-  towerDesc: blabla
+  towerDesc: 'Ein echter Robinhood '
   towerInitPrice: 40
+  placementType: 0
+  blocksPath: 0
+  statHealthPoints: 0
+  currentHealth: 0
   range: 7
   damage: 7
   timeInBetweenShots: 1.2
   attackSpeedMultiplier: 2
   rangeIndicator: {fileID: 8368980288965995694}
   rangeIndicatorOffset: {x: 0, y: 1.5, z: 0}
+  outlineMaterial: {fileID: 2100000, guid: fb640c70274ee704a9029b0be1691a4e, type: 2}
+  targetPreference: 0
   statCoinsEarnedPerSecond: 0
   statHealthRegenPerSecond: 0
   statRangeMultiplier: 0
@@ -375,8 +381,8 @@ MonoBehaviour:
   - towerName: Schnellschuss
     researchCost: 1
     levels:
-    - upgradeName: Schnelles Feuer
-      description: aa
+    - upgradeName: Schnellschuss
+      description: Schneller schuss
       researchCost: 4
       upgradeCost: 0
       damageIncrease: 2
@@ -384,20 +390,44 @@ MonoBehaviour:
       attackSpeedIncrease: 0.5
       timeInBetweenShotsDecrease: 0
       coinsEarnedPerSecond: 0
+      healthpoints: 0
       healthRegenPerSecond: 0
       rangeMultiplier: 0
       dmgMultiplier: 0
       attackSpeedMultiplier: 0
       slowMultiplier: 0
-      idle_sprites: []
+      idle_sprites:
+      - {fileID: 4431118774077993716, guid: 1e828444256bb7f45bb9ed45f9a44601, type: 3}
       attack_sprites: []
-      pathShopIcon: []
-      projectile: {fileID: 0}
+      pathShopIcon:
+      - {fileID: 5612204544531477646, guid: 1e828444256bb7f45bb9ed45f9a44601, type: 3}
+      projectile: {fileID: 8985508962564218780, guid: 46a471d0b64dfb744abc682e247532b9, type: 3}
+    - upgradeName: Schnellschuss 2
+      description: Schneller schuss 2
+      researchCost: 4
+      upgradeCost: 0
+      damageIncrease: 2
+      rangeIncrease: 0.1
+      attackSpeedIncrease: 0.5
+      timeInBetweenShotsDecrease: 0
+      coinsEarnedPerSecond: 0
+      healthpoints: 0
+      healthRegenPerSecond: 0
+      rangeMultiplier: 0
+      dmgMultiplier: 0
+      attackSpeedMultiplier: 0
+      slowMultiplier: 0
+      idle_sprites:
+      - {fileID: 4431118774077993716, guid: 1e828444256bb7f45bb9ed45f9a44601, type: 3}
+      attack_sprites: []
+      pathShopIcon:
+      - {fileID: 5612204544531477646, guid: 1e828444256bb7f45bb9ed45f9a44601, type: 3}
+      projectile: {fileID: 8985508962564218780, guid: 46a471d0b64dfb744abc682e247532b9, type: 3}
   - towerName: "Fl\xE4chenschaden"
     researchCost: 1
     levels:
     - upgradeName: Einfacher Angriff
-      description: 
+      description: a
       researchCost: 2
       upgradeCost: 0
       damageIncrease: 0
@@ -405,37 +435,41 @@ MonoBehaviour:
       attackSpeedIncrease: 0
       timeInBetweenShotsDecrease: 0
       coinsEarnedPerSecond: 0
+      healthpoints: 0
       healthRegenPerSecond: 0
       rangeMultiplier: 0
       dmgMultiplier: 0
       attackSpeedMultiplier: 0
       slowMultiplier: 0
-      idle_sprites: []
+      idle_sprites:
+      - {fileID: -7693509699681689978, guid: 1e828444256bb7f45bb9ed45f9a44601, type: 3}
       attack_sprites: []
       pathShopIcon: []
-      projectile: {fileID: 0}
+      projectile: {fileID: 8985508962564218780, guid: 46a471d0b64dfb744abc682e247532b9, type: 3}
   - towerName: Mehrfachschuss
     researchCost: 1
     levels:
     - upgradeName: Doppelter Schuss
       description: CC
       researchCost: 2
-      upgradeCost: 0
+      upgradeCost: 5
       damageIncrease: 0
       rangeIncrease: 0
       attackSpeedIncrease: 0
       timeInBetweenShotsDecrease: 0
       coinsEarnedPerSecond: 0
+      healthpoints: 0
       healthRegenPerSecond: 0
       rangeMultiplier: 0
       dmgMultiplier: 0
       attackSpeedMultiplier: 0
       slowMultiplier: 0
-      idle_sprites: []
+      idle_sprites:
+      - {fileID: -701857054325594128, guid: 1e828444256bb7f45bb9ed45f9a44601, type: 3}
       attack_sprites: []
       pathShopIcon: []
-      projectile: {fileID: 0}
-  pathLevels: 0000000000000000000000000000000000000000
+      projectile: {fileID: 8985508962564218780, guid: 46a471d0b64dfb744abc682e247532b9, type: 3}
+  pathLevels: 000000000000000000000000
   level: 1
   experience: 0
   requiredExperience: 0
@@ -443,8 +477,6 @@ MonoBehaviour:
   isAttacking: 0
   projectilePrefab: {fileID: 8985508962564218780, guid: 46a471d0b64dfb744abc682e247532b9, type: 3}
   isSelected: 0
-  outlineMaterial: {fileID: 2100000, guid: fb640c70274ee704a9029b0be1691a4e, type: 2}
-  targetPreference: 0
   maxMoveSpeed: 4
   acceleration: 10
   targetPosition: {x: -7.047619, y: -6.9761906}

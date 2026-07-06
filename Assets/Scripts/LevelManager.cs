@@ -54,6 +54,12 @@ namespace TowerDefense
         private float _earlyStartTimer = 0f;
         private bool _earlyStartActive = false;
         private Coroutine _earlyStartCoroutine;
+        private StatDiffDisplay statDiffDisplay;
+
+        private void Awake()
+        {
+            statDiffDisplay = GetComponent<StatDiffDisplay>();
+        }
 
         void Start()
         {
@@ -85,6 +91,9 @@ namespace TowerDefense
         // ── Wave-Events ───────────────────────────────────────────
 
         private Boolean _allWavesSpawned = false;
+        private int _waveIndex = 0;
+        private bool _waitingForPlayerStart;
+        
         private void OnWaveSpawnComplete()
         {
             _allWavesSpawned = true;
@@ -94,6 +103,7 @@ namespace TowerDefense
         /// Wird aufgerufen wenn alle Gegner einer Welle besiegt wurden.
         /// Startet das Frühstart-Fenster.
         /// </summary>
+
         private void OnWaveCleared()
         {
             if (_allWavesSpawned) return; // letzte Welle – kein Frühstart nötig
@@ -101,9 +111,25 @@ namespace TowerDefense
             if (_earlyStartCoroutine != null)
                 StopCoroutine(_earlyStartCoroutine);
 
-            _earlyStartCoroutine = StartCoroutine(EarlyStartCountdown());
-        }
+            _waveIndex++;
 
+            bool hardPause = (_waveIndex % 3 == 0);
+
+            if (hardPause)
+                _earlyStartCoroutine = StartCoroutine(WaitForPlayerStart());
+            else
+                _earlyStartCoroutine = StartCoroutine(EarlyStartCountdown());
+        }
+        private IEnumerator WaitForPlayerStart()
+        {
+            _waitingForPlayerStart = true;
+            _earlyStartActive = false;
+
+            SetStartWaveButtonVisible(true);
+
+            while (_waitingForPlayerStart)
+                yield return null;
+        }
         private IEnumerator EarlyStartCountdown()
         {
             var waveManagerComponent = waveManager.GetComponent<WaveManager>();
@@ -146,11 +172,12 @@ namespace TowerDefense
             _earlyStartActive = false;
             SetStartWaveButtonVisible(false);
 
-            cur_coins += bonus;
-            UpdateStats();
-
             if (bonus > 0)
-                ShowBonusPopup(bonus); // optional visuelles Feedback
+            {
+                cur_coins += bonus;
+                UpdateStats();
+                ShowBonusPopup(bonus); 
+            }
 
             TriggerNextWave(earlyBonus: bonus);
         }
@@ -188,14 +215,12 @@ namespace TowerDefense
         {
             Debug.Log($"Nächste Welle gestartet. Frühstart-Bonus: {earlyBonus} Gold.");
             var waveManagerComponent = waveManager.GetComponent<WaveManager>();
-
-            waveManagerComponent.StartNextWave();
+            waveManagerComponent.AllowNextWave();        
         }
 
         private void ShowBonusPopup(int bonus)
         {
-            // Optional: FloatingText, Animation etc. hier einfügen
-            Debug.Log($"Frühstart! +{bonus} Gold");
+
         }
 
         // ── Bestehende Methoden (unverändert) ────────────────────

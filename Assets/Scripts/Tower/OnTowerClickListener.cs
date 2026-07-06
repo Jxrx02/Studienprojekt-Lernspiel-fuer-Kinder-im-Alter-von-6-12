@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
@@ -9,7 +10,8 @@ namespace TowerDefense
     {
         public Vector2 size = new Vector2(1.3f, 1.3f); // Größe des Colliders
         public Vector2 offset = new Vector2(0, .5f); // Größe des Colliders
-
+        [HideInInspector] public Boolean _enabled = true;
+        
         private Vector2 colliderCenter;
 
         private Tower tower;
@@ -33,7 +35,7 @@ namespace TowerDefense
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && _enabled)
             {
                
                 if (EventSystem.current.IsPointerOverGameObject())

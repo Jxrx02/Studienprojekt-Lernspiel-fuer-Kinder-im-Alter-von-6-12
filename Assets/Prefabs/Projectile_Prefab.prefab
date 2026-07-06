@@ -170,20 +170,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f353da48ee374edf8c9559d552487771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseDmg: 0
   rotationAngleOffset: -90
   doRotation: 1
   lookAtTarget: 1
   hideTilCollision: 0
   canFindNewTarget: 0
   speed: 2.75
-  mode: 1
+  mode: 3
   aoeRadius: 1.5
   aoeVfxPrefab: {fileID: 0}
   dotDuration: 2
   dotInterval: 0.5
   dotDamagePerTick: 1
-  slowDuration: 2
-  slowAmount: 0.725
   chainCount: 3
   chainDamageFalloff: 0.503
   chainRadius: 3
@@ -193,9 +192,6 @@ MonoBehaviour:
   splitterPrefab: {fileID: 3476404959106327209, guid: a488f35dbc112f746b4769e7dfb3f191, type: 3}
   splitterDamage: 1
   pierceCount: 3
-  orbitProjectilePrefab: {fileID: 3476404959106327209, guid: a488f35dbc112f746b4769e7dfb3f191, type: 3}
-  orbitDuration: 3
-  orbitDamagePerSecond: 10
   blackHolePullDuration: 2
   blackHoleRadius: 3
   blackHoleVfxPrefab: {fileID: 0}

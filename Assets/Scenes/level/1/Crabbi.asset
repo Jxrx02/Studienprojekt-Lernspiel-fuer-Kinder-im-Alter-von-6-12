@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 998680a2070d3c5478e4f1cbbd4f93f9, type: 3}
   m_Name: Crabbi
   m_EditorClassIdentifier: 
+  enemyType: 1
   description: Crabbi die Krabbe
   walkAnim:
   - {fileID: 4350892059848520236, guid: cf45c9459520dab41ad4045357847af5, type: 3}
