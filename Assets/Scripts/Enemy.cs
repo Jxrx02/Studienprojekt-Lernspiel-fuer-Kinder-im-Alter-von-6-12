@@ -19,7 +19,8 @@ namespace TowerDefense
         // ── Pathfinding ─────────────────────────────────────
         private List<Vector3> currentPath;
         private int pathIndex;
-        private Transform target;
+        private Transform nextPathTarget;
+        private Transform lvlPathEnd;
 
         private GameObject attackTarget;
         private bool reachedFinalTarget;
@@ -38,14 +39,12 @@ namespace TowerDefense
         // ── AI Type Control ─────────────────────────────────
         private float repathTimer;
         private const float cleverRepathInterval = 1.5f;
-
+        private bool isAttacking;
         public bool IsBeingPulled
         {
             get => isBeingPulled;
             set => isBeingPulled = value;
         }
-
-        private bool isAttacking;
 
         // ───────────────── INIT ─────────────────────────────
 
@@ -58,9 +57,10 @@ namespace TowerDefense
             CalculatePath();
         }
 
-        public void SetTarget(Transform newTarget)
+        public void SetLevelEnd(Transform newTarget)
         {
-            target = newTarget;
+            nextPathTarget = newTarget;
+            lvlPathEnd = newTarget;
         }
 
         private void ApplyConfig()
@@ -97,20 +97,28 @@ namespace TowerDefense
 
         private void CalculatePath()
         {
-            if (target == null)
-                return;
+            if (nextPathTarget == null) return;
+
+            nextPathTarget = lvlPathEnd;
+            
+
 
             PathResult result = PathfindingManager.Instance.FindPath(
                 transform.position,
-                target.position
+                nextPathTarget.position
             );
+            //Debug.Log("Result: " + "\n" + result.attackTarget + "\n" + result.targetNode.worldPosition );
 
             pathIndex = 0;
             currentPath = result?.path;
 
             attackTarget = result?.attackTarget;
-            reachedFinalTarget = result != null && result.reachedTarget;
-
+            
+            reachedFinalTarget = Vector2.Distance(
+                transform.position,
+                lvlPathEnd.position
+            ) < 0.6f;
+                
             if (attackTarget == null && currentPath == null)
             {
                 // kompletter Fail → nichts erreichbar
@@ -122,19 +130,48 @@ namespace TowerDefense
 
         private void Update()
         {
-            if (isDead || isKnockbacking || isBeingPulled)
+            if (isDead || isKnockbacking || isBeingPulled || isAttacking)
                 return;
-
+            
             UpdatePathing();
 
+            // Ziel erreicht -> jetzt angreifen
+
+            
             if (attackTarget != null)
             {
-                Attack();
+
+                float dist = Vector2.Distance(
+                    transform.position,
+                    attackTarget.transform.position
+                );
+
+                if (dist <= enemyConfig.attackRange)
+                {
+                    Attack();
+                    return;
+                }
+            }
+            
+            // Erst laufen, solange noch Wegpunkte vorhanden sind
+            if (currentPath != null && pathIndex < currentPath.Count)
+            {
+                if (enemyConfig != null && enemyConfig.movementSpeed > 0)
+                    MoveAlongPath();
+
                 return;
             }
 
-            if (enemyConfig != null && enemyConfig.movementSpeed > 0)
-                MoveAlongPath();
+
+
+            // Endziel erreicht
+            if (reachedFinalTarget)
+            {
+                Debug.Log("Reched end");
+
+                ReachEnd();
+            }
+        
         }
 
         private void UpdatePathing()
@@ -162,21 +199,31 @@ namespace TowerDefense
         }
 
         // ───────────────── ATTACK ─────────────────────────
-
         public void Attack()
         {
-            if (attackTarget == null)
-                return;
+            Debug.Log("Attack " + attackTarget);
 
-            if (currentPath == null || pathIndex < currentPath.Count)
+            if (attackTarget == null)
                 return;
 
             if (isAttacking)
                 return;
 
+
+            Wall wall = attackTarget.GetComponent<Wall>();
+
+            if (wall == null)
+            {
+                attackTarget = null;
+                CalculatePath();
+                return;
+            }
+
+
             isAttacking = true;
             StartCoroutine(BaseAttackCoroutine(Shoot));
         }
+
 
         protected IEnumerator BaseAttackCoroutine(Action onShoot = null)
         {
@@ -187,27 +234,28 @@ namespace TowerDefense
                 _spriteAnim.SetAttackSpeed(1);
                 _spriteAnim.animState = AnimationState.Attack_Animation;
 
-                bool animationComplete = false;
 
+                bool animationComplete = false;
                 void AnimationFinished() => animationComplete = true;
 
                 _spriteAnim.OnAttackAnimationComplete += AnimationFinished;
-
+                
                 yield return new WaitUntil(() => animationComplete);
-
+                
                 _spriteAnim.OnAttackAnimationComplete -= AnimationFinished;
 
                 onShoot?.Invoke();
 
                 yield return new WaitForSeconds(enemyConfig.attackCooldown);
-
-                isAttacking = false;
             }
-            else
+
+            if (attackTarget == null)
             {
-                isAttacking = false;
                 _spriteAnim.animState = AnimationState.Walk_Animation;
             }
+            
+            isAttacking = false;
+
         }
 
         protected virtual void Shoot()
@@ -234,7 +282,11 @@ namespace TowerDefense
             if (wall.currentHealth <= 0)
             {
                 attackTarget = null;
+                currentPath = null;
+                pathIndex = 0;
+
                 CalculatePath();
+
                 _spriteAnim.animState = AnimationState.Walk_Animation;
             }
         }
@@ -260,9 +312,6 @@ namespace TowerDefense
             if (Vector2.Distance(transform.position, targetPos) < 0.1f)
             {
                 pathIndex++;
-
-                if (pathIndex >= currentPath.Count)
-                    ReachEnd();
             }
         }
 

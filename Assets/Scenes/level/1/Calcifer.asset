@@ -32,7 +32,7 @@ MonoBehaviour:
   attackCooldown: 1
   attackDamage: 1
   isMeele: 0
-  projectile: {fileID: 3476404959106327209, guid: 73acc887856189a4f86d818886a51f26, type: 3}
+  projectile: {fileID: 1633401857767853938, guid: 4fb0b0b29dcb4ed429e4bf6603031f52, type: 3}
   evasionChance: 0
   fireResistance: 100
   iceWeakness: 0

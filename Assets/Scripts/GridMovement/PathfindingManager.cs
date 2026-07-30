@@ -7,239 +7,402 @@ namespace TowerDefense.GridMovement
     {
         public static PathfindingManager Instance;
 
+
         private void Awake()
         {
             Instance = this;
         }
 
-        // ─────────────────────────────────────────────
-        // PUBLIC API
-        // ─────────────────────────────────────────────
+
         public PathResult FindPath(Vector3 startWorld, Vector3 targetWorld)
         {
             GridNode startNode = GridManager.Instance.GetNode(startWorld);
             GridNode targetNode = GridManager.Instance.GetNode(targetWorld);
 
-            if (startNode == null || targetNode == null)
+
+            if(startNode == null || targetNode == null)
                 return null;
 
-            // 1. Normaler Pfadversuch
-            PathResult direct = FindPathInternal(startNode, targetNode);
 
-            if (direct != null && direct.reachedTarget)
-                return direct;
+            // normaler Weg
+            PathResult normalPath = FindPathInternal(startNode,targetNode);
 
-            // 2. Fallback: nächste Mauer suchen
-            GameObject wall = FindClosestWall(startWorld);
-            if (wall == null)
+
+            if(normalPath != null)
+                return normalPath;
+
+
+
+            // blockiert -> beste Wall suchen
+            WallPathResult wallResult = FindBestWallPath(startNode);
+
+
+            if(wallResult == null)
                 return null;
 
-            return FindBestPathAroundWall(startNode, wall);
+
+            return wallResult.pathResult;
         }
 
-        // ─────────────────────────────────────────────
-        // A* CORE
-        // ─────────────────────────────────────────────
-        private PathResult FindPathInternal(GridNode startNode, GridNode targetNode)
-        {
-            List<GridNode> openList = new();
-            HashSet<GridNode> closedList = new();
 
-            foreach (GridNode node in GridManager.Instance.GetAllNodes())
+
+        // =====================================================
+        // WALL SEARCH
+        // =====================================================
+
+        private WallPathResult FindBestWallPath(GridNode startNode)
+        {
+            WallPathResult best = null;
+
+
+            foreach(GameObject wall in TowerHeroManager.instance.walls)
+            {
+                PathResult result = FindPathToWall(startNode,wall);
+
+
+                if(result == null)
+                    continue;
+
+
+                int cost = CalculatePathCost(result.path);
+
+
+
+                if(best == null || cost < best.cost)
+                {
+                    best = new WallPathResult
+                    {
+                        cost = cost,
+                        pathResult = result
+                    };
+                }
+            }
+
+
+            return best;
+        }
+
+
+
+        private PathResult FindPathToWall(GridNode startNode, GameObject wall)
+        {
+            GridNode wallNode =
+                GridManager.Instance.GetNode(
+                    wall.transform.position
+                );
+
+
+            if(wallNode == null)
+                return null;
+
+
+
+            List<GridNode> attackPositions =
+                GetAttackPositions(wallNode);
+
+
+
+            PathResult best = null;
+
+            int bestCost = int.MaxValue;
+
+
+
+            foreach(GridNode position in attackPositions)
+            {
+                PathResult result =
+                    FindPathInternal(
+                        startNode,
+                        position
+                    );
+
+
+                if(result == null)
+                    continue;
+
+
+                int cost =
+                    CalculatePathCost(result.path);
+
+
+
+                if(cost < bestCost)
+                {
+                    bestCost = cost;
+                    best = result;
+                }
+            }
+
+
+
+            if(best != null)
+            {
+                best.attackTarget = wall;
+            }
+
+
+            return best;
+        }
+
+
+
+        private List<GridNode> GetAttackPositions(GridNode wallNode)
+        {
+            List<GridNode> result = new();
+
+
+            foreach(GridNode neighbour in wallNode.neighbours)
+            {
+                if(neighbour.walkable)
+                    result.Add(neighbour);
+            }
+
+
+            return result;
+        }
+
+
+
+        // =====================================================
+        // A STAR
+        // =====================================================
+
+        private PathResult FindPathInternal(
+            GridNode startNode,
+            GridNode targetNode)
+        {
+            List<GridNode> open = new();
+            HashSet<GridNode> closed = new();
+
+
+            foreach(GridNode node in GridManager.Instance.GetAllNodes())
             {
                 node.gCost = int.MaxValue;
                 node.hCost = 0;
                 node.parent = null;
             }
 
+
+
             startNode.gCost = 0;
-            startNode.hCost = GetDistance(startNode, targetNode);
+            startNode.hCost =
+                GetDistance(startNode,targetNode);
 
-            openList.Add(startNode);
 
-            while (openList.Count > 0)
+            open.Add(startNode);
+
+
+
+            while(open.Count > 0)
             {
-                GridNode currentNode = openList[0];
+                GridNode current = open[0];
 
-                for (int i = 1; i < openList.Count; i++)
+
+                for(int i=1;i<open.Count;i++)
                 {
-                    if (openList[i].fCost < currentNode.fCost ||
-                        (openList[i].fCost == currentNode.fCost &&
-                         openList[i].hCost < currentNode.hCost))
-                    {
-                        currentNode = openList[i];
-                    }
+                    if(open[i].fCost < current.fCost)
+                        current = open[i];
                 }
 
-                openList.Remove(currentNode);
-                closedList.Add(currentNode);
 
-                if (currentNode == targetNode)
+                open.Remove(current);
+                closed.Add(current);
+
+
+
+                if(current == targetNode)
                 {
                     return new PathResult
                     {
-                        path = RetracePath(startNode, targetNode),
-                        targetNode = targetNode,
-                        attackTarget = null,
-                        reachedTarget = true
+                        path =
+                        RetracePath(
+                            startNode,
+                            targetNode
+                        ),
+
+                        targetNode = targetNode
                     };
                 }
 
-                foreach (GridNode neighbour in currentNode.neighbours)
+
+
+                foreach(GridNode neighbour in current.neighbours)
                 {
-                    if (!neighbour.walkable || closedList.Contains(neighbour))
+                    if(!neighbour.walkable)
                         continue;
 
-                    if (!CanMoveDiagonal(currentNode, neighbour))
+
+                    if(closed.Contains(neighbour))
                         continue;
 
-                    int movementCost =
-                        currentNode.gCost +
-                        GetDistance(currentNode, neighbour) +
+
+                    if(!CanMoveDiagonal(current,neighbour))
+                        continue;
+
+
+
+                    int cost =
+                        current.gCost +
+                        GetDistance(current,neighbour) +
                         neighbour.movementCost;
 
-                    if (movementCost < neighbour.gCost || !openList.Contains(neighbour))
-                    {
-                        neighbour.gCost = movementCost;
-                        neighbour.hCost = GetDistance(neighbour, targetNode);
-                        neighbour.parent = currentNode;
 
-                        if (!openList.Contains(neighbour))
-                            openList.Add(neighbour);
+
+                    if(cost < neighbour.gCost)
+                    {
+                        neighbour.gCost = cost;
+
+                        neighbour.hCost =
+                            GetDistance(
+                                neighbour,
+                                targetNode
+                            );
+
+
+                        neighbour.parent=current;
+
+
+                        if(!open.Contains(neighbour))
+                            open.Add(neighbour);
                     }
                 }
             }
+
 
             return null;
         }
 
-        // ─────────────────────────────────────────────
-        // WALL FALLBACK LOGIC
-        // ─────────────────────────────────────────────
-        private PathResult FindBestPathAroundWall(GridNode startNode, GameObject wall)
+
+
+        // =====================================================
+        // UTIL
+        // =====================================================
+
+
+        private int CalculatePathCost(List<Vector3> path)
         {
-            GridNode wallNode = GridManager.Instance.GetNode(wall.transform.position);
+            int cost=0;
 
-            if (wallNode == null)
-                return null;
 
-            List<GridNode> candidates = new();
-
-            foreach (GridNode n in wallNode.neighbours)
+            foreach(Vector3 pos in path)
             {
-                if (n.walkable)
-                    candidates.Add(n);
+                GridNode node =
+                    GridManager.Instance.GetNode(pos);
+
+
+                if(node!=null)
+                    cost += node.movementCost;
             }
 
-            PathResult best = null;
-            int bestCost = int.MaxValue;
 
-            foreach (GridNode candidate in candidates)
-            {
-                PathResult result = FindPathInternal(startNode, candidate);
-
-                if (result == null || result.path == null)
-                    continue;
-
-                int cost = result.path.Count;
-
-                if (cost < bestCost)
-                {
-                    bestCost = cost;
-                    best = result;
-                    best.attackTarget = wall;
-                    best.reachedTarget = false;
-                }
-            }
-
-            return best;
+            return cost;
         }
 
-        private GameObject FindClosestWall(Vector3 startWorld)
-        {
-            GameObject closest = null;
-            float best = float.MaxValue;
 
-            foreach (GameObject w in TowerHeroManager.instance.walls)
-            {
-                float d = (w.transform.position - startWorld).sqrMagnitude;
 
-                if (d < best)
-                {
-                    best = d;
-                    closest = w;
-                }
-            }
-
-            return closest;
-        }
-
-        // ─────────────────────────────────────────────
-        // PATH RECONSTRUCTION
-        // ─────────────────────────────────────────────
-        private List<Vector3> RetracePath(GridNode start, GridNode end)
+        private List<Vector3> RetracePath(
+            GridNode start,
+            GridNode end)
         {
             List<Vector3> path = new();
 
-            GridNode current = end;
 
-            while (current != start)
+            GridNode current=end;
+
+
+            while(current != start)
             {
                 path.Add(current.worldPosition);
-                current = current.parent;
+                current=current.parent;
             }
 
+
             path.Add(start.worldPosition);
+
+
             path.Reverse();
+
 
             return path;
         }
 
-        // ─────────────────────────────────────────────
-        // DISTANCE
-        // ─────────────────────────────────────────────
-        private int GetDistance(GridNode a, GridNode b)
-        {
-            int dstX = Mathf.Abs(a.cell.x - b.cell.x);
-            int dstY = Mathf.Abs(a.cell.y - b.cell.y);
 
-            return (dstX > dstY)
-                ? 14 * dstY + 10 * (dstX - dstY)
-                : 14 * dstX + 10 * (dstY - dstX);
+
+        private int GetDistance(
+            GridNode a,
+            GridNode b)
+        {
+            int x =
+                Mathf.Abs(
+                    a.cell.x-b.cell.x
+                );
+
+            int y =
+                Mathf.Abs(
+                    a.cell.y-b.cell.y
+                );
+
+
+            return Mathf.Min(x,y)*14 +
+                   Mathf.Abs(x-y)*10;
         }
 
-        // ─────────────────────────────────────────────
-        // DIAGONAL CHECK
-        // ─────────────────────────────────────────────
-        private bool CanMoveDiagonal(GridNode current, GridNode neighbour)
-        {
-            int dx = neighbour.cell.x - current.cell.x;
-            int dy = neighbour.cell.y - current.cell.y;
 
-            if (Mathf.Abs(dx) != 1 || Mathf.Abs(dy) != 1)
+
+        private bool CanMoveDiagonal(
+            GridNode current,
+            GridNode next)
+        {
+            int dx =
+                next.cell.x-current.cell.x;
+
+            int dy =
+                next.cell.y-current.cell.y;
+
+
+
+            if(Mathf.Abs(dx)!=1 ||
+               Mathf.Abs(dy)!=1)
                 return true;
 
-            GridNode horizontal = GridManager.Instance.GetNode(
-                current.cell + new Vector3Int(dx, 0, 0));
 
-            GridNode vertical = GridManager.Instance.GetNode(
-                current.cell + new Vector3Int(0, dy, 0));
 
-            if (horizontal == null || vertical == null)
-                return false;
+            GridNode h =
+                GridManager.Instance.GetNode(
+                    current.cell +
+                    new Vector3Int(dx,0,0)
+                );
 
-            return horizontal.walkable && vertical.walkable;
+
+            GridNode v =
+                GridManager.Instance.GetNode(
+                    current.cell +
+                    new Vector3Int(0,dy,0)
+                );
+
+
+
+            return h != null &&
+                   v != null &&
+                   h.walkable &&
+                   v.walkable;
         }
     }
 
-    // ─────────────────────────────────────────────
-    // RESULT TYPE
-    // ─────────────────────────────────────────────
+
+
     public class PathResult
     {
         public List<Vector3> path;
         public GridNode targetNode;
         public GameObject attackTarget;
-        public bool reachedTarget;
+    }
+
+
+
+    public class WallPathResult
+    {
+        public int cost;
+        public PathResult pathResult;
     }
 }

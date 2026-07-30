@@ -238,7 +238,14 @@ namespace TowerDefense
         private void HitSingle()
         {
             if (target.Item1 != null)
+            {
                 target.Item1.GetComponent<Enemy>()?.TakeDamage(damage);
+                target.Item1.GetComponent<Wall>()?.TakeDamage(damage);
+
+            }
+                
+            
+            
         }
 
         private void ApplyAoeDamage(Vector3 center, float radius, int dmg, GameObject vfx)
@@ -248,7 +255,11 @@ namespace TowerDefense
             {
                 if (go == null) continue;
                 if (Vector3.Distance(center, go.transform.position) <= radius)
+                {
                     go.GetComponent<Enemy>()?.TakeDamage(dmg);
+                    go.GetComponent<Wall>()?.TakeDamage(damage);
+
+                }
             }
         }
 
@@ -268,6 +279,8 @@ namespace TowerDefense
                 if (elapsed >= nextTick)
                 {
                     enemy.GetComponent<Enemy>()?.TakeDamage(dotDamagePerTick);
+                    enemy.GetComponent<Wall>()?.TakeDamage(dotDamagePerTick);
+
                     nextTick += dotInterval;
                 }
 
@@ -289,6 +302,7 @@ namespace TowerDefense
             while (current != null && remaining > 0)
             {
                 current.GetComponent<Enemy>()?.TakeDamage(currentDamage);
+                current.GetComponent<Wall>()?.TakeDamage(currentDamage);
 
                 GameObject nearest = null;
                 float minDist = chainRadius;
@@ -397,6 +411,8 @@ namespace TowerDefense
             if (target.Item1 != null)
             {
                 target.Item1.GetComponent<Enemy>()?.TakeDamage(damage);
+                target.Item1.GetComponent<Wall>()?.TakeDamage(damage);
+
                 remainingPierce--;
             }
 
@@ -487,6 +503,7 @@ namespace TowerDefense
                 }
                 a.GetComponent<Enemy>()?.TakeDamage(chainLinkDamage);
                 b.GetComponent<Enemy>()?.TakeDamage(chainLinkDamage);
+                
                 yield return new WaitForSeconds(0.5f);
             }
         }

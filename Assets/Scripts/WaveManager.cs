@@ -112,7 +112,7 @@ public class WaveManager : MonoBehaviour
                 Enemy enemy = enemyInstance.GetComponent<Enemy>() 
                            ?? enemyInstance.AddComponent<Enemy>();
                 enemy.enemyConfig = burstConfig.enemyConfig;
-                enemy.SetTarget(target);
+                enemy.SetLevelEnd(target);
 
                 TowerHeroManager.instance.RegisterEnemy(enemyInstance);
                 _activeEnemyCount++;

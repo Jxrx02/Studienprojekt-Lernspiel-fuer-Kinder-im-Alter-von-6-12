@@ -592,12 +592,12 @@ MonoBehaviour:
   towerInitPrice: 30
   placementType: 1
   blocksPath: 1
-  statHealthPoints: 3
-  currentHealth: 3
-  range: 0.74
+  statHealthPoints: 15
+  currentHealth: 6
+  range: 0
   damage: 0
   timeInBetweenShots: 0.1
-  attackSpeedMultiplier: 1
+  attackSpeedMultiplier: 0
   rangeIndicator: {fileID: 6642679538933387214}
   rangeIndicatorOffset: {x: 0, y: 0.47, z: 0}
   outlineMaterial: {fileID: 2100000, guid: fb640c70274ee704a9029b0be1691a4e, type: 2}
