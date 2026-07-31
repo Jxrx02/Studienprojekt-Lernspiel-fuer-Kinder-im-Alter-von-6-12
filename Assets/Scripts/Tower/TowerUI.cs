@@ -40,7 +40,7 @@ namespace TowerDefense
         [SerializeField] private Transform upgradePathIconIndicatorParent3;
         [SerializeField] private Sprite[] upgradePathIconIndicatorSprites = new Sprite[2]; 
         
-        [SerializeField] private Button btnMoveHeroTo;
+        //[SerializeField] private Button btnMoveHeroTo;
 
         [HideInInspector] public Tower selectedTower;
         
@@ -74,13 +74,13 @@ namespace TowerDefense
         public void FocusTowerUI(Tower tower)
         {
             selectedTower = tower;
-            btnMoveHeroTo.gameObject.SetActive(false);
+            //btnMoveHeroTo.gameObject.SetActive(false);
 
-            if (selectedTower is Hero hero)
-            {
-                btnMoveHeroTo.gameObject.SetActive(true);
-                btnMoveHeroTo.onClick.AddListener(()=> hero.OnHeroMoveButtonPressed());
-            }
+            // if (selectedTower is Hero hero)
+            // {
+            //     btnMoveHeroTo.gameObject.SetActive(true);
+            //     btnMoveHeroTo.onClick.AddListener(()=> hero.OnHeroMoveButtonPressed());
+            // }
             // Entferne vorhandene Event-Handler, bevor neue hinzugefügt werden
             btnNext.onClick.RemoveAllListeners();
             btnPrev.onClick.RemoveAllListeners();

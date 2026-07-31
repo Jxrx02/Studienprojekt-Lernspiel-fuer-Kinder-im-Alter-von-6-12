@@ -39,6 +39,8 @@ namespace TowerDefense
 
         [Header("Combat Stats")]
         [SerializeField] public float range;
+        [SerializeField] public float interactionrange;
+
         [SerializeField] public int damage;
         [Range(0.1f, 50f)]
         [SerializeField] public float timeInBetweenShots;
@@ -47,6 +49,8 @@ namespace TowerDefense
         [Header("Visuals")]
         [SerializeField] public SpriteRenderer rangeIndicator;
         [SerializeField] private Vector3 rangeIndicatorOffset;
+        [SerializeField] public SpriteRenderer interactionIndicator;
+        [SerializeField] private Vector3 interactionIndicatorOffset;
         [SerializeField] public Material outlineMaterial;
         [SerializeField] public TargetType targetPreference = TargetType.Nearest;
         private Material notOutlinedMaterial;
@@ -80,6 +84,9 @@ namespace TowerDefense
 
         [Header("Targeting")]
         protected Boolean isSelected;
+        protected Boolean isHighlighted; 
+        protected Boolean isInteracted;
+
         protected Boolean isPlaceable;
 
         protected (GameObject, int) target;
@@ -169,16 +176,25 @@ namespace TowerDefense
             }
         }
 
+
         protected virtual void UpdateLookDirection(Vector3 targetPos)
         {
             Quaternion canvasRot = GetComponentInChildren<Canvas>().transform.rotation;
+
             bool faceRight = targetPos.x > transform.position.x;
-            transform.rotation = faceRight
-                ? new Quaternion(0, 180, 0, 1)
+
+            Quaternion rotation = faceRight
+                ? Quaternion.Euler(0, 180, 0)
                 : Quaternion.identity;
+
+            transform.rotation = rotation;
+
+            if (statDiffDisplay != null)
+                statDiffDisplay.gameObject.transform.rotation = rotation;
+
             GetComponentInChildren<Canvas>().transform.rotation = canvasRot;
         }
-
+        
         /// <summary>
         /// Spawnt ein Projektil und überträgt Schaden + optionale Projektil-Überschreibungen vom Turm.
         /// </summary>
@@ -287,7 +303,7 @@ namespace TowerDefense
             TowerUI.Instance.txtTargetPreference.text = targetPreference.ToString();
         }
         // ───────────────── UI / SELECTION ─────────────────
-
+         
         public void SetIsSelected(Boolean _isSelected)
         {
             DrawRangeIndicatior();
@@ -295,16 +311,43 @@ namespace TowerDefense
 
             if (isSelected)
             {
-                sr.material = outlineMaterial;
                 rangeIndicator.gameObject.SetActive(true);
             }
             else
             {
-                sr.material = notOutlinedMaterial;
                 rangeIndicator.gameObject.SetActive(false);
             }
         }
+        public void SetHighlighted(Boolean _isHighlighted)
+        {
+            isHighlighted = _isHighlighted;
 
+            if (isHighlighted)
+            {
+                sr.material = outlineMaterial;
+            }
+            else
+            {
+                sr.material = notOutlinedMaterial;
+            }
+        }
+
+
+        public void SetInteraction(Boolean _isInteracted)
+        {
+            isInteracted = _isInteracted;
+            DrawInteractionIndicatior();
+
+            if (isSelected)
+            {
+                interactionIndicator.enabled = true;
+            }
+            else
+            {
+                interactionIndicator.enabled = false;
+            }
+        }
+        
         protected virtual void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.green;
@@ -312,6 +355,14 @@ namespace TowerDefense
             GetComponent<CircleCollider2D>().radius = range;
             GetComponent<CircleCollider2D>().offset = rangeIndicatorOffset;
             DrawRangeIndicatior();
+            
+            //Interactionindicator
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position + rangeIndicatorOffset, interactionrange);
+            GetComponent<CircleCollider2D>().radius = interactionrange;
+            GetComponent<CircleCollider2D>().offset = rangeIndicatorOffset;
+
+            DrawInteractionIndicatior();
         }
 
         private void DrawRangeIndicatior()
@@ -324,7 +375,21 @@ namespace TowerDefense
                 rangeIndicator.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
             }
         }
+        
 
+        private void DrawInteractionIndicatior()
+        {
+            if (interactionIndicator != null)
+            {
+                float spriteDiameter = interactionIndicator.sprite.bounds.size.x;
+                float scaleFactor = (interactionrange * 2) / spriteDiameter;
+                interactionIndicator.transform.position = transform.position + rangeIndicatorOffset;
+                interactionIndicator.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
+            }
+        }
+
+        
+        
         public void UpgradePath(int pathIndex)
         {
             if (pathIndex < 0 || pathIndex >= upgradePaths.Length) return;
@@ -419,7 +484,16 @@ namespace TowerDefense
             DestroyTower();
 
         }
+        
+        // ───────────────── Towerinteraction among towers ─────────────────
 
+        public void EnterTowerRange(Tower tower)
+        {
+            
+        }
+        public void ExitTowerRange(Tower tower)
+        {
+        }
         public int CalculateSellPrice()
         {
             int coins = towerInitPrice;
@@ -432,5 +506,7 @@ namespace TowerDefense
             }
             return (int)(coins * 0.8f);
         }
+
+
     }
 }

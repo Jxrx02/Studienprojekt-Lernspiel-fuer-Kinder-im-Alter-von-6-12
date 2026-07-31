@@ -113,7 +113,7 @@ Material:
     - _StencilWriteMask: 255
     - _Surface: 1
     - _Thickness: 0.005
-    - _Tickness: 0
+    - _Tickness: 0.0005
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
     - _ZTest: 4

@@ -9,7 +9,7 @@ namespace TowerDefense
     public class StatDiffDisplay: MonoBehaviour
     {
         [SerializeField] private GameObject statTextPrefab;
-        [SerializeField] private int poolSize = 5;
+        [SerializeField] private int poolSize = 15;
 
         private List<Text> pool = new List<Text>();
 
@@ -57,24 +57,41 @@ namespace TowerDefense
             }
 
             text.gameObject.SetActive(true);
-            float duration = 1.0f; // wie lange soll die Animation dauern
+
+            float duration = 1f;
             float elapsed = 0f;
+
+            RectTransform rect = text.GetComponent<RectTransform>();
+            Vector2 startPos = rect.anchoredPosition;
+            Vector2 endPos = startPos + Vector2.down * 4f;   // 40 Pixel nach unten
+
+            Color startColor = text.color;
+            Color endColor = startColor;
+            endColor.a = 0f;
 
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / duration);
+                float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
                 float currentValue = Mathf.Lerp(oldValue, newValue, t);
                 float shownDiff = currentValue - oldValue;
 
                 text.text = $"{(shownDiff >= 0 ? "+" : "")}{shownDiff:F1} {statName}";
+
+                // Nach unten bewegen
+                rect.anchoredPosition = Vector2.Lerp(startPos, endPos, t);
+
+                // Ausblenden
+                text.color = Color.Lerp(startColor, endColor, t);
+
                 yield return null;
             }
 
-            // sicherstellen, dass am Ende genau der Zielwert steht
             text.text = $"{(diff >= 0 ? "+" : "")}{diff:F1} {statName}";
 
-            yield return new WaitForSeconds(0.5f);
+            // Ausgangszustand wiederherstellen
+            rect.anchoredPosition = startPos;
+            text.color = startColor;
             text.gameObject.SetActive(false);
         }
 

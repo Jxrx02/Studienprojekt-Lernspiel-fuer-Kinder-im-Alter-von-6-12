@@ -9,10 +9,23 @@ namespace TowerDefense
 {
     public class Hero : Tower
     {
+		[Header("Movement")]
+        [SerializeField] private float moveSpeed = 4f;
+
+        private Vector2 movementInput;
+
+        private Tower currentTower;
+
+        private bool interactionMode = false;
+        private bool hasReachedTargetPosition;
+
+        [Header("Weapons")]
+        [SerializeField] private Projectile[] equippedProjectiles;
+        [SerializeField] private int activeWeaponIndex;
+		
         [SerializeField] public float maxMoveSpeed = 4f;
         [SerializeField] public float acceleration = 10f;
-        private Vector2 velocity;
-        private Boolean hasReachedTargetPosition = true;
+
         
         [HideInInspector]public Vector2 targetPosition;
 
@@ -24,36 +37,94 @@ namespace TowerDefense
 
         private void Update()
         {
-            if (!hasReachedTargetPosition && !isAttacking)
+            HandleAnimation();
+            HandleMovement();
+
+            if (Input.GetKeyDown(KeyCode.E) && currentTower != null)
             {
-                spriteAnim.animState = AnimationState.Walk_Animation;
-                spriteAnim.SetWalkSpeed(2);
-                
-                Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-                float distance = Vector2.Distance(transform.position, targetPosition);
+                TowerHeroManager.instance.SelectTower(currentTower);
 
-                if (distance > 0.15f)
-                {
-                    // Beschleunige in Richtung des Ziels
-                    velocity += direction * acceleration * Time.deltaTime;
-
-                    // Begrenze die maximale Geschwindigkeit
-                    velocity = Vector2.ClampMagnitude(velocity, maxMoveSpeed);
-
-                    // Bewege das Objekt
-                    transform.position += (Vector3)(velocity * Time.deltaTime);
-                }
-                else
-                {
-                    // Ziel erreicht – stoppen und Idle setzen
-                    velocity = Vector2.zero;
-                    spriteAnim.animState = AnimationState.Idle_Animation;
-                    hasReachedTargetPosition = true;
-                }
             }
 
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                interactionMode = !interactionMode;
+                SetInteraction(true);
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                interactionMode = !interactionMode;
+
+                SetInteraction(false);
+            }
         }
 
+        public new void EnterTowerRange(Tower tower)
+        {
+            if (currentTower != null)
+            {
+                currentTower.SetHighlighted(false);
+                currentTower.SetInteraction(false);
+                currentTower.SetIsSelected(false);
+            }
+            currentTower = tower;
+            currentTower.SetHighlighted(true);
+            currentTower.SetInteraction(true);
+
+            Debug.Log(tower.towerName + " ist in Range");
+        }
+
+        public new void ExitTowerRange(Tower tower)
+        {
+            if (tower != currentTower)
+                return;
+
+            currentTower.SetHighlighted(false);
+            currentTower.SetInteraction(false);
+            currentTower.SetIsSelected(false);
+
+            currentTower = null;
+            SetInteraction(false);
+
+            TowerHeroManager.instance.DeselectTower();
+        }
+
+
+
+        private void HandleAnimation()
+        {
+            bool moving = movementInput.sqrMagnitude > 0.01f;
+
+            if (isAttacking)
+            {
+                spriteAnim.animState = AnimationState.Attack_Animation;
+            }
+            else if (moving)
+            {
+                spriteAnim.animState = AnimationState.Walk_Animation;
+            }
+            else
+            {
+                spriteAnim.animState = AnimationState.Idle_Animation;
+            }
+        }
+
+        private void HandleMovement()
+        {
+            movementInput = new Vector2(
+                Input.GetAxisRaw("Horizontal"),
+                Input.GetAxisRaw("Vertical"));
+
+            movementInput = movementInput.normalized;
+
+            transform.position += (Vector3)(movementInput * moveSpeed * Time.deltaTime);
+
+            if (movementInput.x < 0)
+                transform.rotation = new Quaternion(0,180,0,1);
+            else if (movementInput.x > 0)
+                transform.rotation = new Quaternion(0,0,0,1);
+        }
+        
         public void OnHeroMoveButtonPressed()
         {
             OneClickInWorldListener.ListenOnce((Vector3 pos) =>
@@ -100,22 +171,17 @@ namespace TowerDefense
 
         }
         
-        
         protected override void UpdateLookDirection(Vector3 targetPos)
         {
-            Quaternion originalCanvasRotation = GetComponentInChildren<Canvas>().transform.rotation;
-
-            if (targetPos.x > transform.position.x)
-                transform.rotation = new Quaternion(0, 180, 0, 1);
-            else
-                transform.rotation = new Quaternion(0, 0, 0, 1);
-            
-            GetComponentInChildren<Canvas>().transform.rotation = originalCanvasRotation;
+            Quaternion canvasRot = GetComponentInChildren<Canvas>().transform.rotation;
+            bool faceRight = targetPos.x < transform.position.x;
+            transform.rotation = faceRight
+                ? new Quaternion(0, 180, 0, 1)
+                : Quaternion.identity;
+            GetComponentInChildren<Canvas>().transform.rotation = canvasRot;
         }
 
         
-
-
 
     }
     

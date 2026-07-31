@@ -46,10 +46,14 @@ namespace TowerDefense
             {
                 // Finde Gegner basierend auf dem Zieltyp
                 Tower _tower = tower.GetComponent<Tower>();
+                if (_tower.isAttacking) break;
+                
                 (GameObject, int) target = _tower.FindTargetInRange(enemies);
                 if (target.Item1 != null)
                 {
                     _tower.Attack(target);
+                    Debug.Log(_tower.towerName + " attacks: " + target);
+
                 }
             }
             OneClickInWorldListener.ListenOnce((Vector3 pos) =>
@@ -128,11 +132,17 @@ namespace TowerDefense
         {
             // Falls ein Turm bereits ausgewählt ist, deaktivieren
             if (instance.selectedTower != null && instance.selectedTower != tower)
+            {
                 instance.selectedTower.SetIsSelected(false);
+                instance.selectedTower.SetInteraction(false);
+                instance.selectedTower.SetHighlighted(false);
+
+            }
 
             instance.selectedTower = tower;
             instance.selectedTower.SetIsSelected(true);
-
+            instance.selectedTower.SetInteraction(true);
+            instance.selectedTower.SetHighlighted(true);
 
             // UI anzeigen und aktualisieren
             TowerUI.Instance.FocusTowerUI(tower);
@@ -144,6 +154,8 @@ namespace TowerDefense
             if (instance.selectedTower != null)
             {
                 instance.selectedTower.SetIsSelected(false);
+                instance.selectedTower.SetInteraction(false);
+                instance.selectedTower.SetHighlighted(false);
                 instance.selectedTower = null;
             }
 

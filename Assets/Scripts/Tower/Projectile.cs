@@ -114,7 +114,7 @@ namespace TowerDefense
 
         void Update()
         {
-            if (projectileIsDead) return;
+            if (projectileIsDead)return ;
 
             if (target.Item1 != null)
             {
