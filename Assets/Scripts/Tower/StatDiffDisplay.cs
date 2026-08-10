@@ -6,94 +6,152 @@ using UnityEngine.UI;
 namespace TowerDefense
 {
     [RequireComponent(typeof(Tower))]
-    public class StatDiffDisplay: MonoBehaviour
+    public class StatDiffDisplay : MonoBehaviour
     {
         [SerializeField] private GameObject statTextPrefab;
         [SerializeField] private int poolSize = 15;
 
-        private List<Text> pool = new List<Text>();
+        [Header("Animation")]
+        [SerializeField] private float startY = 1.75f;
+        [SerializeField] private float endY = 2.15f;
+        [SerializeField] private float duration = 1f;
+
+        private readonly List<Text> pool = new List<Text>();
+
+        private struct DiffRequest
+        {
+            public string statName;
+            public float oldValue;
+            public float newValue;
+            public Color color;
+        }
+
+        private readonly Queue<DiffRequest> queue = new Queue<DiffRequest>();
+        private bool isPlaying;
 
         private void Awake()
         {
             var statDiffCanvas = GetComponentInChildren<Canvas>();
-            if (statDiffCanvas != null)
-            {
-                for (int i = 0; i < poolSize; i++)
-                {
+            if (statDiffCanvas == null)
+                return;
 
-                    var go = Instantiate(statTextPrefab, statDiffCanvas.transform);
-                    go.SetActive(false);
-                    pool.Add(go.GetComponent<Text>());
-                }
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject go = Instantiate(statTextPrefab, statDiffCanvas.transform);
+                go.SetActive(false);
+
+                // Lokale Position relativ zum Canvas/Tower setzen (nicht Weltposition!)
+                go.transform.localPosition = new Vector3(0f, startY, 0f);
+                pool.Add(go.GetComponent<Text>());
             }
         }
 
         public void ShowDiff(string statName, float oldValue, float newValue)
         {
-            Text textObj = GetFreeText();
-            if (textObj == null) return;
+            ShowDiff(statName, oldValue, newValue, Color.white);
+        }
 
-            textObj.gameObject.SetActive(true);
-            StartCoroutine(AnimateDiff(textObj, statName, oldValue, newValue));
+        public void ShowDiff(string statName, float oldValue, float newValue, Color color)
+        {
+            queue.Enqueue(new DiffRequest
+            {
+                statName = statName,
+                oldValue = oldValue,
+                newValue = newValue,
+                color = color
+            });
+
+            if (!isPlaying)
+                StartCoroutine(ProcessQueue());
+        }
+
+        private IEnumerator ProcessQueue()
+        {
+            isPlaying = true;
+
+            while (queue.Count > 0)
+            {
+                DiffRequest request = queue.Dequeue();
+
+                Text text = GetFreeText();
+                while (text == null)
+                {
+                    yield return null;
+                    text = GetFreeText();
+                }
+
+                yield return AnimateDiff(
+                    text,
+                    request.statName,
+                    request.oldValue,
+                    request.newValue,
+                    request.color);
+            }
+
+            isPlaying = false;
         }
 
         private Text GetFreeText()
         {
-            foreach (var txt in pool)
+            foreach (Text txt in pool)
             {
                 if (!txt.gameObject.activeInHierarchy)
                     return txt;
             }
+
             return null;
         }
 
-        private IEnumerator AnimateDiff(Text text, string statName, float oldValue, float newValue)
+        private IEnumerator AnimateDiff(
+            Text text,
+            string statName,
+            float oldValue,
+            float newValue,
+            Color color)
         {
             float diff = newValue - oldValue;
+
             if (Mathf.Approximately(diff, 0f))
-            {
-                text.gameObject.SetActive(false);
                 yield break;
-            }
 
             text.gameObject.SetActive(true);
+            text.color = color;
 
-            float duration = 1f;
             float elapsed = 0f;
 
-            RectTransform rect = text.GetComponent<RectTransform>();
-            Vector2 startPos = rect.anchoredPosition;
-            Vector2 endPos = startPos + Vector2.down * 4f;   // 40 Pixel nach unten
+            Transform t = text.transform;
+            Vector3 startPos = new Vector3(0f, startY, 0f);
+            Vector3 endPos = new Vector3(0f, endY, 0f);
 
-            Color startColor = text.color;
-            Color endColor = startColor;
+            // Sicherstellen, dass die Animation immer sauber bei startY beginnt
+            t.localPosition = startPos;
+
+            Color startColor = color;
+            Color endColor = color;
             endColor.a = 0f;
 
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
-                float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
-                float currentValue = Mathf.Lerp(oldValue, newValue, t);
+
+                float lerpT = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+
+                float currentValue = Mathf.Lerp(oldValue, newValue, lerpT);
                 float shownDiff = currentValue - oldValue;
 
                 text.text = $"{(shownDiff >= 0 ? "+" : "")}{shownDiff:F1} {statName}";
 
-                // Nach unten bewegen
-                rect.anchoredPosition = Vector2.Lerp(startPos, endPos, t);
-
-                // Ausblenden
-                text.color = Color.Lerp(startColor, endColor, t);
+                t.localPosition = Vector3.Lerp(startPos, endPos, lerpT);
+                text.color = Color.Lerp(startColor, endColor, lerpT);
 
                 yield return null;
             }
 
             text.text = $"{(diff >= 0 ? "+" : "")}{diff:F1} {statName}";
 
-            // Ausgangszustand wiederherstellen
-            rect.anchoredPosition = startPos;
-            text.color = startColor;
+            t.localPosition = startPos;
+            text.color = color;
             text.gameObject.SetActive(false);
         }
-
     }
 }

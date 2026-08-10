@@ -15,3 +15,4 @@ MonoBehaviour:
   enemyConfig: {fileID: 11400000, guid: ea59485e6c19253488c5da16a7e05900, type: 2}
   spawnInterval: 1
   spawnCount: 4
+  spawnPointIndex: 1

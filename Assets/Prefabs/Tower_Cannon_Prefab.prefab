@@ -162,7 +162,6 @@ GameObject:
   - component: {fileID: 1061803233883542865}
   - component: {fileID: 8437903671026638882}
   - component: {fileID: 4328554353491148878}
-  - component: {fileID: 6131223149305885804}
   m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
@@ -236,32 +235,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
---- !u!114 &6131223149305885804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445721711633885064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 3
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: -29.2
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &3751961141019920574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,8 +1084,9 @@ MonoBehaviour:
   evolve_sprites: []
   dead_sprites: []
   walk_sprites: []
+  directionalAnimations: []
   destroyOnEndDeadAnimation: 0
-  <animState>k__BackingField: 0
+  <animState>k__BackingField: 1
 --- !u!1 &4846675263847651107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1113,7 @@ Transform:
   m_GameObject: {fileID: 4846675263847651107}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6999998, z: 0}
+  m_LocalPosition: {x: 0, y: 0.70000076, z: 0}
   m_LocalScale: {x: 8, y: 8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1233,7 +1207,7 @@ Transform:
   m_GameObject: {fileID: 5102061605546105367}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6999998, z: 0}
+  m_LocalPosition: {x: 0, y: 0.70000076, z: 0}
   m_LocalScale: {x: 4.16, y: 4.16, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:

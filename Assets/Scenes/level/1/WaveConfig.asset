@@ -16,14 +16,18 @@ MonoBehaviour:
   - bursts:
     - burstConfigs:
       - {fileID: 11400000, guid: c24163478446e4e48937a8c050c0cee6, type: 2}
-      spawnInterval: 1
+      spawnInterval: 3.05
+    - burstConfigs:
+      - {fileID: 11400000, guid: c24163478446e4e48937a8c050c0cee6, type: 2}
+      - {fileID: 11400000, guid: c24163478446e4e48937a8c050c0cee6, type: 2}
+      spawnInterval: 3.05
     timeBetweenBursts: 1
   - bursts:
     - burstConfigs:
       - {fileID: 11400000, guid: c24163478446e4e48937a8c050c0cee6, type: 2}
       - {fileID: 11400000, guid: 697c445103b18ea4f9d505932d837fa0, type: 2}
       - {fileID: 11400000, guid: 11e904cede4696549b4fb16656731a68, type: 2}
-      spawnInterval: 1
+      spawnInterval: 3.05
     timeBetweenBursts: 1
   - bursts:
     - burstConfigs:
@@ -54,3 +58,4 @@ MonoBehaviour:
       spawnInterval: 0.01
     timeBetweenBursts: 0.01
   timeBetweenWaves: 5
+  goldPerSecondEarlyStart: 3

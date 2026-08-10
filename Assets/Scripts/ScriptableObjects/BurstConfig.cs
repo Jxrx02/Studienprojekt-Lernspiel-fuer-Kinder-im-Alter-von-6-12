@@ -15,5 +15,14 @@ namespace ScriptableObjects
         [Tooltip("Anzahl der Gegner-Spawns")]
         public int spawnCount;
         
+        [Tooltip("Welcher Spawnpunkt verwendet wird")]
+        public int spawnPointIndex;
+    }
+    
+    [System.Serializable]
+    public class PlannedBurst
+    {
+        public BurstConfig burstConfig;
+        public SpawnPoint spawnPoint;
     }
 }

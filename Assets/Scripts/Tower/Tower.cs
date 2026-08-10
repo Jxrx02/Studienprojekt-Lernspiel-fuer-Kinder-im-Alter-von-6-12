@@ -121,7 +121,7 @@ namespace TowerDefense
                 {
                     experience -= requiredExperience;
                     LevelUp();
-                    statDiffDisplay.ShowDiff("Level", level - 1, level);
+                    statDiffDisplay.ShowDiff("Level", level - 1, level, Color.cornsilk);
                 }
             }
             TowerUI.Instance.UpdateUI();
@@ -439,16 +439,16 @@ namespace TowerDefense
 
                 if (statDiffDisplay != null)
                 {
-                    statDiffDisplay.ShowDiff("Damage",        oldDamage,         damage);
-                    statDiffDisplay.ShowDiff("Range",         oldRange,          range);
-                    statDiffDisplay.ShowDiff("Abklingzeit",   oldFireRate,       1f / timeInBetweenShots);
-                    statDiffDisplay.ShowDiff("Gold/sec",      oldCoinsPerSecond, statCoinsEarnedPerSecond);
-                    statDiffDisplay.ShowDiff("Regen/sec",     oldRegen,          statHealthRegenPerSecond);
-                    statDiffDisplay.ShowDiff("Health",     oldHealth,          statHealthPoints);
-                    statDiffDisplay.ShowDiff("Dmg Mult.",     oldDmgMult,        statDmgMultiplier);
-                    statDiffDisplay.ShowDiff("Range Mult.",   oldRangeMult,      statRangeMultiplier);
-                    statDiffDisplay.ShowDiff("AtkSpeed Mult.",oldAtkSpeedMult,   statAttackSpeedMultiplier);
-                    statDiffDisplay.ShowDiff("Slow Mult.",    oldSlowMult,       statSlowMultiplier);
+                    statDiffDisplay.ShowDiff("Damage",         oldDamage,         damage,                     Color.red);
+                    statDiffDisplay.ShowDiff("Range",          oldRange,          range,                      new Color(0.2f, 0.8f, 1f));
+                    statDiffDisplay.ShowDiff("Abklingzeit",    oldFireRate,       1f / timeInBetweenShots,    new Color(1f, 0.35f, .6f));
+                    statDiffDisplay.ShowDiff("Gold/sec",       oldCoinsPerSecond, statCoinsEarnedPerSecond,   new Color(1f, 0.84f, 0f));
+                    statDiffDisplay.ShowDiff("Regen/sec",      oldRegen,          statHealthRegenPerSecond,   new Color(0.3f, 1f, 0.3f));
+                    statDiffDisplay.ShowDiff("Health",         oldHealth,         statHealthPoints,           new Color(0f, 0.9f, 0f));
+                    statDiffDisplay.ShowDiff("Dmg Mult.",      oldDmgMult,        statDmgMultiplier,          new Color(1f, 0.4f, 0.4f));
+                    statDiffDisplay.ShowDiff("Range Mult.",    oldRangeMult,      statRangeMultiplier,        new Color(0.5f, 0.9f, 1f));
+                    statDiffDisplay.ShowDiff("AtkSpeed Mult.", oldAtkSpeedMult,   statAttackSpeedMultiplier,  new Color(1f, 0.7f, 0.2f));
+                    statDiffDisplay.ShowDiff("Slow Mult.",     oldSlowMult,       statSlowMultiplier,         new Color(0.6f, 0.4f, 1f));
                 }
 
                 Debug.Log($"Pfad {path} auf Level {pathLevels[pathIndex]} verbessert!");

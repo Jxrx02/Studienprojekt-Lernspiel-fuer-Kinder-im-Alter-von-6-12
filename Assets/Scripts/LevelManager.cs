@@ -81,11 +81,9 @@ namespace TowerDefense
             if (instance == null)               instance = this;
             else                                Destroy(gameObject);
 
-            // Frühstart-Button zu Beginn verstecken
-            SetStartWaveButtonVisible(false);
+            SetStartWaveButtonVisible(true);
 
-            // Warte auf den ersten Weltklick, dann erste Welle freigeben
-            OnStartWaveClick();
+
         }
 
         // ── Wave-Events ───────────────────────────────────────────
@@ -103,7 +101,7 @@ namespace TowerDefense
         /// Wird aufgerufen wenn alle Gegner einer Welle besiegt wurden.
         /// Startet das Frühstart-Fenster.
         /// </summary>
-
+        
         private void OnWaveCleared()
         {
             if (_allWavesSpawned) return; // letzte Welle – kein Frühstart nötig
@@ -116,9 +114,13 @@ namespace TowerDefense
             bool hardPause = (_waveIndex % 3 == 0);
 
             if (hardPause)
+            {
                 _earlyStartCoroutine = StartCoroutine(WaitForPlayerStart());
+            }
             else
+            {
                 _earlyStartCoroutine = StartCoroutine(EarlyStartCountdown());
+            }
         }
         private IEnumerator WaitForPlayerStart()
         {
@@ -161,8 +163,31 @@ namespace TowerDefense
         /// Spieler klickt manuell auf „Welle starten" → Bonus wird ausbezahlt.
         /// Diesen Aufruf an den Button im Inspector hängen.
         /// </summary>
+        public void StartWaveButton()
+        {
+            //wird nur 1x aufgerufen
+            StartGame();
+            
+            if (_waitingForPlayerStart)
+            {
+                _waitingForPlayerStart = false;
+                
+                TriggerNextWave(0);
+                SetStartWaveButtonVisible(false);
+                return;
+            }
+
+            if (_earlyStartActive)
+            {
+                OnEarlyStartClick();
+            }
+            SetStartWaveButtonVisible(false);
+
+        }
         public void OnEarlyStartClick()
         {
+
+            
             if (!_earlyStartActive) return;
 
             if (_earlyStartCoroutine != null)
@@ -183,7 +208,23 @@ namespace TowerDefense
         }
 
         // ── Hilfsmethoden ─────────────────────────────────────────
+        private void StartGame()
+        {
+            if (_waveIndex > 0 || _allWavesSpawned)
+                return;
 
+            clickToStartGameObject?.SetActive(false);
+
+            waveManager.gameObject.SetActive(true);
+            // Erste Welle freigeben
+            waveManager.GetComponent<WaveManager>()?.OnGameStarted();
+
+            SetStartWaveButtonVisible(false);
+            
+            TriggerNextWave(0);
+
+            Debug.Log("Game gestartet – erste Welle gestartet.");
+        }
         private int CalculateEarlyBonus()
         {
             var waveManagerComponent = waveManager.GetComponent<WaveManager>();
@@ -205,6 +246,9 @@ namespace TowerDefense
                 btn_startWave.gameObject.SetActive(visible);
             if (txt_earlyBonus != null)
                 txt_earlyBonus.gameObject.SetActive(visible);
+            if (_waitingForPlayerStart)
+                txt_earlyBonus.text = "Let the sun set";
+            
         }
 
         /// <summary>
@@ -222,9 +266,7 @@ namespace TowerDefense
         {
 
         }
-
-        // ── Bestehende Methoden (unverändert) ────────────────────
-
+        
         private void LvlCompleted()
         {
             if (!_allWavesSpawned) return;
@@ -232,7 +274,7 @@ namespace TowerDefense
             endScreen.gameObject.SetActive(true);
         }
 
-        public void OnStartWaveClick()
+        /* public void OnStartWaveClick()
         {
             OneClickInWorldListener.ListenOnce((Vector3 pos) =>
             {
@@ -244,7 +286,7 @@ namespace TowerDefense
                 waveManager.GetComponent<WaveManager>()?.OnGameStarted();
                 Debug.Log("Game gestartet");
             });
-        }
+        } */
 
         public Boolean CanPurchase(int price)  => (cur_coins - price) >= 0;
 
