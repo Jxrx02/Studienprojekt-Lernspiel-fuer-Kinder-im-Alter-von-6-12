@@ -65,6 +65,7 @@ namespace TowerDefense
                 StartCoroutine(ProcessQueue());
         }
 
+        
         private IEnumerator ProcessQueue()
         {
             isPlaying = true;

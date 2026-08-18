@@ -1,0 +1,3276 @@
+fileFormatVersion: 2
+guid: 414648dc751413a4bb0c6becc100ad3b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7116302944687163344
+    second: map-Props_normal_0
+  - first:
+      213: -4372305537487595030
+    second: map-Props_normal_1
+  - first:
+      213: 268904415939477621
+    second: map-Props_normal_2
+  - first:
+      213: 4293011344047678586
+    second: map-Props_normal_3
+  - first:
+      213: 445401768856689271
+    second: map-Props_normal_4
+  - first:
+      213: -4646093152904389680
+    second: map-Props_normal_5
+  - first:
+      213: -1261509741590858045
+    second: map-Props_normal_6
+  - first:
+      213: -333281331510339185
+    second: map-Props_normal_7
+  - first:
+      213: 6861481498948627684
+    second: map-Props_normal_8
+  - first:
+      213: 1346655512024011349
+    second: map-Props_normal_9
+  - first:
+      213: -6034159036082654677
+    second: map-Props_normal_10
+  - first:
+      213: 3395675672885355317
+    second: map-Props_normal_11
+  - first:
+      213: 3266352242488853109
+    second: map-Props_normal_12
+  - first:
+      213: -3286594703820206391
+    second: map-Props_normal_13
+  - first:
+      213: -2348156368399285717
+    second: map-Props_normal_14
+  - first:
+      213: 4235112360984810559
+    second: map-Props_normal_15
+  - first:
+      213: 8215724594884883700
+    second: map-Props_normal_16
+  - first:
+      213: -3446402548689943877
+    second: map-Props_normal_17
+  - first:
+      213: -1414726881926657071
+    second: map-Props_normal_18
+  - first:
+      213: 2328523171269408314
+    second: map-Props_normal_19
+  - first:
+      213: -5155586680159780394
+    second: map-Props_normal_20
+  - first:
+      213: 7314774637930664281
+    second: map-Props_normal_21
+  - first:
+      213: 8328568407084349171
+    second: map-Props_normal_22
+  - first:
+      213: 4067450408576337745
+    second: map-Props_normal_23
+  - first:
+      213: -3311587094218187360
+    second: map-Props_normal_24
+  - first:
+      213: -6090971188744650193
+    second: map-Props_normal_25
+  - first:
+      213: -6156005336586807653
+    second: map-Props_normal_26
+  - first:
+      213: -6616675468621212004
+    second: map-Props_normal_27
+  - first:
+      213: -5057849789357849470
+    second: map-Props_normal_28
+  - first:
+      213: 1593584094797312632
+    second: map-Props_normal_29
+  - first:
+      213: -2343351183440693171
+    second: map-Props_normal_30
+  - first:
+      213: 8375586366906307598
+    second: map-Props_normal_31
+  - first:
+      213: 6483452923217845587
+    second: map-Props_normal_32
+  - first:
+      213: -2194654559338240452
+    second: map-Props_normal_33
+  - first:
+      213: 4046255182280969632
+    second: map-Props_normal_34
+  - first:
+      213: -4076711483657808695
+    second: map-Props_normal_35
+  - first:
+      213: -124329911090810819
+    second: map-Props_normal_36
+  - first:
+      213: -7024841271861291190
+    second: map-Props_normal_37
+  - first:
+      213: -826080673111414632
+    second: map-Props_normal_38
+  - first:
+      213: -6569125944845174744
+    second: map-Props_normal_39
+  - first:
+      213: 8133583940317166858
+    second: map-Props_normal_40
+  - first:
+      213: -4251636683191895345
+    second: map-Props_normal_41
+  - first:
+      213: 1829031860542778581
+    second: map-Props_normal_42
+  - first:
+      213: 5341142985118546075
+    second: map-Props_normal_43
+  - first:
+      213: -893192729568234114
+    second: map-Props_normal_44
+  - first:
+      213: -5254537287557028907
+    second: map-Props_normal_45
+  - first:
+      213: 1317070013528509963
+    second: map-Props_normal_46
+  - first:
+      213: 4518503075165134794
+    second: map-Props_normal_47
+  - first:
+      213: 5185703783584141777
+    second: map-Props_normal_48
+  - first:
+      213: 7537492493579132531
+    second: map-Props_normal_49
+  - first:
+      213: 9065952419866029483
+    second: map-Props_normal_50
+  - first:
+      213: 422276763847798733
+    second: map-Props_normal_51
+  - first:
+      213: 844384910699453092
+    second: map-Props_normal_52
+  - first:
+      213: 2103956466376877387
+    second: map-Props_normal_53
+  - first:
+      213: 4440443339447312126
+    second: map-Props_normal_54
+  - first:
+      213: -1795370708146578262
+    second: map-Props_normal_55
+  - first:
+      213: -982580511710827361
+    second: map-Props_normal_56
+  - first:
+      213: 6629940801817579790
+    second: map-Props_normal_57
+  - first:
+      213: 2992726355149211158
+    second: map-Props_normal_58
+  - first:
+      213: -3892418032748299618
+    second: map-Props_normal_59
+  - first:
+      213: 5840733045270521851
+    second: map-Props_normal_60
+  - first:
+      213: 7938035710573525257
+    second: map-Props_normal_61
+  - first:
+      213: 3121166751933059253
+    second: map-Props_normal_62
+  - first:
+      213: -1704809597884392461
+    second: map-Props_normal_63
+  - first:
+      213: -8131516424634959325
+    second: map-Props_normal_64
+  - first:
+      213: 8614992095762288626
+    second: map-Props_normal_65
+  - first:
+      213: -4622092435781856662
+    second: map-Props_normal_66
+  - first:
+      213: 8477418217883953138
+    second: map-Props_normal_67
+  - first:
+      213: -1616384247223691374
+    second: map-Props_normal_68
+  - first:
+      213: 6328492307618396176
+    second: map-Props_normal_69
+  - first:
+      213: 4552127822680259666
+    second: map-Props_normal_70
+  - first:
+      213: 1918501662296573593
+    second: map-Props_normal_71
+  - first:
+      213: 3662892551860380582
+    second: map-Props_normal_72
+  - first:
+      213: -7253338386289577413
+    second: map-Props_normal_73
+  - first:
+      213: 2906620997948744614
+    second: map-Props_normal_74
+  - first:
+      213: 3861907448469181508
+    second: map-Props_normal_75
+  - first:
+      213: 5248570057731330748
+    second: map-Props_normal_76
+  - first:
+      213: -5160647965192516574
+    second: map-Props_normal_77
+  - first:
+      213: 3205134556126896989
+    second: map-Props_normal_78
+  - first:
+      213: 3073991863210783213
+    second: map-Props_normal_79
+  - first:
+      213: -8600220748030896234
+    second: map-Props_normal_80
+  - first:
+      213: 8913978451885505627
+    second: map-Props_normal_81
+  - first:
+      213: -8696423280683976659
+    second: map-Props_normal_82
+  - first:
+      213: 345612479840428863
+    second: map-Props_normal_83
+  - first:
+      213: 2389469950927460566
+    second: map-Props_normal_84
+  - first:
+      213: -567222555197700884
+    second: map-Props_normal_85
+  - first:
+      213: -2777173184706922528
+    second: map-Props_normal_86
+  - first:
+      213: 7440511737897520389
+    second: map-Props_normal_87
+  - first:
+      213: 2911927938715334096
+    second: map-Props_normal_88
+  - first:
+      213: 629444527029036161
+    second: map-Props_normal_89
+  - first:
+      213: -5561635046854908333
+    second: map-Props_normal_90
+  - first:
+      213: -2638443577904410987
+    second: map-Props_normal_91
+  - first:
+      213: 8789394095932867401
+    second: map-Props_normal_92
+  - first:
+      213: -303952140323989107
+    second: map-Props_normal_93
+  - first:
+      213: 5844771080492491324
+    second: map-Props_normal_94
+  - first:
+      213: -8301330247995936653
+    second: map-Props_normal_95
+  - first:
+      213: 8445345853142951812
+    second: map-Props_normal_96
+  - first:
+      213: -5083985893229881943
+    second: map-Props_normal_97
+  - first:
+      213: 779527774700699881
+    second: map-Props_normal_98
+  - first:
+      213: 6400004299829831075
+    second: map-Props_normal_99
+  - first:
+      213: -2742219559039470989
+    second: map-Props_normal_100
+  - first:
+      213: -760040770879292519
+    second: map-Props_normal_101
+  - first:
+      213: 7370791120214883635
+    second: map-Props_normal_102
+  - first:
+      213: 9116585826322932049
+    second: map-Props_normal_103
+  - first:
+      213: -241492798993854472
+    second: map-Props_normal_104
+  - first:
+      213: 472161478343164513
+    second: map-Props_normal_105
+  - first:
+      213: 4487823163830724369
+    second: map-Props_normal_106
+  - first:
+      213: 8713967265315822212
+    second: map-Props_normal_107
+  - first:
+      213: 6774422589718269782
+    second: map-Props_normal_108
+  - first:
+      213: -8801968958549712267
+    second: map-Props_normal_109
+  - first:
+      213: 1502043309367707061
+    second: map-Props_normal_110
+  - first:
+      213: -8779731007290330564
+    second: map-Props_normal_111
+  - first:
+      213: 4370241628514329767
+    second: map-Props_normal_112
+  - first:
+      213: -4139518274311969016
+    second: map-Props_normal_113
+  - first:
+      213: 3905105490912739877
+    second: map-Props_normal_114
+  - first:
+      213: -2358670037658503858
+    second: map-Props_normal_115
+  - first:
+      213: 5298478667568043174
+    second: map-Props_normal_116
+  - first:
+      213: 2216566919560879866
+    second: map-Props_normal_117
+  - first:
+      213: 1580458138659599160
+    second: map-Props_normal_118
+  - first:
+      213: -8618705739125053716
+    second: map-Props_normal_119
+  - first:
+      213: -7439575611577400366
+    second: map-Props_normal_120
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: map-Props_normal_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 883
+        width: 76
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 038fad3fc20dd3d90800000000000000
+      internalID: -7116302944687163344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_1
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 884
+        width: 96
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae9149477437253c0800000000000000
+      internalID: -4372305537487595030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_2
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 896
+        width: 58
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5704b9e34275bb300800000000000000
+      internalID: 268904415939477621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_3
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 897
+        width: 50
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a742fa27217d39b30800000000000000
+      internalID: 4293011344047678586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_4
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 774
+        width: 185
+        height: 233
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77a98078c826e2600800000000000000
+      internalID: 445401768856689271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_5
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 927
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0db52cbb4e2c58fb0800000000000000
+      internalID: -4646093152904389680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_6
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 927
+        width: 38
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c638c3e2973e7ee0800000000000000
+      internalID: -1261509741590858045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_7
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 927
+        width: 37
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f899e011562ff5bf0800000000000000
+      internalID: -333281331510339185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_8
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 932
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ec6fb1d111e83f50800000000000000
+      internalID: 6861481498948627684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_9
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 930
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5525305ad0840b210800000000000000
+      internalID: 1346655512024011349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_10
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 932
+        width: 36
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b227418b35c524ca0800000000000000
+      internalID: -6034159036082654677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_11
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 836
+        width: 55
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53364ce880ddf1f20800000000000000
+      internalID: 3395675672885355317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_12
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 863
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57249d40f0a645d20800000000000000
+      internalID: 3266352242488853109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_13
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 863
+        width: 35
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cecd1ea78ba362d0800000000000000
+      internalID: -3286594703820206391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_14
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 863
+        width: 37
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b224d78593ca96fd0800000000000000
+      internalID: -2348156368399285717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_15
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 868
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f349d54f04426ca30800000000000000
+      internalID: 4235112360984810559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_16
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 866
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f4bd828dfd140270800000000000000
+      internalID: 8215724594884883700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_17
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 867
+        width: 36
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb2c55c442beb20d0800000000000000
+      internalID: -3446402548689943877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_18
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 835
+        width: 28
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dbc09c7561ed5ce0800000000000000
+      internalID: -1414726881926657071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_19
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 834
+        width: 30
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3677cabc73905020800000000000000
+      internalID: 2328523171269408314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_20
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 837
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d14758da3da378b0800000000000000
+      internalID: -5155586680159780394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_21
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 836
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 951d4e127cc438560800000000000000
+      internalID: 7314774637930664281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_22
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 799
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f6bdcfe6d4059370800000000000000
+      internalID: 8328568407084349171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_23
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 799
+        width: 38
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 157c5b8a89c727830800000000000000
+      internalID: 4067450408576337745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_24
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 799
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ad5b565511ea02d0800000000000000
+      internalID: -3311587094218187360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_25
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 804
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f228cb5a9f5887ba0800000000000000
+      internalID: -6090971188744650193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_26
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 802
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b96955523c9719aa0800000000000000
+      internalID: -6156005336586807653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_27
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 803
+        width: 36
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c969acac7b8dc24a0800000000000000
+      internalID: -6616675468621212004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_28
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 767
+        width: 43
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2848a0a0a68eec9b0800000000000000
+      internalID: -5057849789357849470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_29
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 767
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8723b128a4c8d1610800000000000000
+      internalID: 1593584094797312632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_30
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 717
+        width: 59
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d48b607a38eba7fd0800000000000000
+      internalID: -2343351183440693171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_31
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 720
+        width: 63
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e041e09cc6f0c3470800000000000000
+      internalID: 8375586366906307598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_32
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 718
+        width: 66
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35d1e56351ad9f950800000000000000
+      internalID: 6483452923217845587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_33
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 691
+        width: 63
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c36e3f95e450b81e0800000000000000
+      internalID: -2194654559338240452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_34
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 690
+        width: 69
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0adc07a76af272830800000000000000
+      internalID: 4046255182280969632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_35
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 735
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c412d4418c9c67c0800000000000000
+      internalID: -4076711483657808695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_36
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 735
+        width: 36
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d30f976ca9a464ef0800000000000000
+      internalID: -124329911090810819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_37
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 735
+        width: 36
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a47543b1510c28e90800000000000000
+      internalID: -7024841271861291190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_38
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 740
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 898e06b210c2984f0800000000000000
+      internalID: -826080673111414632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_39
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 738
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82873b402c6c5d4a0800000000000000
+      internalID: -6569125944845174744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_40
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 738
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0d3d69008b40e070800000000000000
+      internalID: 8133583940317166858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_41
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 739
+        width: 33
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcab35876f62ff4c0800000000000000
+      internalID: -4251636683191895345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_42
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 736
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dc268a59c6026910800000000000000
+      internalID: 1829031860542778581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_43
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 745
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b987f821f3d8f1a40800000000000000
+      internalID: 5341142985118546075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_44
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 740
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e75bf1ed1fdba93f0800000000000000
+      internalID: -893192729568234114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_45
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 692
+        width: 59
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d36e1c3d222417b0800000000000000
+      internalID: -5254537287557028907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_46
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 703
+        width: 43
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0e8facf23c274210800000000000000
+      internalID: 1317070013528509963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_47
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 703
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acf5ab75b92f4be30800000000000000
+      internalID: 4518503075165134794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_48
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 654
+        width: 42
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d19eeabd1257f740800000000000000
+      internalID: 5185703783584141777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_49
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 657
+        width: 45
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37e15f0dc7d8a9860800000000000000
+      internalID: 7537492493579132531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_50
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 680
+        width: 44
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad25b041bbb0dd70800000000000000
+      internalID: 9065952419866029483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_51
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 671
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcfac0aba7a3cd500800000000000000
+      internalID: 422276763847798733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_52
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 671
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4aad0ff3a9bd7bb00800000000000000
+      internalID: 844384910699453092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_53
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 671
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b45a7494241c23d10800000000000000
+      internalID: 2103956466376877387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_54
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 676
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efe9105d0bf9f9d30800000000000000
+      internalID: 4440443339447312126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_55
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 674
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aac18cc6adf8517e0800000000000000
+      internalID: -1795370708146578262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_56
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 673
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9c21440b3c2d52f0800000000000000
+      internalID: -982580511710827361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_57
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 675
+        width: 33
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0194364808420c50800000000000000
+      internalID: 6629940801817579790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_58
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 672
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6164e9c83cc488920800000000000000
+      internalID: 2992726355149211158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_59
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 681
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9a76b01c6a5bf9c0800000000000000
+      internalID: -3892418032748299618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_60
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 676
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf72c3752c37e0150800000000000000
+      internalID: 5840733045270521851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_61
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 655
+        width: 31
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 909b917db61992e60800000000000000
+      internalID: 7938035710573525257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_62
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 630
+        width: 42
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b0dabdcf9c905b20800000000000000
+      internalID: 3121166751933059253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_63
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 629
+        width: 45
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fb9c6404bc4758e0800000000000000
+      internalID: -1704809597884392461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_64
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 628
+        width: 46
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32af068f4ec072f80800000000000000
+      internalID: -8131516424634959325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_65
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 566
+        width: 59
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ff85babaa99e8770800000000000000
+      internalID: 8614992095762288626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_66
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 569
+        width: 59
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a62d3362b670bdfb0800000000000000
+      internalID: -4622092435781856662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_67
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 567
+        width: 59
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f7e56134f6d5a570800000000000000
+      internalID: 8477418217883953138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_68
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 551
+        width: 59
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 297d1b357137199e0800000000000000
+      internalID: -1616384247223691374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_69
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 550
+        width: 62
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 018f267593253d750800000000000000
+      internalID: 6328492307618396176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_70
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 549
+        width: 65
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25c7703f2286c2f30800000000000000
+      internalID: 4552127822680259666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_71
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 610
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9960f22e813ef9a10800000000000000
+      internalID: 1918501662296573593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_72
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 609
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a3ef0c7e5535d230800000000000000
+      internalID: 3662892551860380582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_73
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 606
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b323181ea27f65b90800000000000000
+      internalID: -7253338386289577413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_74
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 594
+        width: 56
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a32d6fc564665820800000000000000
+      internalID: 2906620997948744614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_75
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 594
+        width: 58
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 444d075fc50489530800000000000000
+      internalID: 3861907448469181508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_76
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 495
+        width: 42
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb2d3ddc8aaa6d840800000000000000
+      internalID: 5248570057731330748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_77
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 498
+        width: 42
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22c8bd79402b168b0800000000000000
+      internalID: -5160647965192516574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_78
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 496
+        width: 42
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d53e543b5ecea7c20800000000000000
+      internalID: 3205134556126896989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_79
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 490
+        width: 42
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de1be19105309aa20800000000000000
+      internalID: 3073991863210783213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_80
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 489
+        width: 59
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6979cababc0e5a880800000000000000
+      internalID: -8600220748030896234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_81
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 546
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5c3f187c20d4bb70800000000000000
+      internalID: 8913978451885505627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_82
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 546
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d28f4621a19105780800000000000000
+      internalID: -8696423280683976659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_83
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 542
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f33a4d228bcdbc400800000000000000
+      internalID: 345612479840428863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_84
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 530
+        width: 56
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d8508aa24a192120800000000000000
+      internalID: 2389469950927460566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_85
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 530
+        width: 58
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce40ad06712d028f0800000000000000
+      internalID: -567222555197700884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_86
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 355
+        width: 96
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e7bdcdd3bf7579d0800000000000000
+      internalID: -2777173184706922528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_87
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 356
+        width: 96
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50d818c0102024760800000000000000
+      internalID: 7440511737897520389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_88
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 357
+        width: 97
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d5b9ae380f396820800000000000000
+      internalID: 2911927938715334096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_89
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 488
+        width: 44
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 184216f567c3cb800800000000000000
+      internalID: 629444527029036161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_90
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 482
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 356a9d5446a11d2b0800000000000000
+      internalID: -5561635046854908333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_91
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 482
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59ec8138b8d526bd0800000000000000
+      internalID: -2638443577904410987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_92
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 478
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9438efeac533af970800000000000000
+      internalID: 8789394095932867401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_93
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 466
+        width: 56
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d89d447832528cbf0800000000000000
+      internalID: -303952140323989107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_94
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 466
+        width: 58
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c322b3ea45ccc1150800000000000000
+      internalID: 5844771080492491324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_95
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 334
+        width: 76
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3703ffc2f10cbcc80800000000000000
+      internalID: -8301330247995936653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_96
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 358
+        width: 65
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48767edde45e33570800000000000000
+      internalID: 8445345853142951812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_97
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 357
+        width: 50
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a59fe624cd0279b0800000000000000
+      internalID: -5083985893229881943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_98
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 363
+        width: 49
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e00697816071da00800000000000000
+      internalID: 779527774700699881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_99
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 418
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a56454800261d850800000000000000
+      internalID: 6400004299829831075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_100
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 418
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 372f25707dda1f9d0800000000000000
+      internalID: -2742219559039470989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_101
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 414
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99bfcec12fac375f0800000000000000
+      internalID: -760040770879292519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_102
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 402
+        width: 56
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33df202c87f4a4660800000000000000
+      internalID: 7370791120214883635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_103
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 402
+        width: 58
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 151e65ed18e948e70800000000000000
+      internalID: 9116585826322932049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_104
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 236
+        width: 50
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ff082c249b06acf0800000000000000
+      internalID: -241492798993854472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_105
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 354
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1628449ec547d8600800000000000000
+      internalID: 472161478343164513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_106
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 354
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11766e6d363f74e30800000000000000
+      internalID: 4487823163830724369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_107
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 350
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48a18892f0b3ee870800000000000000
+      internalID: 8713967265315822212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_108
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 338
+        width: 56
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65f0a82f375930e50800000000000000
+      internalID: 6774422589718269782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_109
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 338
+        width: 58
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57221a5fddf19d580800000000000000
+      internalID: -8801968958549712267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_110
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 195
+        width: 72
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b54d148e6458d410800000000000000
+      internalID: 1502043309367707061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_111
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 195
+        width: 82
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c323af67a21282680800000000000000
+      internalID: -8779731007290330564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_112
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 196
+        width: 79
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a4a83a4b9736ac30800000000000000
+      internalID: 4370241628514329767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_113
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 195
+        width: 57
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 807a566cf0a7d86c0800000000000000
+      internalID: -4139518274311969016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_114
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 194
+        width: 58
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522084cf0c8b13630800000000000000
+      internalID: 3905105490912739877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_115
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 196
+        width: 65
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e45f107f812544fd0800000000000000
+      internalID: -2358670037658503858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_116
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 194
+        width: 67
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a4d06e864af78940800000000000000
+      internalID: 5298478667568043174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_117
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 228
+        width: 50
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afede459ed3d2ce10800000000000000
+      internalID: 2216566919560879866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_118
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 230
+        width: 49
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8333e21bd4aeee510800000000000000
+      internalID: 1580458138659599160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_119
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 0
+        width: 186
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce6a4db4bc4346880800000000000000
+      internalID: -8618705739125053716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-Props_normal_120
+      rect:
+        serializedVersion: 2
+        x: 836
+        y: 0
+        width: 185
+        height: 227
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d30548d56151c890800000000000000
+      internalID: -7439575611577400366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      map-Props_normal_0: -7116302944687163344
+      map-Props_normal_1: -4372305537487595030
+      map-Props_normal_10: -6034159036082654677
+      map-Props_normal_100: -2742219559039470989
+      map-Props_normal_101: -760040770879292519
+      map-Props_normal_102: 7370791120214883635
+      map-Props_normal_103: 9116585826322932049
+      map-Props_normal_104: -241492798993854472
+      map-Props_normal_105: 472161478343164513
+      map-Props_normal_106: 4487823163830724369
+      map-Props_normal_107: 8713967265315822212
+      map-Props_normal_108: 6774422589718269782
+      map-Props_normal_109: -8801968958549712267
+      map-Props_normal_11: 3395675672885355317
+      map-Props_normal_110: 1502043309367707061
+      map-Props_normal_111: -8779731007290330564
+      map-Props_normal_112: 4370241628514329767
+      map-Props_normal_113: -4139518274311969016
+      map-Props_normal_114: 3905105490912739877
+      map-Props_normal_115: -2358670037658503858
+      map-Props_normal_116: 5298478667568043174
+      map-Props_normal_117: 2216566919560879866
+      map-Props_normal_118: 1580458138659599160
+      map-Props_normal_119: -8618705739125053716
+      map-Props_normal_12: 3266352242488853109
+      map-Props_normal_120: -7439575611577400366
+      map-Props_normal_13: -3286594703820206391
+      map-Props_normal_14: -2348156368399285717
+      map-Props_normal_15: 4235112360984810559
+      map-Props_normal_16: 8215724594884883700
+      map-Props_normal_17: -3446402548689943877
+      map-Props_normal_18: -1414726881926657071
+      map-Props_normal_19: 2328523171269408314
+      map-Props_normal_2: 268904415939477621
+      map-Props_normal_20: -5155586680159780394
+      map-Props_normal_21: 7314774637930664281
+      map-Props_normal_22: 8328568407084349171
+      map-Props_normal_23: 4067450408576337745
+      map-Props_normal_24: -3311587094218187360
+      map-Props_normal_25: -6090971188744650193
+      map-Props_normal_26: -6156005336586807653
+      map-Props_normal_27: -6616675468621212004
+      map-Props_normal_28: -5057849789357849470
+      map-Props_normal_29: 1593584094797312632
+      map-Props_normal_3: 4293011344047678586
+      map-Props_normal_30: -2343351183440693171
+      map-Props_normal_31: 8375586366906307598
+      map-Props_normal_32: 6483452923217845587
+      map-Props_normal_33: -2194654559338240452
+      map-Props_normal_34: 4046255182280969632
+      map-Props_normal_35: -4076711483657808695
+      map-Props_normal_36: -124329911090810819
+      map-Props_normal_37: -7024841271861291190
+      map-Props_normal_38: -826080673111414632
+      map-Props_normal_39: -6569125944845174744
+      map-Props_normal_4: 445401768856689271
+      map-Props_normal_40: 8133583940317166858
+      map-Props_normal_41: -4251636683191895345
+      map-Props_normal_42: 1829031860542778581
+      map-Props_normal_43: 5341142985118546075
+      map-Props_normal_44: -893192729568234114
+      map-Props_normal_45: -5254537287557028907
+      map-Props_normal_46: 1317070013528509963
+      map-Props_normal_47: 4518503075165134794
+      map-Props_normal_48: 5185703783584141777
+      map-Props_normal_49: 7537492493579132531
+      map-Props_normal_5: -4646093152904389680
+      map-Props_normal_50: 9065952419866029483
+      map-Props_normal_51: 422276763847798733
+      map-Props_normal_52: 844384910699453092
+      map-Props_normal_53: 2103956466376877387
+      map-Props_normal_54: 4440443339447312126
+      map-Props_normal_55: -1795370708146578262
+      map-Props_normal_56: -982580511710827361
+      map-Props_normal_57: 6629940801817579790
+      map-Props_normal_58: 2992726355149211158
+      map-Props_normal_59: -3892418032748299618
+      map-Props_normal_6: -1261509741590858045
+      map-Props_normal_60: 5840733045270521851
+      map-Props_normal_61: 7938035710573525257
+      map-Props_normal_62: 3121166751933059253
+      map-Props_normal_63: -1704809597884392461
+      map-Props_normal_64: -8131516424634959325
+      map-Props_normal_65: 8614992095762288626
+      map-Props_normal_66: -4622092435781856662
+      map-Props_normal_67: 8477418217883953138
+      map-Props_normal_68: -1616384247223691374
+      map-Props_normal_69: 6328492307618396176
+      map-Props_normal_7: -333281331510339185
+      map-Props_normal_70: 4552127822680259666
+      map-Props_normal_71: 1918501662296573593
+      map-Props_normal_72: 3662892551860380582
+      map-Props_normal_73: -7253338386289577413
+      map-Props_normal_74: 2906620997948744614
+      map-Props_normal_75: 3861907448469181508
+      map-Props_normal_76: 5248570057731330748
+      map-Props_normal_77: -5160647965192516574
+      map-Props_normal_78: 3205134556126896989
+      map-Props_normal_79: 3073991863210783213
+      map-Props_normal_8: 6861481498948627684
+      map-Props_normal_80: -8600220748030896234
+      map-Props_normal_81: 8913978451885505627
+      map-Props_normal_82: -8696423280683976659
+      map-Props_normal_83: 345612479840428863
+      map-Props_normal_84: 2389469950927460566
+      map-Props_normal_85: -567222555197700884
+      map-Props_normal_86: -2777173184706922528
+      map-Props_normal_87: 7440511737897520389
+      map-Props_normal_88: 2911927938715334096
+      map-Props_normal_89: 629444527029036161
+      map-Props_normal_9: 1346655512024011349
+      map-Props_normal_90: -5561635046854908333
+      map-Props_normal_91: -2638443577904410987
+      map-Props_normal_92: 8789394095932867401
+      map-Props_normal_93: -303952140323989107
+      map-Props_normal_94: 5844771080492491324
+      map-Props_normal_95: -8301330247995936653
+      map-Props_normal_96: 8445345853142951812
+      map-Props_normal_97: -5083985893229881943
+      map-Props_normal_98: 779527774700699881
+      map-Props_normal_99: 6400004299829831075
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

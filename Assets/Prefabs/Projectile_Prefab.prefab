@@ -156,6 +156,7 @@ MonoBehaviour:
   - {fileID: 1343250139075512010, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
   - {fileID: -6366991265210452826, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
   walk_sprites: []
+  directionalAnimations: []
   destroyOnEndDeadAnimation: 0
   <animState>k__BackingField: 0
 --- !u!114 &3383669193516688753
@@ -177,9 +178,9 @@ MonoBehaviour:
   hideTilCollision: 0
   canFindNewTarget: 0
   speed: 2.75
-  mode: 3
+  mode: 1
   aoeRadius: 1.5
-  aoeVfxPrefab: {fileID: 0}
+  aoeVfxPrefab: {fileID: 4736630556181736464, guid: e45bb3901cec7d3409067438f9d3f4f1, type: 3}
   dotDuration: 2
   dotInterval: 0.5
   dotDamagePerTick: 1

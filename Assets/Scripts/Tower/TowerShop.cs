@@ -65,12 +65,17 @@ public class TowerShop : MonoBehaviour
             if (selectedTower.TryGetComponent(out Hero hero))
             {
                 hero.SetIsSelected(false);
-                hero.targetPosition = mousePosition;
+                hero.transform.position = mousePosition;
                 hero.isAttacking = false;
                 
                 levelManager.heroFielded = true;
             }
             
+            if (selectedTower.TryGetComponent(out Wall wall))
+            {
+                wall.SetIsSelected(false);
+                wall.isAttacking = false;
+            }
 
             selectedTower = null;
             isPlacingTower = false;
@@ -141,8 +146,8 @@ public class TowerShop : MonoBehaviour
 
             GridManager.Instance.PlaceWall(pos);
             selectedTower.GetComponent<SpriteRenderer>().color = Color.white;
-
         }
+        
         tower.GetComponent<OnTowerClickListener>()._enabled = true;
         PlaceTower();
     }

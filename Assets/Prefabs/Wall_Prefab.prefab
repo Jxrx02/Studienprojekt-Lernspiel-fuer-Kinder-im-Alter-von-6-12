@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1210802783087284844}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4699998, z: 0}
+  m_LocalPosition: {x: 0, y: 0.13999987, z: 0}
   m_LocalScale: {x: 1.28, y: 1.28, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -311,7 +311,7 @@ Transform:
   m_GameObject: {fileID: 3846463442611047790}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4699998, z: 0}
+  m_LocalPosition: {x: 0, y: 0.13999987, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -769,7 +769,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 5249424626304117103, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  m_Sprite: {fileID: 1122172968, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -813,7 +813,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.47}
+  m_Offset: {x: 0, y: 0.14}
   m_Radius: 0.64
 --- !u!114 &2573140597876220150
 MonoBehaviour:
@@ -827,8 +827,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b883c1daea164d7687ea0d8ad22f1835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 1.49, y: 2.3}
-  offset: {x: 0, y: 0.62}
+  size: {x: 0.65, y: 1.13}
+  offset: {x: 0, y: 0.13}
   _enabled: 1
 --- !u!114 &5202487448468226290
 MonoBehaviour:
@@ -844,6 +844,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statTextPrefab: {fileID: 7405248465969971765, guid: e3c9765711bf9d049a6b52fb72c03261, type: 3}
   poolSize: 5
+  startY: 1.75
+  endY: 2.15
+  duration: 1
 --- !u!114 &3807360598587681782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -851,7 +854,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8899905071059491453}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c06338dcf3f3834e9ea0d40eccd0c6b, type: 3}
   m_Name: 
@@ -861,13 +864,12 @@ MonoBehaviour:
   mTimePerFrame: 0.125
   loop: 1
   idle_sprites:
-  - {fileID: 5249424626304117103, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 262567472736910702, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-  - {fileID: 5249424626304117103, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  - {fileID: 1122172968, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
   attack_sprites: []
   evolve_sprites: []
   dead_sprites: []
   walk_sprites: []
+  directionalAnimations: []
   destroyOnEndDeadAnimation: 0
   <animState>k__BackingField: 0
 --- !u!114 &1574092445128407524
@@ -895,7 +897,7 @@ MonoBehaviour:
   timeInBetweenShots: 0.1
   attackSpeedMultiplier: 0
   rangeIndicator: {fileID: 6642679538933387214}
-  rangeIndicatorOffset: {x: 0, y: 0.47, z: 0}
+  rangeIndicatorOffset: {x: 0, y: 0.14, z: 0}
   interactionIndicator: {fileID: 5973805779799042870}
   interactionIndicatorOffset: {x: 0, y: 0, z: 0}
   outlineMaterial: {fileID: 2100000, guid: fb640c70274ee704a9029b0be1691a4e, type: 2}
@@ -930,6 +932,7 @@ MonoBehaviour:
       attack_sprites: []
       pathShopIcon: []
       projectile: {fileID: 0}
+      wallTile: {fileID: 0}
   - towerName: aawww
     researchCost: 1
     levels:
@@ -954,6 +957,7 @@ MonoBehaviour:
       pathShopIcon:
       - {fileID: 2988533918862914309, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
       projectile: {fileID: 0}
+      wallTile: {fileID: 0}
   - towerName: darr
     researchCost: 1
     levels:
@@ -977,6 +981,7 @@ MonoBehaviour:
       pathShopIcon:
       - {fileID: -4317833008507849792, guid: 1df28cd758c7f8341928ffcbb31eefc2, type: 3}
       projectile: {fileID: 0}
+      wallTile: {fileID: 0}
   pathLevels: 000000000000000000000000
   level: 1
   experience: 0
@@ -984,6 +989,9 @@ MonoBehaviour:
   levelConfig: {fileID: 11400000, guid: f434a970578b9894dbaeb1a25b88b1e0, type: 2}
   isAttacking: 0
   projectilePrefab: {fileID: 0}
+  buildCost: 25
+  baseWallTile: {fileID: 11400000, guid: 8f40516933b4af542b505a1cda889c9c, type: 2}
+  spriteRenderer: {fileID: 720708846989912815}
   spikeDamage: 0
   spikeCooldown: 1
   hasSpikes: 0

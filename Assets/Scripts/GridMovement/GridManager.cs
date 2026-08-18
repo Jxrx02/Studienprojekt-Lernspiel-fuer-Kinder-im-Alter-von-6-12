@@ -8,14 +8,17 @@ namespace TowerDefense.GridMovement
     {
         public static GridManager Instance;
 
+        [Header("Tilemaps")]
         [SerializeField] private Tilemap groundTilemap;
         [SerializeField] private Tilemap obstacleTilemap;
+        [SerializeField] public Tilemap WallTilemap;
 
         private Dictionary<Vector3Int, GridNode> nodes = new();
 
         private void Awake()
         {
             Instance = this;
+
             BuildGrid();
             CacheNeighbours();
         }
@@ -25,44 +28,72 @@ namespace TowerDefense.GridMovement
         public Vector3 SnapToGrid(Vector3 worldPosition)
         {
             Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
+
             return groundTilemap.GetCellCenterWorld(cell);
         }
-        // ───────────────── WALL VALIDATION ─────────────────
+
+        // ───────────────── WALL ─────────────────
+
+        /// <summary>
+        /// Prüft, ob auf dieser Position grundsätzlich eine Wall
+        /// gebaut werden kann.
+        ///
+        /// Wird für das neue BuildPoint-System normalerweise
+        /// nicht mehr benötigt, kann aber für Validierung bleiben.
+        /// </summary>
         public bool CanPlaceWall(Vector3 worldPosition)
         {
-            Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
+            Vector3Int cell =
+                groundTilemap.WorldToCell(worldPosition);
 
             if (!nodes.TryGetValue(cell, out GridNode node))
                 return false;
 
-            // Wall darf NUR auf Pfad (walkable = true) gebaut werden
+            // Wall darf nur auf begehbarem Boden gebaut werden.
             return node.walkable;
         }
 
-        public void PlaceWall(Vector3 worldPosition)
+        /// <summary>
+        /// Markiert das Feld als durch eine Wall blockiert.
+        /// </summary>
+        public bool PlaceWall(Vector3 worldPosition)
         {
-            Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
+            Vector3Int cell =
+                groundTilemap.WorldToCell(worldPosition);
 
             if (!nodes.TryGetValue(cell, out GridNode node))
-                return;
+                return false;
+
+            // Bereits blockiert
+            if (!node.walkable)
+                return false;
 
             node.walkable = false;
-            
+
             NotifyGridChanged();
+
+            return true;
         }
 
-        public void RemoveWall(Vector3 worldPosition)
+        /// <summary>
+        /// Entfernt die Blockierung durch eine Wall.
+        /// </summary>
+        public bool RemoveWall(Vector3 worldPosition)
         {
-            Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
+            Vector3Int cell =
+                groundTilemap.WorldToCell(worldPosition);
 
             if (!nodes.TryGetValue(cell, out GridNode node))
-                return;
+                return false;
 
             node.walkable = true;
 
             NotifyGridChanged();
+
+            return true;
         }
-        // ───────────────── EXISTING ─────────────────
+
+        // ───────────────── GRID ─────────────────
 
         private void BuildGrid()
         {
@@ -77,7 +108,8 @@ namespace TowerDefense.GridMovement
 
                 GridNode node = new GridNode(
                     cell,
-                    groundTilemap.GetCellCenterWorld(cell));
+                    groundTilemap.GetCellCenterWorld(cell)
+                );
 
                 node.walkable = !obstacleTilemap.HasTile(cell);
 
@@ -98,35 +130,53 @@ namespace TowerDefense.GridMovement
                         if (x == 0 && y == 0)
                             continue;
 
-                        Vector3Int neighbourCell = node.cell + new Vector3Int(x, y, 0);
+                        Vector3Int neighbourCell =
+                            node.cell +
+                            new Vector3Int(x, y, 0);
 
-                        if (nodes.TryGetValue(neighbourCell, out GridNode neighbour))
+                        if (nodes.TryGetValue(
+                                neighbourCell,
+                                out GridNode neighbour))
+                        {
                             node.neighbours.Add(neighbour);
+                        }
                     }
                 }
             }
         }
 
+        // ───────────────── NODE ACCESS ─────────────────
+
         public GridNode GetNode(Vector3 worldPosition)
         {
-            Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
-            nodes.TryGetValue(cell, out GridNode node);
+            Vector3Int cell =
+                groundTilemap.WorldToCell(worldPosition);
+
+            nodes.TryGetValue(
+                cell,
+                out GridNode node
+            );
+
             return node;
         }
 
         public GridNode GetNode(Vector3Int cell)
         {
-            nodes.TryGetValue(cell, out GridNode node);
+            nodes.TryGetValue(
+                cell,
+                out GridNode node
+            );
+
             return node;
         }
-        
 
         public IEnumerable<GridNode> GetAllNodes()
         {
             return nodes.Values;
         }
-        
-        
+
+        // ───────────────── GRID UPDATE ─────────────────
+
         public void NotifyGridChanged()
         {
             foreach (var node in nodes.Values)
@@ -139,9 +189,52 @@ namespace TowerDefense.GridMovement
             Actions.onGridChanged?.Invoke();
         }
         
+        public void RefreshWallVisuals(Vector3Int centerCell)
+        {
+            if (WallTilemap == null)
+                return;
+
+            // Zuerst die RuleTiles neu berechnen.
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    Vector3Int cell =
+                        centerCell + new Vector3Int(x, y, 0);
+
+                    WallTilemap.RefreshTile(cell);
+                }
+            }
+
+            // Danach die SpriteRenderer der betroffenen Walls aktualisieren.
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    Vector3Int cell =
+                        centerCell + new Vector3Int(x, y, 0);
+
+                    RefreshWallVisual(cell);
+                }
+            }
+        }
+        private void RefreshWallVisual(Vector3Int cell)
+        {
+            Vector3 worldPosition =
+                WallTilemap.GetCellCenterWorld(cell);
+
+            Collider2D[] colliders =
+                Physics2D.OverlapPointAll(worldPosition);
+
+            foreach (Collider2D collider in colliders)
+            {
+                Wall wall = collider.GetComponent<Wall>();
+
+                if (wall != null && wall.IsBuilt)
+                {
+                    wall.RefreshVisual();
+                }
+            }
+        }
     }
-    
-    
-
-
 }

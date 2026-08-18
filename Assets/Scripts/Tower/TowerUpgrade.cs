@@ -39,6 +39,9 @@ namespace ScriptableObjects
         public Sprite[] attack_sprites;
         public Sprite[] pathShopIcon;
         public GameObject projectile;
+        
+        [Header("Wall")]
+        public RuleTile wallTile;
     }
 
     [System.Serializable]

@@ -1,0 +1,650 @@
+fileFormatVersion: 2
+guid: f07a3e7202778ee41b63227c2e34d891
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2042363730335297801
+    second: map-WaterTiles-6frames_normal_0
+  - first:
+      213: 875706245305238388
+    second: map-WaterTiles-6frames_normal_1
+  - first:
+      213: 67366492642866796
+    second: map-WaterTiles-6frames_normal_2
+  - first:
+      213: 3804916092564676221
+    second: map-WaterTiles-6frames_normal_3
+  - first:
+      213: 2003335707127668225
+    second: map-WaterTiles-6frames_normal_4
+  - first:
+      213: -3568697884442965155
+    second: map-WaterTiles-6frames_normal_5
+  - first:
+      213: -2030281312724377247
+    second: map-WaterTiles-6frames_normal_6
+  - first:
+      213: 5141816205470055213
+    second: map-WaterTiles-6frames_normal_7
+  - first:
+      213: -5376302272362628483
+    second: map-WaterTiles-6frames_normal_8
+  - first:
+      213: 6038742485352942876
+    second: map-WaterTiles-6frames_normal_9
+  - first:
+      213: 2724116171988790077
+    second: map-WaterTiles-6frames_normal_10
+  - first:
+      213: 4860826160982755773
+    second: map-WaterTiles-6frames_normal_11
+  - first:
+      213: -7282897991748119762
+    second: map-WaterTiles-6frames_normal_12
+  - first:
+      213: -1414624880947299220
+    second: map-WaterTiles-6frames_normal_13
+  - first:
+      213: -7857284559539770671
+    second: map-WaterTiles-6frames_normal_14
+  - first:
+      213: -5612143127860359879
+    second: map-WaterTiles-6frames_normal_15
+  - first:
+      213: 96208501888855878
+    second: map-WaterTiles-6frames_normal_16
+  - first:
+      213: 1130096620010823667
+    second: map-WaterTiles-6frames_normal_17
+  - first:
+      213: 2608824711577896208
+    second: map-WaterTiles-6frames_normal_18
+  - first:
+      213: -6525049051052425303
+    second: map-WaterTiles-6frames_normal_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 767
+        width: 225
+        height: 257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fe0937120118a3e0800000000000000
+      internalID: -2042363730335297801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_1
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 831
+        width: 194
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 473820fb032272c00800000000000000
+      internalID: 875706245305238388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_2
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 831
+        width: 194
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c66fdb7d7755fe000800000000000000
+      internalID: 67366492642866796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_3
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 831
+        width: 194
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7e1c71e607cdc430800000000000000
+      internalID: 3804916092564676221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_4
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 639
+        width: 194
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10e533526374dcb10800000000000000
+      internalID: 2003335707127668225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_5
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 639
+        width: 194
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5bc61f8e20797ec0800000000000000
+      internalID: -3568697884442965155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_6
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 639
+        width: 194
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16123f827edf2d3e0800000000000000
+      internalID: -2030281312724377247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_7
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 703
+        width: 194
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2bb36ba8966b5740800000000000000
+      internalID: 5141816205470055213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 479
+        width: 225
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7a33b271998365b0800000000000000
+      internalID: -5376302272362628483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_9
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 479
+        width: 194
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1d8589bb4cedc350800000000000000
+      internalID: 6038742485352942876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_10
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 479
+        width: 194
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3be946b9310ec520800000000000000
+      internalID: 2724116171988790077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_11
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 351
+        width: 194
+        height: 290
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db98d40c3af157340800000000000000
+      internalID: 4860826160982755773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_12
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 351
+        width: 194
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e23927aecd2fdea90800000000000000
+      internalID: -7282897991748119762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_13
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 351
+        width: 194
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6cf4b07a2e3e5ce0800000000000000
+      internalID: -1414624880947299220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 97
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1da6871a25155f290800000000000000
+      internalID: -7857284559539770671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_15
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 223
+        width: 194
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93dcb334f89ad12b0800000000000000
+      internalID: -5612143127860359879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_16
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 223
+        width: 194
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64f257b6f1dc55100800000000000000
+      internalID: 96208501888855878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_17
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 223
+        width: 194
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ff5d9d63e8eeaf00800000000000000
+      internalID: 1130096620010823667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 159
+        width: 97
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0158cd6c048643420800000000000000
+      internalID: 2608824711577896208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: map-WaterTiles-6frames_normal_19
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 95
+        width: 194
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9af3502957e5275a0800000000000000
+      internalID: -6525049051052425303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      map-WaterTiles-6frames_normal_0: -2042363730335297801
+      map-WaterTiles-6frames_normal_1: 875706245305238388
+      map-WaterTiles-6frames_normal_10: 2724116171988790077
+      map-WaterTiles-6frames_normal_11: 4860826160982755773
+      map-WaterTiles-6frames_normal_12: -7282897991748119762
+      map-WaterTiles-6frames_normal_13: -1414624880947299220
+      map-WaterTiles-6frames_normal_14: -7857284559539770671
+      map-WaterTiles-6frames_normal_15: -5612143127860359879
+      map-WaterTiles-6frames_normal_16: 96208501888855878
+      map-WaterTiles-6frames_normal_17: 1130096620010823667
+      map-WaterTiles-6frames_normal_18: 2608824711577896208
+      map-WaterTiles-6frames_normal_19: -6525049051052425303
+      map-WaterTiles-6frames_normal_2: 67366492642866796
+      map-WaterTiles-6frames_normal_3: 3804916092564676221
+      map-WaterTiles-6frames_normal_4: 2003335707127668225
+      map-WaterTiles-6frames_normal_5: -3568697884442965155
+      map-WaterTiles-6frames_normal_6: -2030281312724377247
+      map-WaterTiles-6frames_normal_7: 5141816205470055213
+      map-WaterTiles-6frames_normal_8: -5376302272362628483
+      map-WaterTiles-6frames_normal_9: 6038742485352942876
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

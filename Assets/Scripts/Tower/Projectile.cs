@@ -250,15 +250,24 @@ namespace TowerDefense
 
         private void ApplyAoeDamage(Vector3 center, float radius, int dmg, GameObject vfx)
         {
-            if (vfx != null) Instantiate(vfx, center, Quaternion.identity);
+            if (vfx != null)
+            {
+                GameObject aoeVfx = Instantiate(vfx, center, Quaternion.Euler(0, 0, 90));
+                SpriteAnim sa = aoeVfx.GetComponent<SpriteAnim>();
+
+                if (sa != null)
+                    sa.OnIdleAnimationComplete = () => Destroy(aoeVfx);
+                else
+                    Destroy(aoeVfx, 1f); // Fallback, falls kein SpriteAnim vorhanden ist
+            }
+
             foreach (var go in TowerHeroManager.instance.enemies)
             {
                 if (go == null) continue;
                 if (Vector3.Distance(center, go.transform.position) <= radius)
                 {
                     go.GetComponent<Enemy>()?.TakeDamage(dmg);
-                    go.GetComponent<Wall>()?.TakeDamage(damage);
-
+                    go.GetComponent<Wall>()?.TakeDamage(dmg); // war vorher "damage" (Member-Feld) statt "dmg" (Parameter)
                 }
             }
         }
@@ -450,7 +459,7 @@ namespace TowerDefense
                 yield return null;
             }
             // Explosion am Ende
-            ApplyAoeDamage(center, blackHoleRadius, damage, null);
+            ApplyAoeDamage(center, blackHoleRadius, damage, aoeVfxPrefab);
             anim.TriggerDeadAnimation(true);
             projectileIsDead = true;
         }
@@ -506,6 +515,92 @@ namespace TowerDefense
                 
                 yield return new WaitForSeconds(0.5f);
             }
+        }
+        // ── Stat-Anzeige für Upgrade-Diffs ──────────────────────
+        [Serializable]
+        public struct StatEntry
+        {
+            public string label;
+            public float value;
+            public Color color;
+
+            public StatEntry(string label, float value, Color color)
+            {
+                this.label = label;
+                this.value = value;
+                this.color = color;
+            }
+        }
+
+                /// <summary>
+        /// Liefert Basisschaden + alle modusabhängigen Effekt-Werte dieses Projektils
+        /// (z.B. AOE-Radius, DoT-Schaden, Chain-Anzahl, ...), damit sie im
+        /// Upgrade-Diff (StatDiffDisplay) angezeigt werden können.
+        /// Funktioniert auch direkt auf einem nicht instanziierten Prefab,
+        /// da nur die serialisierten Inspector-Werte gelesen werden.
+        /// </summary>
+        public List<StatEntry> GetEffectStats()
+        {
+            var stats = new List<StatEntry>
+            {
+                new StatEntry("Projektilschaden", baseDmg, Color.red)
+            };
+
+            switch (mode)
+            {
+                case ProjectileMode.Default:
+                    if (canFindNewTarget > 0)
+                        stats.Add(new StatEntry("Bounces", canFindNewTarget, new Color(0.7f, 0.7f, 0.7f)));
+                    break;
+
+                case ProjectileMode.AOE:
+                    stats.Add(new StatEntry("AOE Radius", aoeRadius, new Color(1f, 0.5f, 0f)));
+                    break;
+
+                case ProjectileMode.DoT:
+                    stats.Add(new StatEntry("DoT Schaden/Tick", dotDamagePerTick, new Color(0.6f, 0.2f, 0.8f)));
+                    stats.Add(new StatEntry("DoT Dauer", dotDuration, new Color(0.6f, 0.2f, 0.8f)));
+                    stats.Add(new StatEntry("DoT Intervall", dotInterval, new Color(0.6f, 0.2f, 0.8f)));
+                    break;
+
+                case ProjectileMode.ChainLightning:
+                    stats.Add(new StatEntry("Chain Anzahl", chainCount, Color.yellow));
+                    stats.Add(new StatEntry("Chain Radius", chainRadius, Color.yellow));
+                    stats.Add(new StatEntry("Chain Falloff", chainDamageFalloff, Color.yellow));
+                    break;
+
+                case ProjectileMode.Knockback:
+                    stats.Add(new StatEntry("Knockback Distanz", knockbackDistance, new Color(0.8f, 0.5f, 0.2f)));
+                    stats.Add(new StatEntry("Knockback Dauer", knockbackDuration, new Color(0.8f, 0.5f, 0.2f)));
+                    break;
+
+                case ProjectileMode.Splitter:
+                    stats.Add(new StatEntry("Splitter Anzahl", splitterCount, new Color(0.2f, 0.8f, 0.4f)));
+                    stats.Add(new StatEntry("Splitter Schaden", splitterDamage, new Color(0.2f, 0.8f, 0.4f)));
+                    break;
+
+                case ProjectileMode.Pierce:
+                    stats.Add(new StatEntry("Pierce Anzahl", pierceCount, new Color(0.4f, 0.7f, 1f)));
+                    break;
+
+                case ProjectileMode.BlackHole:
+                    stats.Add(new StatEntry("BlackHole Radius", blackHoleRadius, new Color(0.5f, 0f, 1f)));
+                    stats.Add(new StatEntry("BlackHole Dauer", blackHolePullDuration, new Color(0.5f, 0f, 1f)));
+                    break;
+
+                case ProjectileMode.Sticky:
+                    stats.Add(new StatEntry("Sticky Radius", stickyAoeRadius, new Color(1f, 0f, 0.5f)));
+                    stats.Add(new StatEntry("Sticky Delay", stickyDelay, new Color(1f, 0f, 0.5f)));
+                    break;
+
+                case ProjectileMode.Chain:
+                    stats.Add(new StatEntry("Chain Radius", chainLinkRadius, new Color(0f, 0.8f, 1f)));
+                    stats.Add(new StatEntry("Chain Schaden", chainLinkDamage, new Color(0f, 0.8f, 1f)));
+                    stats.Add(new StatEntry("Chain Slow", chainSlowAmount, new Color(0f, 0.8f, 1f)));
+                    break;
+            }
+
+            return stats;
         }
 
         // ── Gizmos ───────────────────────────────────────────────

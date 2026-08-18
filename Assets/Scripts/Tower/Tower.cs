@@ -79,7 +79,7 @@ namespace TowerDefense
         [HideInInspector] public int requiredExperience;
         public LevelConfig levelConfig;
         
-        [HideInInspector] public Boolean isAttacking;
+        [HideInInspector] public Boolean isAttacking =false;
         public GameObject projectilePrefab;
 
         [Header("Targeting")]
@@ -435,8 +435,14 @@ namespace TowerDefense
 
                 spriteAnim.idle_sprites   = lvl.idle_sprites;
                 spriteAnim.attack_sprites = lvl.attack_sprites;
-                projectilePrefab          = lvl.projectile;
-
+                GameObject oldProjectilePrefab = projectilePrefab;  
+                projectilePrefab               = lvl.projectile;
+                
+                if (this is Wall wall)
+                {
+                    wall.ApplyWallTile(lvl.wallTile);
+                }
+                
                 if (statDiffDisplay != null)
                 {
                     statDiffDisplay.ShowDiff("Damage",         oldDamage,         damage,                     Color.red);
@@ -449,6 +455,9 @@ namespace TowerDefense
                     statDiffDisplay.ShowDiff("Range Mult.",    oldRangeMult,      statRangeMultiplier,        new Color(0.5f, 0.9f, 1f));
                     statDiffDisplay.ShowDiff("AtkSpeed Mult.", oldAtkSpeedMult,   statAttackSpeedMultiplier,  new Color(1f, 0.7f, 0.2f));
                     statDiffDisplay.ShowDiff("Slow Mult.",     oldSlowMult,       statSlowMultiplier,         new Color(0.6f, 0.4f, 1f));
+                    
+                    ShowProjectileDiff(oldProjectilePrefab, projectilePrefab);
+
                 }
 
                 Debug.Log($"Pfad {path} auf Level {pathLevels[pathIndex]} verbessert!");
@@ -461,7 +470,31 @@ namespace TowerDefense
             TowerUI.Instance.UpdateUI();
             DrawRangeIndicatior();
         }
+        private void ShowProjectileDiff(GameObject oldPrefab, GameObject newPrefab)
+        {
+            if (statDiffDisplay == null || newPrefab == null) return;
 
+            Projectile newProj = newPrefab.GetComponent<Projectile>();
+            if (newProj == null) return;
+
+            Projectile oldProj = oldPrefab != null ? oldPrefab.GetComponent<Projectile>() : null;
+
+            var newStats = newProj.GetEffectStats();
+            var oldStats = oldProj != null ? oldProj.GetEffectStats() : null;
+
+            foreach (var stat in newStats)
+            {
+                float oldValue = 0f;
+                if (oldStats != null)
+                {
+                    foreach (var os in oldStats)
+                    {
+                        if (os.label == stat.label) { oldValue = os.value; break; }
+                    }
+                }
+                statDiffDisplay.ShowDiff(stat.label, oldValue, stat.value, stat.color);
+            }
+        }
 
 
         // ───────────────── SELL ─────────────────

@@ -123,6 +123,7 @@ MonoBehaviour:
   evolve_sprites: []
   dead_sprites: []
   walk_sprites: []
+  directionalAnimations: []
   destroyOnEndDeadAnimation: 0
   <animState>k__BackingField: 0
 --- !u!114 &6243388201073787142
@@ -137,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f353da48ee374edf8c9559d552487771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDmg: 1
+  baseDmg: 2
   rotationAngleOffset: -90
   doRotation: 1
   lookAtTarget: 1
