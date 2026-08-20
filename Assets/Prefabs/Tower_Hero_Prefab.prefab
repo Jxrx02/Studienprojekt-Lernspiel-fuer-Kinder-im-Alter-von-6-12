@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 14, y: 14, z: 1}
+  m_LocalScale: {x: 10.92, y: 10.92, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5775751218265191575}
@@ -344,7 +344,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.24
+  m_Radius: 1
 --- !u!114 &8879415244484785402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,8 +364,8 @@ MonoBehaviour:
   blocksPath: 0
   statHealthPoints: 0
   currentHealth: 0
-  range: 7
-  interactionrange: 1.24
+  range: 6.16
+  interactionrange: 1
   damage: 7
   timeInBetweenShots: 1.2
   attackSpeedMultiplier: 2
@@ -488,6 +488,7 @@ MonoBehaviour:
   moveSpeed: 4
   equippedProjectiles:
   - {fileID: 6878188701427382421, guid: 46a471d0b64dfb744abc682e247532b9, type: 3}
+  - {fileID: 6878188701427382421, guid: 46a471d0b64dfb744abc682e247532b9, type: 3}
   activeWeaponIndex: 0
   maxMoveSpeed: 4
   acceleration: 10
@@ -509,21 +510,7 @@ MonoBehaviour:
   mTimePerFrame: 0.125
   loop: 1
   idle_sprites: []
-  attack_sprites:
-  - {fileID: -7984107253978856900, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: 1815023994811458697, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: -373076216440712656, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: 1502800410093419293, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: -4054651237967869833, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: 8517807671858254466, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: 8067163803717983598, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: -2552533183990546876, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: 3893190460080283146, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: -8532930408337253816, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: 4164653689877813853, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: -4982087654040591861, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: 4454050595801280533, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
-  - {fileID: 8311853362289602685, guid: 57a6edc08ed76dc43a69aa8afe784a37, type: 3}
+  attack_sprites: []
   evolve_sprites: []
   dead_sprites: []
   walk_sprites:
@@ -779,8 +766,8 @@ MonoBehaviour:
       - {fileID: 5936902381901186314, guid: acc7b0009aef51143b0b960b2098fbdb, type: 3}
       - {fileID: -5612713679810923103, guid: acc7b0009aef51143b0b960b2098fbdb, type: 3}
     loop: 0
-    isChargeable: 1
-    chargeLoopStartFrame: 2
+    isChargeable: 0
+    chargeLoopStartFrame: 0
     chargeLoopEndFrame: 0
   destroyOnEndDeadAnimation: 0
   <animState>k__BackingField: 0
@@ -796,8 +783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b883c1daea164d7687ea0d8ad22f1835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 3.5, y: 3}
-  offset: {x: 0, y: 1.2}
+  size: {x: 2, y: 2}
+  offset: {x: 0, y: 0}
   _enabled: 1
 --- !u!114 &-1222339928672116993
 MonoBehaviour:
@@ -872,7 +859,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.48, y: 2.48, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7717334485996310191}

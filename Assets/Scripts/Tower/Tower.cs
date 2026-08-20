@@ -93,13 +93,17 @@ namespace TowerDefense
         private List<GameObject> _enemiesInRange = new List<GameObject>();
 
         // ───────────────── INIT ─────────────────
-
-        public void Awake()
+        protected virtual void Awake()
         {
             spriteAnim = GetComponent<SpriteAnim>();
-            spriteAnim.animState = AnimationState.Idle_Animation;
+
+            if (spriteAnim != null)
+                spriteAnim.animState = AnimationState.Idle_Animation;
+
             sr = GetComponent<SpriteRenderer>();
-            notOutlinedMaterial = sr.material;
+
+            if (sr != null)
+                notOutlinedMaterial = sr.material;
 
             statDiffDisplay = GetComponent<StatDiffDisplay>();
             Actions.onEnemyDeath += this.IncreaseExp;
@@ -149,14 +153,14 @@ namespace TowerDefense
 
         public abstract void Attack((GameObject, int) _target);
 
-        protected IEnumerator BaseAttackCoroutine(Action onShoot = null)
+        protected IEnumerator BaseAttackCoroutine(AnimationState attackanimation, Action onShoot = null)
         {
             if (target.Item1 != null)
             {
                 UpdateLookDirection(target.Item1.transform.position);
 
                 spriteAnim.SetAttackSpeed(attackSpeedMultiplier);
-                spriteAnim.animState = AnimationState.Attack_Animation;
+                spriteAnim.animState = attackanimation;
 
                 bool animationComplete = false;
                 void AnimationFinished() => animationComplete = true;
@@ -200,19 +204,35 @@ namespace TowerDefense
         /// </summary>
         protected void Shoot()
         {
-            if (target.Item1 == null || projectilePrefab == null) return;
+            if (target.Item1 == null)
+            {
+                return;
+            }
 
-            GameObject go = Instantiate(projectilePrefab,
-                spawnProjectileOffsetPoint.position, Quaternion.identity);
+            if (projectilePrefab == null)
+            {
+                return;
+            }
+
+            GameObject go = Instantiate(
+                projectilePrefab,
+                spawnProjectileOffsetPoint.position,
+                Quaternion.identity
+            );
 
             var proj = go.GetComponent<Projectile>();
-            if (proj == null) return;
 
-            // Schaden vom Turm berechnen (Multiplikatoren anwenden)
-            int finalTowerDamage = Mathf.RoundToInt(damage * Mathf.Max(1f, statDmgMultiplier));
+            if (proj == null)
+            {
+                return;
+            }
+
+            int finalTowerDamage =
+                Mathf.RoundToInt(
+                    damage * Mathf.Max(1f, statDmgMultiplier)
+                );
 
             proj.Init(target, finalTowerDamage);
-            
         }
 
         public (GameObject, int) FindTargetInRange(List<GameObject> enemies)
@@ -318,17 +338,36 @@ namespace TowerDefense
                 rangeIndicator.gameObject.SetActive(false);
             }
         }
-        public void SetHighlighted(Boolean _isHighlighted)
+        public void SetHighlighted(bool _isHighlighted)
         {
             isHighlighted = _isHighlighted;
 
+            if (sr == null)
+            {
+                Debug.LogError(
+                    $"Tower '{name}' hat keinen SpriteRenderer für Highlighting!",
+                    this
+                );
+                return;
+            }
+
             if (isHighlighted)
             {
+                if (outlineMaterial == null)
+                {
+                    Debug.LogError(
+                        $"Tower '{name}' hat kein Outline-Material!",
+                        this
+                    );
+                    return;
+                }
+
                 sr.material = outlineMaterial;
             }
             else
             {
-                sr.material = notOutlinedMaterial;
+                if (notOutlinedMaterial != null)
+                    sr.material = notOutlinedMaterial;
             }
         }
 
@@ -440,7 +479,7 @@ namespace TowerDefense
                 
                 if (this is Wall wall)
                 {
-                    wall.ApplyWallTile(lvl.wallTile);
+                 //   wall.ApplyWallTile(lvl.wallTile);
                 }
                 
                 if (statDiffDisplay != null)

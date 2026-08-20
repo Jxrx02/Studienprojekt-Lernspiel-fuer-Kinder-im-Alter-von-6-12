@@ -121,7 +121,10 @@ MonoBehaviour:
   - {fileID: -5787989110592691503, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
   attack_sprites: []
   evolve_sprites: []
-  dead_sprites: []
+  dead_sprites:
+  - {fileID: -4398213354934423465, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  - {fileID: -8813527081589083923, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
+  - {fileID: -282015664129683493, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
   walk_sprites: []
   directionalAnimations: []
   destroyOnEndDeadAnimation: 0
@@ -138,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f353da48ee374edf8c9559d552487771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDmg: 2
+  baseDmg: 1
   rotationAngleOffset: -90
   doRotation: 1
   lookAtTarget: 1
@@ -147,7 +150,7 @@ MonoBehaviour:
   speed: 3
   mode: 0
   aoeRadius: 1.5
-  aoeVfxPrefab: {fileID: 0}
+  aoeVfxPrefab: {fileID: 4736630556181736464, guid: e45bb3901cec7d3409067438f9d3f4f1, type: 3}
   dotDuration: 3
   dotInterval: 0.5
   dotDamagePerTick: 5

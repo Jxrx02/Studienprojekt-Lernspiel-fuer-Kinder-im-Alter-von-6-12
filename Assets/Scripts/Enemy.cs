@@ -201,8 +201,6 @@ namespace TowerDefense
         // ───────────────── ATTACK ─────────────────────────
         public void Attack()
         {
-            Debug.Log("Attack " + attackTarget);
-
             if (attackTarget == null)
                 return;
 
@@ -219,6 +217,7 @@ namespace TowerDefense
                 return;
             }
 
+            Debug.Log("attack0" + attackTarget);
 
             isAttacking = true;
             StartCoroutine(BaseAttackCoroutine(Shoot));
@@ -239,10 +238,9 @@ namespace TowerDefense
                 void AnimationFinished() => animationComplete = true;
 
                 _spriteAnim.OnAttackAnimationComplete += AnimationFinished;
-                
                 yield return new WaitUntil(() => animationComplete);
-                
                 _spriteAnim.OnAttackAnimationComplete -= AnimationFinished;
+
 
                 onShoot?.Invoke();
 
@@ -262,6 +260,7 @@ namespace TowerDefense
         {
             if (attackTarget == null)
                 return;
+            
 
             Wall wall = attackTarget.GetComponent<Wall>();
 

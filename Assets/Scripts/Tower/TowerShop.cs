@@ -75,6 +75,8 @@ public class TowerShop : MonoBehaviour
             {
                 wall.SetIsSelected(false);
                 wall.isAttacking = false;
+
+                wall.InitializeBuiltWall();
             }
 
             selectedTower = null;

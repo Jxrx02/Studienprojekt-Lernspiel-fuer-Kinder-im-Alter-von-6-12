@@ -114,7 +114,7 @@ namespace TowerDefense
 
         void Update()
         {
-            if (projectileIsDead)return ;
+            if (projectileIsDead)  Destroy(this); 
 
             if (target.Item1 != null)
             {
@@ -241,11 +241,9 @@ namespace TowerDefense
             {
                 target.Item1.GetComponent<Enemy>()?.TakeDamage(damage);
                 target.Item1.GetComponent<Wall>()?.TakeDamage(damage);
-
+                
             }
                 
-            
-            
         }
 
         private void ApplyAoeDamage(Vector3 center, float radius, int dmg, GameObject vfx)
@@ -270,6 +268,7 @@ namespace TowerDefense
                     go.GetComponent<Wall>()?.TakeDamage(dmg); // war vorher "damage" (Member-Feld) statt "dmg" (Parameter)
                 }
             }
+
         }
 
         private IEnumerator ApplyDoT(GameObject enemy)
@@ -299,6 +298,7 @@ namespace TowerDefense
 
             anim.TriggerDeadAnimation(true);
             projectileIsDead = true;
+
         }
 
 
@@ -344,6 +344,8 @@ namespace TowerDefense
 
             anim.TriggerDeadAnimation(true);
             projectileIsDead = true;
+            
+
         }
         
         private IEnumerator ShowLightning(Vector3 start, Vector3 end)
@@ -438,6 +440,7 @@ namespace TowerDefense
                 }
                 target = next != null ? (next, 0) : (null, -1);
             }
+
         }
         
 
@@ -462,6 +465,8 @@ namespace TowerDefense
             ApplyAoeDamage(center, blackHoleRadius, damage, aoeVfxPrefab);
             anim.TriggerDeadAnimation(true);
             projectileIsDead = true;
+            
+
         }
 
         private IEnumerator ApplySticky(GameObject enemy)
@@ -479,6 +484,7 @@ namespace TowerDefense
             ApplyAoeDamage(explodePos, stickyAoeRadius, damage, aoeVfxPrefab);
             anim.TriggerDeadAnimation(true);
             projectileIsDead = true;
+
         }
 
         private void ApplyChainLink(GameObject enemyA, Vector3 hitPos)

@@ -213,10 +213,7 @@ namespace TowerDefense
             if (!IsObjectInRange(target.Item1))
                 return;
 
-            // --------------------------------------------------------------
             // Angriffsrichtung bestimmen
-            // --------------------------------------------------------------
-
             Vector2 attackDirection =
                 target.Item1.transform.position - transform.position;
 
@@ -228,17 +225,42 @@ namespace TowerDefense
                 spriteAnim.SetDirection(direction);
             }
 
-            // --------------------------------------------------------------
-            // Angriff starten
-            // --------------------------------------------------------------
-
             isAttacking = true;
 
-            spriteAnim.SetState(AnimationState.BowRangedAttack);
+            spriteAnim.SetState(
+                AnimationState.BowRangedAttack,
+                true
+            );
 
-            StartCoroutine(BaseAttackCoroutine(Shoot));
+            StartCoroutine(HeroAttackCoroutine());
         }
+        private IEnumerator HeroAttackCoroutine()
+        {
+            // Kleine Verzögerung bis zum eigentlichen Schuss.
+            // Diesen Wert später passend zum Schuss-Frame deiner Animation einstellen.
+            yield return new WaitForSeconds(0.15f);
 
+            // Ziel könnte während der Animation verschwunden sein
+            if (target.Item1 != null)
+            {
+                Shoot();
+            }
+
+            // Warten, bis die Angriffsdauer vorbei ist
+            yield return new WaitForSeconds(0.2f);
+
+            isAttacking = false;
+
+            // Danach wieder Idle/Run
+            bool moving = movementInput.sqrMagnitude > 0.01f;
+
+            spriteAnim.SetState(
+                moving
+                    ? AnimationState.Run
+                    : AnimationState.Idle,
+                true
+            );
+        }
         // ------------------------------------------------------------------
         // LOOK DIRECTION
         // ------------------------------------------------------------------

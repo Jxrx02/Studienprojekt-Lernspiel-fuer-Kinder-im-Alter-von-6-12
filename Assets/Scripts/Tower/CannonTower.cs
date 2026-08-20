@@ -16,7 +16,7 @@ namespace TowerDefense
             if (IsObjectInRange(target.Item1))
             {
                 isAttacking = true;
-                StartCoroutine(BaseAttackCoroutine(Shoot));
+                StartCoroutine(BaseAttackCoroutine(AnimationState.Attack_Animation, Shoot));
             }
         }
         

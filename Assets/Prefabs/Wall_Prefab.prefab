@@ -889,7 +889,7 @@ MonoBehaviour:
   towerInitPrice: 30
   placementType: 1
   blocksPath: 1
-  statHealthPoints: 15
+  statHealthPoints: 5
   currentHealth: 6
   range: 0
   interactionrange: 0.64
@@ -910,60 +910,15 @@ MonoBehaviour:
   statSlowMultiplier: 0
   spawnProjectileOffsetPoint: {fileID: 2893310875958728720}
   upgradePaths:
-  - towerName: Wall
+  - towerName: 
+    researchCost: 0
+    levels: []
+  - towerName: awdd
     researchCost: 1
     levels:
-    - upgradeName: Starke mowe
-      description: 
-      researchCost: 1
-      upgradeCost: 5
-      damageIncrease: 0
-      rangeIncrease: 0
-      attackSpeedIncrease: 0
-      timeInBetweenShotsDecrease: 0
-      coinsEarnedPerSecond: 0
-      healthpoints: 77
-      healthRegenPerSecond: 2
-      rangeMultiplier: 0
-      dmgMultiplier: 0
-      attackSpeedMultiplier: 0
-      slowMultiplier: 0
-      idle_sprites: []
-      attack_sprites: []
-      pathShopIcon: []
-      projectile: {fileID: 0}
-      wallTile: {fileID: 0}
-  - towerName: aawww
-    researchCost: 1
-    levels:
-    - upgradeName: gew
-      description: gewz1
-      researchCost: 1
-      upgradeCost: 3
-      damageIncrease: 0
-      rangeIncrease: 0
-      attackSpeedIncrease: 0
-      timeInBetweenShotsDecrease: 0
-      coinsEarnedPerSecond: 0
-      healthpoints: 0
-      healthRegenPerSecond: 0
-      rangeMultiplier: 0
-      dmgMultiplier: 0
-      attackSpeedMultiplier: 0
-      slowMultiplier: 0
-      idle_sprites:
-      - {fileID: 7248995656060893176, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-      attack_sprites: []
-      pathShopIcon:
-      - {fileID: 2988533918862914309, guid: 6df06cf815dbd8e41850de61de053d75, type: 3}
-      projectile: {fileID: 0}
-      wallTile: {fileID: 0}
-  - towerName: darr
-    researchCost: 1
-    levels:
-    - upgradeName: gew
-      description: gew1
-      researchCost: 1
+    - upgradeName: rgr
+      description: thth
+      researchCost: 0
       upgradeCost: 0
       damageIncrease: 0
       rangeIncrease: 0
@@ -978,10 +933,12 @@ MonoBehaviour:
       slowMultiplier: 0
       idle_sprites: []
       attack_sprites: []
-      pathShopIcon:
-      - {fileID: -4317833008507849792, guid: 1df28cd758c7f8341928ffcbb31eefc2, type: 3}
+      pathShopIcon: []
       projectile: {fileID: 0}
       wallTile: {fileID: 0}
+  - towerName: 
+    researchCost: 0
+    levels: []
   pathLevels: 000000000000000000000000
   level: 1
   experience: 0
@@ -990,8 +947,23 @@ MonoBehaviour:
   isAttacking: 0
   projectilePrefab: {fileID: 0}
   buildCost: 25
-  baseWallTile: {fileID: 11400000, guid: 8f40516933b4af542b505a1cda889c9c, type: 2}
-  spriteRenderer: {fileID: 720708846989912815}
+  wallSprites:
+  - {fileID: 1122172968, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: -728984118, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: -322282752, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: 2251708977879825419, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: -1086554849524507838, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: 707986047, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: 2283871586314144915, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: -791255275, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: -2120341970, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: -5775690697265436071, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: 1164720733, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: 100747274, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: -8885746418533784346, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: 975779042, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: -16075467, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
+  - {fileID: 7822810608373803639, guid: 5d239126d75b88942ae4b69d602782d0, type: 3}
   spikeDamage: 0
   spikeCooldown: 1
   hasSpikes: 0

@@ -11,7 +11,6 @@ namespace TowerDefense.GridMovement
         [Header("Tilemaps")]
         [SerializeField] private Tilemap groundTilemap;
         [SerializeField] private Tilemap obstacleTilemap;
-        [SerializeField] public Tilemap WallTilemap;
 
         private Dictionary<Vector3Int, GridNode> nodes = new();
 
@@ -27,7 +26,8 @@ namespace TowerDefense.GridMovement
 
         public Vector3 SnapToGrid(Vector3 worldPosition)
         {
-            Vector3Int cell = groundTilemap.WorldToCell(worldPosition);
+            Vector3Int cell =
+                groundTilemap.WorldToCell(worldPosition);
 
             return groundTilemap.GetCellCenterWorld(cell);
         }
@@ -187,54 +187,6 @@ namespace TowerDefense.GridMovement
             CacheNeighbours();
 
             Actions.onGridChanged?.Invoke();
-        }
-        
-        public void RefreshWallVisuals(Vector3Int centerCell)
-        {
-            if (WallTilemap == null)
-                return;
-
-            // Zuerst die RuleTiles neu berechnen.
-            for (int x = -1; x <= 1; x++)
-            {
-                for (int y = -1; y <= 1; y++)
-                {
-                    Vector3Int cell =
-                        centerCell + new Vector3Int(x, y, 0);
-
-                    WallTilemap.RefreshTile(cell);
-                }
-            }
-
-            // Danach die SpriteRenderer der betroffenen Walls aktualisieren.
-            for (int x = -1; x <= 1; x++)
-            {
-                for (int y = -1; y <= 1; y++)
-                {
-                    Vector3Int cell =
-                        centerCell + new Vector3Int(x, y, 0);
-
-                    RefreshWallVisual(cell);
-                }
-            }
-        }
-        private void RefreshWallVisual(Vector3Int cell)
-        {
-            Vector3 worldPosition =
-                WallTilemap.GetCellCenterWorld(cell);
-
-            Collider2D[] colliders =
-                Physics2D.OverlapPointAll(worldPosition);
-
-            foreach (Collider2D collider in colliders)
-            {
-                Wall wall = collider.GetComponent<Wall>();
-
-                if (wall != null && wall.IsBuilt)
-                {
-                    wall.RefreshVisual();
-                }
-            }
         }
     }
 }
