@@ -95,15 +95,19 @@ namespace TowerDefense
             this.targetIndex = target.Item2;
             remainingPierce = pierceCount;
         }
-        
+				[SerializeField] private float turnSpeed = 360f;
+[SerializeField] private float maxRedirectAngle = 90f;
+private Vector3 projectileDirection;
 
-        private void Start()
-        {
-            anim = GetComponent<SpriteAnim>();
-            if (hideTilCollision)
-                foreach (Transform child in transform)
-                    child.gameObject.SetActive(false);
-        }
+		private void Start()
+		{
+			if (target.Item1 != null)
+			{
+				projectileDirection =
+					(target.Item1.transform.position - transform.position).normalized;
+			}
+		}
+
 
         private void UpdateLookDirection(Vector3 targetPos)
         {
@@ -112,52 +116,124 @@ namespace TowerDefense
                 : new Quaternion(0, 0, 0, 1);
         }
 
-        void Update()
+     
+void Update()
+{
+    if (projectileIsDead)
+    {
+        Destroy(gameObject);
+        return;
+    }
+
+    if (target.Item1 != null)
+    {
+        if (lookAtTarget)
+            UpdateLookDirection(target.Item1.transform.position);
+
+        if (Vector3.Distance(
+                transform.position,
+                target.Item1.transform.position) < 0.3f)
         {
-            if (projectileIsDead)  Destroy(this); 
-
-            if (target.Item1 != null)
+            OnProjectileHitTarget();
+        }
+        else
+        {
+            MoveProjectileTowardsTarget();
+        }
+    }
+    else
+    {
+        if (canFindNewTarget > 0)
+        {
+            try
             {
-                if (lookAtTarget) UpdateLookDirection(target.Item1.transform.position);
+                var enemies = TowerHeroManager.instance.enemies;
 
-                if (Vector3.Distance(transform.position, target.Item1.transform.position) < 0.3f)
-                    OnProjectileHitTarget();
-                else
-                    MoveProjectileTowardsTarget();
-            }
-            else
-            {
-                if (canFindNewTarget > 0)
+                if (enemies.Count > 0)
                 {
-                    try
+                    int newIndex = Mathf.Clamp(
+                        targetIndex - 1,
+                        0,
+                        enemies.Count - 1
+                    );
+
+                    var newTarget = enemies[newIndex];
+
+                    if (newTarget != null)
                     {
-                        var enemies = TowerHeroManager.instance.enemies;
-                        if (enemies.Count > 0)
+                        Vector3 newDirection =
+                            (newTarget.transform.position - transform.position)
+                            .normalized;
+
+                        float angle = Vector3.Angle(
+                            projectileDirection,
+                            newDirection
+                        );
+
+                        // Nur übernehmen, wenn der neue Gegner
+                        // nicht zu weit von der aktuellen Flugrichtung entfernt ist.
+                        if (angle <= maxRedirectAngle)
                         {
-                            int newIndex = Mathf.Clamp(targetIndex - 1, 0, enemies.Count - 1);
-                            target = (enemies[newIndex], newIndex);
+                            target = (newTarget, newIndex);
                             targetIndex = newIndex;
                         }
-                        else OnProjectileHitTarget();
+                        else
+                        {
+                            OnProjectileHitTarget();
+                        }
                     }
-                    catch { OnProjectileHitTarget(); }
+                    else
+                    {
+                        OnProjectileHitTarget();
+                    }
                 }
-                else OnProjectileHitTarget();
+                else
+                {
+                    OnProjectileHitTarget();
+                }
             }
-        }
-
-        private void MoveProjectileTowardsTarget()
-        {
-            Vector3 dir = (target.Item1.transform.position - transform.position).normalized;
-            transform.position += dir * speed * Time.deltaTime;
-
-            if (doRotation)
+            catch
             {
-                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.AngleAxis(angle + rotationAngleOffset, Vector3.forward);
+                OnProjectileHitTarget();
             }
         }
+        else
+        {
+            OnProjectileHitTarget();
+        }
+    }
+}
 
+
+private void MoveProjectileTowardsTarget()
+{
+    Vector3 targetDirection =
+        (target.Item1.transform.position - transform.position).normalized;
+
+    // Projektilrichtung langsam in Richtung des Targets drehen.
+    projectileDirection = Vector3.RotateTowards(
+        projectileDirection,
+        targetDirection,
+        turnSpeed * Mathf.Deg2Rad * Time.deltaTime,
+        0f
+    ).normalized;
+
+    transform.position += projectileDirection * speed * Time.deltaTime;
+
+    if (doRotation)
+    {
+        float angle =
+            Mathf.Atan2(
+                projectileDirection.y,
+                projectileDirection.x
+            ) * Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.AngleAxis(
+            angle + rotationAngleOffset,
+            Vector3.forward
+        );
+    }
+}
         private void OnProjectileHitTarget()
         {
             if (hideTilCollision)
