@@ -11,72 +11,76 @@ namespace TowerDefense
 {
     public enum ProjectileMode
     {
-        Default,        //single shot
+        Default, //single shot
         AOE,
         DoT,
-        ChainLightning, 
+        ChainLightning,
         Knockback,
         Splitter,
-        Pierce,         
+        Pierce,
         BlackHole,
-        Sticky,         //Semtex
-        Chain           //Slow
+        Sticky, //Semtex
+        Chainslow //Slow
     }
 
     public class Projectile : MonoBehaviour
     {
-        [Header("Basis")] 
-        public int baseDmg=1;
+        [Header("Basis")] public int baseDmg = 1;
         public float rotationAngleOffset;
         public bool doRotation = true;
         public bool lookAtTarget = true;
         public bool hideTilCollision;
-        [Tooltip("Anzahl der möglichen Bounces")] public int canFindNewTarget;
+
+        [Tooltip("Anzahl der möglichen Bounces")]
+        public int canFindNewTarget;
+
         public float speed;
 
-        [Header("Projektil-Modus")]
-        [SerializeField]
+        [Header("Projektil-Modus")] [SerializeField]
         private ProjectileMode mode = ProjectileMode.Default;
 
         public ProjectileMode Mode => mode;
-        
-        [Header("AOE")]
-        [HideInInspector] public float aoeRadius = 1.5f;
+
+        [Header("AOE")] [HideInInspector] public float aoeRadius = 1.5f;
         [HideInInspector] public GameObject aoeVfxPrefab;
 
-        [Header("DoT (Damage over Time)")]
-        [HideInInspector] public float dotDuration = 3f;
+        [Header("DoT (Damage over Time)")] [HideInInspector]
+        public float dotDuration = 3f;
+
         [HideInInspector] public float dotInterval = 0.5f;
         [HideInInspector] public int dotDamagePerTick = 5;
-        
-        [Header("Chain Lightning")]
+
+        [Header("Chain Lightning")] [HideInInspector]
+        public int chainDamage = 10;
+
         [HideInInspector] public int chainCount = 3;
-        [HideInInspector][Range(0f, 1f)] public float chainDamageFalloff = 0.2f;
+        [HideInInspector] [Range(0f, 1f)] public float chainDamageFalloff = 0.2f;
         [HideInInspector] public float chainRadius = 3f;
 
-        [Header("Knockback")]
-        [HideInInspector] public float knockbackDistance = 1.5f;
+        [Header("Knockback")] [HideInInspector]
+        public float knockbackDistance = 1.5f;
+
         [HideInInspector] public float knockbackDuration = 0.2f;
 
-        [Header("Splitter")]
-        [HideInInspector] public int splitterCount = 5;
+        [Header("Splitter")] [HideInInspector] public int splitterCount = 5;
         [HideInInspector] public GameObject splitterPrefab;
         [HideInInspector] public int splitterDamage = 10;
 
-        [Header("Pierce")]
-        [HideInInspector] public int pierceCount = 5;
+        [Header("Pierce")] [HideInInspector] public int pierceCount = 5;
 
-        [Header("Black Hole")]
-        [HideInInspector] public float blackHolePullDuration = 2f;
+        [Header("Black Hole")] [HideInInspector]
+        public float blackHolePullDuration = 2f;
+
         [HideInInspector] public float blackHoleRadius = 3f;
         [HideInInspector] public GameObject blackHoleVfxPrefab;
 
-        [Header("Sticky")]
-        [HideInInspector] public float stickyDelay = 2f;
+        [Header("Sticky")] [HideInInspector] public float stickyDelay = 2f;
         [HideInInspector] public float stickyAoeRadius = 1.5f;
+        [HideInInspector] public int stickyAoeDamage = 5;
 
-        [Header("Chain (Verbindung)")]
-        [HideInInspector] public float chainLinkRadius = 4f;
+        [Header("Chain (Verbindung)")] [HideInInspector]
+        public float chainLinkRadius = 4f;
+
         [HideInInspector] public float chainSlowAmount = 0.4f;
         [HideInInspector] public int chainLinkDamage = 5;
 
@@ -88,25 +92,31 @@ namespace TowerDefense
         private SpriteAnim anim;
         private int remainingPierce;
 
+        private void Awake()
+        {
+            anim = GetComponent<SpriteAnim>();
+        }
+
         public void Init((GameObject, int) target, int damage)
         {
             this.target = target;
-            this.damage = baseDmg+damage;
+            this.damage = baseDmg + damage;
             this.targetIndex = target.Item2;
             remainingPierce = pierceCount;
         }
-				[SerializeField] private float turnSpeed = 360f;
-[SerializeField] private float maxRedirectAngle = 90f;
-private Vector3 projectileDirection;
 
-		private void Start()
-		{
-			if (target.Item1 != null)
-			{
-				projectileDirection =
-					(target.Item1.transform.position - transform.position).normalized;
-			}
-		}
+        [SerializeField] private float turnSpeed = 360f;
+        [SerializeField] private float maxRedirectAngle = 90f;
+        private Vector3 projectileDirection;
+
+        private void Start()
+        {
+            if (target.Item1 != null)
+            {
+                projectileDirection =
+                    (target.Item1.transform.position - transform.position).normalized;
+            }
+        }
 
 
         private void UpdateLookDirection(Vector3 targetPos)
@@ -116,73 +126,83 @@ private Vector3 projectileDirection;
                 : new Quaternion(0, 0, 0, 1);
         }
 
-     
-void Update()
-{
-    if (projectileIsDead)
-    {
-        Destroy(gameObject);
-        return;
-    }
 
-    if (target.Item1 != null)
-    {
-        if (lookAtTarget)
-            UpdateLookDirection(target.Item1.transform.position);
-
-        if (Vector3.Distance(
-                transform.position,
-                target.Item1.transform.position) < 0.3f)
+        void Update()
         {
-            OnProjectileHitTarget();
-        }
-        else
-        {
-            MoveProjectileTowardsTarget();
-        }
-    }
-    else
-    {
-        if (canFindNewTarget > 0)
-        {
-            try
+            if (projectileIsDead)
             {
-                var enemies = TowerHeroManager.instance.enemies;
+                Destroy(gameObject);
+                return;
+            }
 
-                if (enemies.Count > 0)
+            if (target.Item1 != null)
+            {
+                if (lookAtTarget)
+                    UpdateLookDirection(target.Item1.transform.position);
+
+                if (Vector3.Distance(
+                        transform.position,
+                        target.Item1.transform.position) < 0.3f)
                 {
-                    int newIndex = Mathf.Clamp(
-                        targetIndex - 1,
-                        0,
-                        enemies.Count - 1
-                    );
-
-                    var newTarget = enemies[newIndex];
-
-                    if (newTarget != null)
+                    OnProjectileHitTarget();
+                }
+                else
+                {
+                    MoveProjectileTowardsTarget();
+                }
+            }
+            else
+            {
+                if (canFindNewTarget > 0)
+                {
+                    try
                     {
-                        Vector3 newDirection =
-                            (newTarget.transform.position - transform.position)
-                            .normalized;
+                        var enemies = TowerHeroManager.instance.enemies;
 
-                        float angle = Vector3.Angle(
-                            projectileDirection,
-                            newDirection
-                        );
-
-                        // Nur übernehmen, wenn der neue Gegner
-                        // nicht zu weit von der aktuellen Flugrichtung entfernt ist.
-                        if (angle <= maxRedirectAngle)
+                        if (enemies.Count > 0)
                         {
-                            target = (newTarget, newIndex);
-                            targetIndex = newIndex;
+                            int newIndex = Mathf.Clamp(
+                                targetIndex - 1,
+                                0,
+                                enemies.Count - 1
+                            );
+
+                            var newTarget = enemies[newIndex];
+
+                            if (newTarget != null)
+                            {
+                                Vector3 newDirection =
+                                    (newTarget.transform.position - transform.position)
+                                    .normalized;
+
+                                float angle = Vector3.Angle(
+                                    projectileDirection,
+                                    newDirection
+                                );
+
+                                // Nur übernehmen, wenn der neue Gegner
+                                // nicht zu weit von der aktuellen Flugrichtung entfernt ist.
+                                if (angle <= maxRedirectAngle)
+                                {
+                                    target = (newTarget, newIndex);
+                                    targetIndex = newIndex;
+                                }
+                                else
+                                {
+                                    OnProjectileHitTarget();
+                                }
+                            }
+                            else
+                            {
+                                OnProjectileHitTarget();
+                            }
                         }
                         else
                         {
                             OnProjectileHitTarget();
                         }
                     }
-                    else
+                    catch
                     {
                         OnProjectileHitTarget();
                     }
@@ -192,48 +212,39 @@ void Update()
                     OnProjectileHitTarget();
                 }
             }
-            catch
+        }
+
+
+        private void MoveProjectileTowardsTarget()
+        {
+            Vector3 targetDirection =
+                (target.Item1.transform.position - transform.position).normalized;
+
+            // Projektilrichtung langsam in Richtung des Targets drehen.
+            projectileDirection = Vector3.RotateTowards(
+                projectileDirection,
+                targetDirection,
+                turnSpeed * Mathf.Deg2Rad * Time.deltaTime,
+                0f
+            ).normalized;
+
+            transform.position += projectileDirection * speed * Time.deltaTime;
+
+            if (doRotation)
             {
-                OnProjectileHitTarget();
+                float angle =
+                    Mathf.Atan2(
+                        projectileDirection.y,
+                        projectileDirection.x
+                    ) * Mathf.Rad2Deg;
+
+                transform.rotation = Quaternion.AngleAxis(
+                    angle + rotationAngleOffset,
+                    Vector3.forward
+                );
             }
         }
-        else
-        {
-            OnProjectileHitTarget();
-        }
-    }
-}
 
-
-private void MoveProjectileTowardsTarget()
-{
-    Vector3 targetDirection =
-        (target.Item1.transform.position - transform.position).normalized;
-
-    // Projektilrichtung langsam in Richtung des Targets drehen.
-    projectileDirection = Vector3.RotateTowards(
-        projectileDirection,
-        targetDirection,
-        turnSpeed * Mathf.Deg2Rad * Time.deltaTime,
-        0f
-    ).normalized;
-
-    transform.position += projectileDirection * speed * Time.deltaTime;
-
-    if (doRotation)
-    {
-        float angle =
-            Mathf.Atan2(
-                projectileDirection.y,
-                projectileDirection.x
-            ) * Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.AngleAxis(
-            angle + rotationAngleOffset,
-            Vector3.forward
-        );
-    }
-}
         private void OnProjectileHitTarget()
         {
             if (hideTilCollision)
@@ -260,14 +271,16 @@ private void MoveProjectileTowardsTarget()
                         StartCoroutine(ApplyDoT(target.Item1));
                         return; // Projektil lebt weiter
                     }
+
                     break;
 
                 case ProjectileMode.ChainLightning:
                     if (target.Item1 != null)
                     {
-                        StartCoroutine(ApplyChainLightning(target.Item1, damage, chainCount));
+                        StartCoroutine(ApplyChainLightning(target.Item1, chainDamage, chainCount));
                         return;
                     }
+
                     break;
                 case ProjectileMode.Knockback:
                     HitSingle();
@@ -290,7 +303,7 @@ private void MoveProjectileTowardsTarget()
                     if (target.Item1 != null)
                         StartCoroutine(ApplySticky(target.Item1));
                     return; // Projektil stirbt erst nach Delay
-                case ProjectileMode.Chain:
+                case ProjectileMode.Chainslow:
                     HitSingle();
                     if (target.Item1 != null)
                         ApplyChainLink(target.Item1, hitPos);
@@ -317,9 +330,7 @@ private void MoveProjectileTowardsTarget()
             {
                 target.Item1.GetComponent<Enemy>()?.TakeDamage(damage);
                 target.Item1.GetComponent<Wall>()?.TakeDamage(damage);
-                
             }
-                
         }
 
         private void ApplyAoeDamage(Vector3 center, float radius, int dmg, GameObject vfx)
@@ -335,16 +346,15 @@ private void MoveProjectileTowardsTarget()
                     Destroy(aoeVfx, 1f); // Fallback, falls kein SpriteAnim vorhanden ist
             }
 
-            foreach (var go in TowerHeroManager.instance.enemies)
+            foreach (var go in TowerHeroManager.instance.enemies.ToArray())
             {
                 if (go == null) continue;
                 if (Vector3.Distance(center, go.transform.position) <= radius)
                 {
                     go.GetComponent<Enemy>()?.TakeDamage(dmg);
-                    go.GetComponent<Wall>()?.TakeDamage(dmg); // war vorher "damage" (Member-Feld) statt "dmg" (Parameter)
+                    go.GetComponent<Wall>()?.TakeDamage(dmg);
                 }
             }
-
         }
 
         private IEnumerator ApplyDoT(GameObject enemy)
@@ -374,56 +384,103 @@ private void MoveProjectileTowardsTarget()
 
             anim.TriggerDeadAnimation(true);
             projectileIsDead = true;
-
         }
 
 
-        private IEnumerator ApplyChainLightning(GameObject first, int dmg, int remaining)
+        private IEnumerator ApplyChainLightning(
+            GameObject first,
+            int dmg,
+            int remaining)
         {
+            if (first == null)
+            {
+                projectileIsDead = true;
+                yield break;
+            }
+
             HashSet<GameObject> hitEnemies = new HashSet<GameObject>();
+
             GameObject current = first;
             int currentDamage = dmg;
 
+            // Erstes Ziel direkt als getroffen markieren
+            hitEnemies.Add(current);
+
             while (current != null && remaining > 0)
             {
-                current.GetComponent<Enemy>()?.TakeDamage(currentDamage);
-                current.GetComponent<Wall>()?.TakeDamage(currentDamage);
+                // Schaden
+                if (current != null)
+                {
+                    Enemy enemy = current.GetComponent<Enemy>();
+                    if (enemy != null)
+                        enemy.TakeDamage(currentDamage);
 
+                    Wall wall = current.GetComponent<Wall>();
+                    if (wall != null)
+                        wall.TakeDamage(currentDamage);
+                }
+
+                // Wenn das aktuelle Ziel durch den Schaden zerstört wurde,
+                // trotzdem anhand des Snapshots nach dem nächsten Ziel suchen.
                 GameObject nearest = null;
                 float minDist = chainRadius;
 
-                foreach (var go in TowerHeroManager.instance.enemies)
+                foreach (var go in TowerHeroManager.instance.enemies.ToArray())
                 {
-                    if (go == null || go == current || hitEnemies.Contains(go))
+                    if (go == null)
                         continue;
 
-                    float dist = Vector3.Distance(current.transform.position, go.transform.position);
+                    if (go == current)
+                        continue;
 
-                    if (dist < minDist)
+                    if (hitEnemies.Contains(go))
+                        continue;
+
+                    float dist = Vector3.Distance(
+                        current.transform.position,
+                        go.transform.position
+                    );
+
+                    if (dist <= minDist)
                     {
                         minDist = dist;
                         nearest = go;
                     }
                 }
 
+                // Kein weiteres Ziel -> Kette fertig
                 if (nearest == null)
                     break;
 
-                yield return StartCoroutine(ShowLightning(current.transform.position,
-                    nearest.transform.position));
+                // Blitz anzeigen
+                yield return StartCoroutine(
+                    ShowLightning(
+                        current.transform.position,
+                        nearest.transform.position
+                    )
+                );
 
-                hitEnemies.Add(current);
+                // Nächstes Ziel markieren
+                hitEnemies.Add(nearest);
+
                 current = nearest;
-                currentDamage = Mathf.RoundToInt(currentDamage * (1f - chainDamageFalloff));
+
+                // Schaden reduzieren
+                currentDamage = Mathf.RoundToInt(
+                    currentDamage * (1f - chainDamageFalloff)
+                );
+
                 remaining--;
             }
 
-            anim.TriggerDeadAnimation(true);
+            // WICHTIG:
+            // Chain-Coroutine ist fertig -> Projectile definitiv beenden
             projectileIsDead = true;
-            
 
+            if (anim != null)
+                anim.TriggerDeadAnimation(true);
         }
-        
+
         private IEnumerator ShowLightning(Vector3 start, Vector3 end)
         {
             GameObject go = new GameObject("Lightning");
@@ -457,6 +514,7 @@ private void MoveProjectileTowardsTarget()
 
             Destroy(go);
         }
+
         private IEnumerator ApplyKnockback(GameObject enemy, Vector3 hitPos)
         {
             Vector3 dir = (enemy.transform.position - hitPos).normalized;
@@ -508,41 +566,86 @@ private void MoveProjectileTowardsTarget()
             {
                 GameObject next = null;
                 float minDist = float.MaxValue;
-                foreach (var go in TowerHeroManager.instance.enemies)
+                foreach (var go in TowerHeroManager.instance.enemies.ToArray())
                 {
                     if (go == null || go == target.Item1) continue;
                     float d = Vector3.Distance(transform.position, go.transform.position);
-                    if (d < minDist) { minDist = d; next = go; }
+                    if (d < minDist)
+                    {
+                        minDist = d;
+                        next = go;
+                    }
                 }
+
                 target = next != null ? (next, 0) : (null, -1);
             }
-
         }
-        
+
 
         private IEnumerator ApplyBlackHole(Vector3 center)
         {
-            if (blackHoleVfxPrefab != null) Instantiate(blackHoleVfxPrefab, center, Quaternion.identity);
+            GameObject blackHoleVfx = null;
+
+            // Black-Hole-VFX erzeugen
+            if (blackHoleVfxPrefab != null)
+            {
+                blackHoleVfx = Instantiate(
+                    blackHoleVfxPrefab,
+                    center,
+                    Quaternion.identity
+                );
+            }
 
             float elapsed = 0f;
+
             while (elapsed < blackHolePullDuration)
             {
                 elapsed += Time.deltaTime;
-                foreach (var go in TowerHeroManager.instance.enemies)
+
+                // Snapshot verwenden, da TakeDamage / andere Systeme
+                // die Enemy-Liste verändern können.
+                foreach (var go in TowerHeroManager.instance.enemies.ToArray())
                 {
-                    if (go == null) continue;
-                    if (Vector3.Distance(center, go.transform.position) <= blackHoleRadius)
+                    if (go == null)
+                        continue;
+
+                    float distance = Vector3.Distance(
+                        center,
+                        go.transform.position
+                    );
+
+                    if (distance <= blackHoleRadius)
+                    {
                         go.transform.position = Vector3.MoveTowards(
-                            go.transform.position, center, 3f * Time.deltaTime);
+                            go.transform.position,
+                            center,
+                            3f * Time.deltaTime
+                        );
+                    }
                 }
+
                 yield return null;
             }
-            // Explosion am Ende
-            ApplyAoeDamage(center, blackHoleRadius, damage, aoeVfxPrefab);
-            anim.TriggerDeadAnimation(true);
-            projectileIsDead = true;
-            
 
+            // Black-Hole-VFX explizit zerstören
+            if (blackHoleVfx != null)
+            {
+                Destroy(blackHoleVfx);
+            }
+
+            // Abschließender Schaden
+            ApplyAoeDamage(
+                center,
+                blackHoleRadius,
+                damage,
+                aoeVfxPrefab
+            );
+
+            // Projectile beenden
+            projectileIsDead = true;
+
+            if (anim != null)
+                anim.TriggerDeadAnimation(true);
         }
 
         private IEnumerator ApplySticky(GameObject enemy)
@@ -556,23 +659,34 @@ private void MoveProjectileTowardsTarget()
                 transform.position = enemy.transform.position;
                 yield return null;
             }
+
             Vector3 explodePos = enemy != null ? enemy.transform.position : transform.position;
-            ApplyAoeDamage(explodePos, stickyAoeRadius, damage, aoeVfxPrefab);
+            // Sticky bekommt eigenen AOE-Schaden
+            ApplyAoeDamage(
+                explodePos,
+                stickyAoeRadius,
+                stickyAoeDamage,
+                aoeVfxPrefab
+            );
             anim.TriggerDeadAnimation(true);
             projectileIsDead = true;
-
         }
 
         private void ApplyChainLink(GameObject enemyA, Vector3 hitPos)
         {
             GameObject nearest = null;
             float minDist = chainLinkRadius;
-            foreach (var go in TowerHeroManager.instance.enemies)
+            foreach (var go in TowerHeroManager.instance.enemies.ToArray())
             {
                 if (go == null || go == enemyA) continue;
                 float d = Vector3.Distance(hitPos, go.transform.position);
-                if (d < minDist) { minDist = d; nearest = go; }
+                if (d < minDist)
+                {
+                    minDist = d;
+                    nearest = go;
+                }
             }
+
             if (nearest == null) return;
 
             // Beide verlangsamen & Schaden
@@ -592,12 +706,14 @@ private void MoveProjectileTowardsTarget()
                     b.GetComponent<Enemy>()?.ApplySlow(0f, 0f);
                     yield break;
                 }
+
                 a.GetComponent<Enemy>()?.TakeDamage(chainLinkDamage);
                 b.GetComponent<Enemy>()?.TakeDamage(chainLinkDamage);
-                
+
                 yield return new WaitForSeconds(0.5f);
             }
         }
+
         // ── Stat-Anzeige für Upgrade-Diffs ──────────────────────
         [Serializable]
         public struct StatEntry
@@ -614,7 +730,7 @@ private void MoveProjectileTowardsTarget()
             }
         }
 
-                /// <summary>
+        /// <summary>
         /// Liefert Basisschaden + alle modusabhängigen Effekt-Werte dieses Projektils
         /// (z.B. AOE-Radius, DoT-Schaden, Chain-Anzahl, ...), damit sie im
         /// Upgrade-Diff (StatDiffDisplay) angezeigt werden können.
@@ -675,7 +791,7 @@ private void MoveProjectileTowardsTarget()
                     stats.Add(new StatEntry("Sticky Delay", stickyDelay, new Color(1f, 0f, 0.5f)));
                     break;
 
-                case ProjectileMode.Chain:
+                case ProjectileMode.Chainslow:
                     stats.Add(new StatEntry("Chain Radius", chainLinkRadius, new Color(0f, 0.8f, 1f)));
                     stats.Add(new StatEntry("Chain Schaden", chainLinkDamage, new Color(0f, 0.8f, 1f)));
                     stats.Add(new StatEntry("Chain Slow", chainSlowAmount, new Color(0f, 0.8f, 1f)));
@@ -703,7 +819,7 @@ private void MoveProjectileTowardsTarget()
                 case ProjectileMode.Sticky:
                     DrawGizmoSphere(stickyAoeRadius, new Color(1f, 0f, 0.5f));
                     break;
-                case ProjectileMode.Chain:
+                case ProjectileMode.Chainslow:
                     DrawGizmoSphere(chainLinkRadius, new Color(0f, 0.8f, 1f));
                     break;
             }
@@ -727,89 +843,316 @@ private void MoveProjectileTowardsTarget()
         {
             serializedObject.Update();
 
-            // Alle Felder bis auf die HideInInspector-Felder normal zeichnen
-            DrawPropertiesExcluding(serializedObject,
-                "aoeRadius", "aoeVfxPrefab",
-                "dotDuration", "dotInterval", "dotDamagePerTick",
-                "slowDuration", "slowAmount",
-                "chainCount", "chainDamageFalloff", "chainRadius",
-                "knockbackDistance", "knockbackDuration",
-                "splitterCount", "splitterPrefab", "splitterDamage",
+            // HideInInspector-Felder aus der normalen Inspector-Darstellung ausschließen
+            DrawPropertiesExcluding(
+                serializedObject,
+
+                // AOE
+                "aoeRadius",
+                "aoeVfxPrefab",
+
+                // DoT
+                "dotDuration",
+                "dotInterval",
+                "dotDamagePerTick",
+
+                // Slow
+                "slowDuration",
+                "slowAmount",
+
+                // Chain Lightning
+                "chainCount",
+                "chainDamage",
+                "chainDamageFalloff",
+                "chainRadius",
+
+                // Knockback
+                "knockbackDistance",
+                "knockbackDuration",
+
+                // Splitter
+                "splitterCount",
+                "splitterPrefab",
+                "splitterDamage",
+
+                // Pierce
                 "pierceCount",
-                "orbitProjectilePrefab", "orbitDuration", "orbitDamagePerSecond",
-                "blackHolePullDuration", "blackHoleRadius", "blackHoleVfxPrefab",
-                "stickyDelay", "stickyAoeRadius",
-                "chainLinkRadius", "chainSlowAmount", "chainLinkDamage"
+
+                // Orbit
+                "orbitProjectilePrefab",
+                "orbitDuration",
+                "orbitDamagePerSecond",
+
+                // Black Hole
+                "blackHolePullDuration",
+                "blackHoleRadius",
+                "blackHoleVfxPrefab",
+
+                // Sticky
+                "stickyDelay",
+                "stickyAoeRadius",
+                "stickyAoeDamage",
+
+                // Chain Slow
+                "chainLinkRadius",
+                "chainSlowAmount",
+                "chainLinkDamage"
             );
 
-            var p = (Projectile)target;
+            Projectile p = (Projectile)target;
 
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(10);
+
+            // ---------------------------------------------------------
+            // MODE-SPEZIFISCHE PARAMETER
+            // ---------------------------------------------------------
 
             switch (p.Mode)
             {
+                // =====================================================
+                // AOE
+                // =====================================================
                 case ProjectileMode.AOE:
-                    EditorGUILayout.LabelField("AOE Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("aoeRadius"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("aoeVfxPrefab"));
+
+                    EditorGUILayout.LabelField(
+                        "AOE Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("aoeRadius"),
+                        new GUIContent("AOE Radius")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("aoeVfxPrefab"),
+                        new GUIContent("AOE VFX")
+                    );
+
                     break;
 
+
+                // =====================================================
+                // DOT
+                // =====================================================
                 case ProjectileMode.DoT:
-                    EditorGUILayout.LabelField("DoT Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("dotDuration"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("dotInterval"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("dotDamagePerTick"));
+
+                    EditorGUILayout.LabelField(
+                        "DoT Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("dotDuration"),
+                        new GUIContent("Duration")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("dotInterval"),
+                        new GUIContent("Tick Interval")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("dotDamagePerTick"),
+                        new GUIContent("Damage per Tick")
+                    );
+
                     break;
 
+
+                // =====================================================
+                // CHAIN LIGHTNING
+                // =====================================================
                 case ProjectileMode.ChainLightning:
-                    EditorGUILayout.LabelField("Chain Lightning Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("chainCount"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("chainDamageFalloff"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("chainRadius"));
+
+                    EditorGUILayout.LabelField(
+                        "Chain Lightning Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("chainDamage"),
+                        new GUIContent("Chain Damage")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("chainCount"),
+                        new GUIContent("Chain Count")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("chainDamageFalloff"),
+                        new GUIContent("Damage Falloff")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("chainRadius"),
+                        new GUIContent("Chain Radius")
+                    );
+
                     break;
 
+
+                // =====================================================
+                // KNOCKBACK
+                // =====================================================
                 case ProjectileMode.Knockback:
-                    EditorGUILayout.LabelField("Knockback Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("knockbackDistance"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("knockbackDuration"));
+
+                    EditorGUILayout.LabelField(
+                        "Knockback Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("knockbackDistance"),
+                        new GUIContent("Distance")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("knockbackDuration"),
+                        new GUIContent("Duration")
+                    );
+
                     break;
 
+
+                // =====================================================
+                // SPLITTER
+                // =====================================================
                 case ProjectileMode.Splitter:
-                    EditorGUILayout.LabelField("Splitter Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("splitterCount"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("splitterPrefab"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("splitterDamage"));
+
+                    EditorGUILayout.LabelField(
+                        "Splitter Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("splitterCount"),
+                        new GUIContent("Splitter Count")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("splitterPrefab"),
+                        new GUIContent("Splitter Prefab")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("splitterDamage"),
+                        new GUIContent("Splitter Damage")
+                    );
+
                     break;
 
+
+                // =====================================================
+                // PIERCE
+                // =====================================================
                 case ProjectileMode.Pierce:
-                    EditorGUILayout.LabelField("Pierce Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("pierceCount"));
+
+                    EditorGUILayout.LabelField(
+                        "Pierce Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("pierceCount"),
+                        new GUIContent("Pierce Count")
+                    );
+
                     break;
-                
+
+
+                // =====================================================
+                // BLACK HOLE
+                // =====================================================
                 case ProjectileMode.BlackHole:
-                    EditorGUILayout.LabelField("Black Hole Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("blackHolePullDuration"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("blackHoleRadius"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("blackHoleVfxPrefab"));
+
+                    EditorGUILayout.LabelField(
+                        "Black Hole Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("blackHolePullDuration"),
+                        new GUIContent("Pull Duration")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("blackHoleRadius"),
+                        new GUIContent("Radius")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("blackHoleVfxPrefab"),
+                        new GUIContent("Black Hole VFX")
+                    );
+
                     break;
 
+
+                // =====================================================
+                // STICKY
+                // =====================================================
                 case ProjectileMode.Sticky:
-                    EditorGUILayout.LabelField("Sticky Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("stickyDelay"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("stickyAoeRadius"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("aoeVfxPrefab"));
+
+                    EditorGUILayout.LabelField(
+                        "Sticky Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("stickyDelay"),
+                        new GUIContent("Sticky Delay")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("stickyAoeRadius"),
+                        new GUIContent("AOE Radius")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("stickyAoeDamage"),
+                        new GUIContent("AOE Damage")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("aoeVfxPrefab"),
+                        new GUIContent("AOE VFX")
+                    );
+
                     break;
 
-                case ProjectileMode.Chain:
-                    EditorGUILayout.LabelField("Chain (Verbindung) Parameter", EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("chainLinkRadius"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("chainSlowAmount"));
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("chainLinkDamage"));
+
+                // =====================================================
+                // CHAIN SLOW
+                // =====================================================
+                case ProjectileMode.Chainslow:
+
+                    EditorGUILayout.LabelField(
+                        "Chain (Verbindung) Parameter",
+                        EditorStyles.boldLabel
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("chainLinkRadius"),
+                        new GUIContent("Link Radius")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("chainSlowAmount"),
+                        new GUIContent("Slow Amount")
+                    );
+
+                    EditorGUILayout.PropertyField(
+                        serializedObject.FindProperty("chainLinkDamage"),
+                        new GUIContent("Link Damage")
+                    );
+
                     break;
             }
 
             serializedObject.ApplyModifiedProperties();
         }
     }
-#endif
 }
+#endif

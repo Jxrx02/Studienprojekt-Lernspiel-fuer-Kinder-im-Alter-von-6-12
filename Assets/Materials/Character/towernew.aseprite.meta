@@ -129,7 +129,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: towernew
     originalName: 
-    pivot: {x: -0.18803416, y: -0.45089287}
+    pivot: {x: 0.51903117, y: -0.45022288}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,8 +137,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 468
-      height: 672
+      width: 1156
+      height: 673
     spriteID: 7d4acb58fbd907347b25962a8eb3238e
     spriteBone: []
     spriteOutline: []
@@ -167,10 +167,10 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 688
+        x: 0
         y: 303
-        width: 468
-        height: 672
+        width: 1156
+        height: 673
       spriteId: 7d4acb58fbd907347b25962a8eb3238e
     linkedCells: []
     tileCells: []
@@ -182,4 +182,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 1200, y: 1000}
-  previousTextureSize: {x: 512, y: 1024}
+  previousTextureSize: {x: 2048, y: 1024}

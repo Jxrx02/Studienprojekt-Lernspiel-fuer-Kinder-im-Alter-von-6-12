@@ -259,10 +259,14 @@ MonoBehaviour:
   loopThrough: 0
   mTimePerFrame: 0.125
   loop: 1
-  idle_sprites: []
+  idle_sprites:
+  - {fileID: 7830008934347407587, guid: 10752ef0d10508b4abf8e2910e2647a6, type: 3}
+  - {fileID: 5276707169531733852, guid: 10752ef0d10508b4abf8e2910e2647a6, type: 3}
   attack_sprites: []
   evolve_sprites: []
-  dead_sprites: []
+  dead_sprites:
+  - {fileID: 7830008934347407587, guid: 10752ef0d10508b4abf8e2910e2647a6, type: 3}
+  - {fileID: 5276707169531733852, guid: 10752ef0d10508b4abf8e2910e2647a6, type: 3}
   walk_sprites: []
   directionalAnimations: []
   destroyOnEndDeadAnimation: 0
@@ -286,7 +290,7 @@ MonoBehaviour:
   hideTilCollision: 0
   canFindNewTarget: 0
   speed: 7
-  mode: 0
+  mode: 3
   aoeRadius: 1.5
   aoeVfxPrefab: {fileID: 0}
   dotDuration: 3
