@@ -483,10 +483,13 @@ namespace TowerDefense
 
         private IEnumerator ShowLightning(Vector3 start, Vector3 end)
         {
-            GameObject go = new GameObject("Lightning");
+            GameObject go = new GameObject("Lightningeffect");
 
             LineRenderer lr = go.AddComponent<LineRenderer>();
 
+            lr.sortingLayerName = "Player";
+            lr.sortingOrder = 0;
+            
             lr.positionCount = 8;
             lr.startWidth = 0.08f;
             lr.endWidth = 0.08f;
@@ -509,10 +512,9 @@ namespace TowerDefense
 
                 lr.SetPosition(i, p);
             }
-
-            yield return new WaitForSeconds(0.06f);
-
-            Destroy(go);
+            
+            Destroy(go, .3f);
+            yield return null;
         }
 
         private IEnumerator ApplyKnockback(GameObject enemy, Vector3 hitPos)
@@ -594,6 +596,8 @@ namespace TowerDefense
                     center,
                     Quaternion.identity
                 );
+                blackHoleVfx.GetComponent<SpriteRenderer>().sortingLayerName= "Player";
+
             }
 
             float elapsed = 0f;

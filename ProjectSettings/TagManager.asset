@@ -55,6 +55,9 @@ TagManager:
   - name: Player
     uniqueID: 852797597
     locked: 0
+  - name: PlayerVFX
+    uniqueID: 2191289449
+    locked: 0
   - name: DetailsOverlay
     uniqueID: 2152917331
     locked: 0
@@ -70,3 +73,4 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
+  m_MigratedRenderPipelines: []

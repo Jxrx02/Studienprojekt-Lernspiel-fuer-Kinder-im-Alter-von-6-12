@@ -117,6 +117,7 @@ namespace TowerDefense
 
             text.gameObject.SetActive(true);
             text.color = color;
+            text.text = $"{(diff >= 0 ? "+" : "")}{diff:F1} {statName}";
 
             float elapsed = 0f;
 
@@ -137,10 +138,10 @@ namespace TowerDefense
 
                 float lerpT = Mathf.SmoothStep(0f, 1f, elapsed / duration);
 
-                float currentValue = Mathf.Lerp(oldValue, newValue, lerpT);
+               /* float currentValue = Mathf.Lerp(oldValue, newValue, lerpT);
                 float shownDiff = currentValue - oldValue;
 
-                text.text = $"{(shownDiff >= 0 ? "+" : "")}{shownDiff:F1} {statName}";
+                text.text = $"{(shownDiff >= 0 ? "+" : "")}{shownDiff:F1} {statName}"; */
 
                 t.localPosition = Vector3.Lerp(startPos, endPos, lerpT);
                 text.color = Color.Lerp(startColor, endColor, lerpT);
