@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using TowerDefense.GridMovement;
 
 namespace TowerDefense
 {
@@ -28,6 +30,11 @@ namespace TowerDefense
 
         [HideInInspector]
         public Vector2 targetPosition;
+
+        [Header("Wall Interaction")]
+        [SerializeField] private float interactionRadius = 1.0f;
+        [SerializeField] private KeyCode openShopKey = KeyCode.G; // Default G to avoid collision with existing E
+        [SerializeField] private WallShopOverlay wallShopOverlay; // assign in inspector
 
         private void Start()
         {
@@ -61,6 +68,9 @@ namespace TowerDefense
                 interactionMode = !interactionMode;
                 SetInteraction(false);
             }
+
+            // Wall interaction handled on hero
+            HandleWallInteraction();
         }
 
         // ------------------------------------------------------------------
@@ -194,6 +204,43 @@ namespace TowerDefense
 
                 TowerHeroManager.instance.DeselectTower();
             });
+        }
+
+        // ------------------------------------------------------------------
+        // WALL INTERACTION (neu in Hero)
+        // ------------------------------------------------------------------
+
+        private void HandleWallInteraction()
+        {
+            if (GridManager.Instance == null || wallShopOverlay == null)
+                return;
+
+            var tiles = GridManager.Instance.GetWallTilesInRadius(transform.position, interactionRadius);
+            if (tiles == null || tiles.Count == 0)
+            {
+                wallShopOverlay.Hide();
+                return;
+            }
+
+            Vector3Int best = tiles[0];
+            float bestDist = float.MaxValue;
+            foreach (var t in tiles)
+            {
+                var node = GridManager.Instance.GetNode(t);
+                if (node == null) continue;
+                float d = Vector3.SqrMagnitude(node.worldPosition - transform.position);
+                if (d < bestDist) { bestDist = d; best = t; }
+            }
+
+            List<Vector3Int> group = GridManager.Instance.GetConnectedWallTileGroup(best);
+            int builtCount = GridManager.Instance.CountBuiltWallsInGroup(group);
+
+            wallShopOverlay.ShowGroup(group, builtCount);
+
+            if (Input.GetKeyDown(openShopKey))
+            {
+                wallShopOverlay.OpenPurchaseUI();
+            }
         }
 
         // ------------------------------------------------------------------
