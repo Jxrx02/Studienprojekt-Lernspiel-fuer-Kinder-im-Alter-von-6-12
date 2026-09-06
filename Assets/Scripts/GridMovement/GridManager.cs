@@ -8,11 +8,22 @@ namespace TowerDefense.GridMovement
     {
         public static GridManager Instance;
 
-        [Header("Tilemaps")]
-        [SerializeField] private Tilemap groundTilemap;
+        [Header("Tilemaps")] [SerializeField] private Tilemap groundTilemap;
         [SerializeField] private Tilemap obstacleTilemap;
 
+        [Tooltip(
+            "Tilemap, auf der im Editor die Positionen der geplanten Walls eingezeichnet werden."
+        )]
+        [SerializeField]
+        private Tilemap wallTilemap;
+
+        [Header("Wall")] [SerializeField] private Wall wallGroupPrefab;
+
         private Dictionary<Vector3Int, GridNode> nodes = new();
+
+        // =========================================================
+        // UNITY
+        // =========================================================
 
         private void Awake()
         {
@@ -22,7 +33,14 @@ namespace TowerDefense.GridMovement
             CacheNeighbours();
         }
 
-        // ───────────────── SNAP ─────────────────
+        private void Start()
+        {
+            CreateWallGroupFromTilemap();
+        }
+
+        // =========================================================
+        // SNAP
+        // =========================================================
 
         public Vector3 SnapToGrid(Vector3 worldPosition)
         {
@@ -32,88 +50,352 @@ namespace TowerDefense.GridMovement
             return groundTilemap.GetCellCenterWorld(cell);
         }
 
-        // ───────────────── WALL ─────────────────
+        // =========================================================
+        // WALL
+        // =========================================================
 
         /// <summary>
-        /// Prüft, ob auf dieser Position grundsätzlich eine Wall
-        /// gebaut werden kann.
+        /// Prüft, ob eine Wall grundsätzlich auf dieser
+        /// Grid-Zelle platziert werden kann.
         ///
-        /// Wird für das neue BuildPoint-System normalerweise
-        /// nicht mehr benötigt, kann aber für Validierung bleiben.
+        /// Wichtig:
+        /// Die Prüfung erfolgt ausschließlich über den GridNode.
+        /// Die ObstacleTilemap wird hier nicht verändert.
         /// </summary>
         public bool CanPlaceWall(Vector3 worldPosition)
         {
             Vector3Int cell =
                 groundTilemap.WorldToCell(worldPosition);
 
-            if (!nodes.TryGetValue(cell, out GridNode node))
-                return false;
+            return CanPlaceWall(cell);
+        }
 
-            // Wall darf nur auf begehbarem Boden gebaut werden.
+        public bool CanPlaceWall(Vector3Int cell)
+        {
+            if (!nodes.TryGetValue(
+                    cell,
+                    out GridNode node))
+            {
+                return false;
+            }
+
             return node.walkable;
         }
 
         /// <summary>
-        /// Markiert das Feld als durch eine Wall blockiert.
+        /// Belegt eine Grid-Zelle mit einer Wall.
+        ///
+        /// Die Zelle wird im Node als nicht begehbar markiert.
+        ///
+        /// Es wird KEIN Tile auf die ObstacleTilemap geschrieben.
         /// </summary>
         public bool PlaceWall(Vector3 worldPosition)
         {
             Vector3Int cell =
                 groundTilemap.WorldToCell(worldPosition);
 
-            if (!nodes.TryGetValue(cell, out GridNode node))
-                return false;
+            return PlaceWall(cell);
+        }
 
-            // Bereits blockiert
-            if (!node.walkable)
+        public bool PlaceWall(Vector3Int cell)
+        {
+            if (!nodes.TryGetValue(
+                    cell,
+                    out GridNode node))
+            {
+                Debug.LogWarning(
+                    $"PlaceWall: Zelle {cell} existiert nicht im Grid."
+                );
+
                 return false;
+            }
+
+            // Bereits blockiert.
+            if (!node.walkable)
+            {
+                return false;
+            }
 
             node.walkable = false;
-
-            NotifyGridChanged();
 
             return true;
         }
 
         /// <summary>
-        /// Entfernt die Blockierung durch eine Wall.
+        /// Entfernt die Wall-Blockierung von einer Grid-Zelle.
+        ///
+        /// Auch hier wird die ObstacleTilemap NICHT verändert.
         /// </summary>
         public bool RemoveWall(Vector3 worldPosition)
         {
             Vector3Int cell =
                 groundTilemap.WorldToCell(worldPosition);
 
-            if (!nodes.TryGetValue(cell, out GridNode node))
+            return RemoveWall(cell);
+        }
+
+        public bool RemoveWall(Vector3Int cell)
+        {
+            if (!nodes.TryGetValue(
+                    cell,
+                    out GridNode node))
+            {
                 return false;
+            }
 
             node.walkable = true;
-
-            NotifyGridChanged();
 
             return true;
         }
 
-        // ───────────────── GRID ─────────────────
+        /// <summary>
+        /// Belegt mehrere Grid-Zellen mit einer Wall.
+        ///
+        /// Wird für eine komplette WallGroup verwendet.
+        /// </summary>
+        public void PlaceWallGroup(
+            IEnumerable<Vector3Int> cells)
+        {
+            if (cells == null)
+                return;
+
+            bool changed = false;
+
+            foreach (Vector3Int cell in cells)
+            {
+                if (!nodes.TryGetValue(
+                        cell,
+                        out GridNode node))
+                {
+                    continue;
+                }
+
+                if (node.walkable)
+                {
+                    node.walkable = false;
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                NotifyGridChanged();
+            }
+        }
+
+        /// <summary>
+        /// Entfernt die Blockierung einer kompletten WallGroup.
+        /// </summary>
+        public void RemoveWallGroup(
+            IEnumerable<Vector3Int> cells)
+        {
+            if (cells == null)
+                return;
+
+            bool changed = false;
+
+            foreach (Vector3Int cell in cells)
+            {
+                if (!nodes.TryGetValue(
+                        cell,
+                        out GridNode node))
+                {
+                    continue;
+                }
+
+                if (!node.walkable)
+                {
+                    node.walkable = true;
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                NotifyGridChanged();
+            }
+        }
+
+        // =========================================================
+        // WALL GROUP
+        // =========================================================
+        public bool CanPlaceWallGroup(
+            IEnumerable<Vector3Int> cells)
+        {
+            if (cells == null)
+                return false;
+
+            foreach (Vector3Int cell in cells)
+            {
+                if (!nodes.TryGetValue(
+                        cell,
+                        out GridNode node))
+                {
+                    return false;
+                }
+
+                if (!node.walkable)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
+        /// <summary>
+        /// Liest beim Start alle Tiles aus der WallTilemap
+        /// und erzeugt daraus eine einzige WallGroup.
+        ///
+        /// Die WallTilemap dient ausschließlich als Editor-
+        /// Definition für die geplanten Wall-Positionen.
+        /// </summary>
+        private void CreateWallGroupFromTilemap()
+        {
+            if (wallTilemap == null)
+            {
+                Debug.LogError(
+                    "GridManager: Keine WallTilemap zugewiesen!",
+                    this
+                );
+
+                return;
+            }
+
+            if (wallGroupPrefab == null)
+            {
+                Debug.LogError(
+                    "GridManager: Kein WallGroup-Prefab zugewiesen!",
+                    this
+                );
+
+                return;
+            }
+
+            List<Vector3Int> wallCells =
+                new List<Vector3Int>();
+
+            BoundsInt bounds =
+                wallTilemap.cellBounds;
+
+            foreach (Vector3Int cell in bounds.allPositionsWithin)
+            {
+                if (!wallTilemap.HasTile(cell))
+                    continue;
+
+                if (!nodes.ContainsKey(cell))
+                {
+                    Debug.LogWarning(
+                        $"WallTilemap-Zelle {cell} liegt nicht auf dem GroundGrid.",
+                        this
+                    );
+
+                    continue;
+                }
+
+                wallCells.Add(cell);
+            }
+
+            if (wallCells.Count == 0)
+            {
+                Debug.Log(
+                    "GridManager: Keine Wall-Zellen auf der WallTilemap gefunden."
+                );
+
+                return;
+            }
+
+            // =========================================================
+            // MITTELPUNKT DER WALL BERECHNEN
+            // =========================================================
+
+            Vector3Int minCell = wallCells[0];
+            Vector3Int maxCell = wallCells[0];
+
+            foreach (Vector3Int cell in wallCells)
+            {
+                minCell = Vector3Int.Min(minCell, cell);
+                maxCell = Vector3Int.Max(maxCell, cell);
+            }
+
+            Vector3 minWorld =
+                groundTilemap.CellToWorld(minCell);
+
+            Vector3 maxWorld =
+                groundTilemap.CellToWorld(
+                    maxCell + Vector3Int.one
+                );
+
+            Vector3 wallGroupCenter =
+                (minWorld + maxWorld) * 0.5f;
+
+            // =========================================================
+            // WALLGROUP ERSTELLEN
+            // =========================================================
+
+            Wall wallGroup =
+                Instantiate(
+                    wallGroupPrefab,
+                    wallGroupCenter,
+                    Quaternion.identity
+                );
+
+            wallGroup.name = "WallGroup";
+
+            wallGroup.Initialize(
+                wallCells,
+                groundTilemap
+            );
+
+            // =========================================================
+            // WICHTIG:
+            // KEIN PlaceWall()!
+            //
+            // Die Nodes bleiben walkable.
+            // =========================================================
+
+            // WallTilemap wird nur als Editor-Vorlage verwendet.
+            wallTilemap.gameObject.SetActive(false);
+
+            Debug.Log(
+                $"GridManager: WallGroup mit " +
+                $"{wallCells.Count} Segmenten erstellt. " +
+                "Walls sind noch NICHT gebaut und blockieren das Grid nicht."
+            );
+        }
+        // =========================================================
+        // GRID
+        // =========================================================
 
         private void BuildGrid()
         {
             nodes.Clear();
 
-            BoundsInt bounds = groundTilemap.cellBounds;
+            BoundsInt bounds =
+                groundTilemap.cellBounds;
 
-            foreach (Vector3Int cell in bounds.allPositionsWithin)
+            foreach (
+                Vector3Int cell
+                in bounds.allPositionsWithin)
             {
                 if (!groundTilemap.HasTile(cell))
                     continue;
 
-                GridNode node = new GridNode(
+                GridNode node =
+                    new GridNode(
+                        cell,
+                        groundTilemap.GetCellCenterWorld(cell)
+                    );
+
+                // Die normale ObstacleTilemap bestimmt nur
+                // die bereits vorhandenen statischen Hindernisse.
+                node.walkable =
+                    !obstacleTilemap.HasTile(cell);
+
+                nodes.Add(
                     cell,
-                    groundTilemap.GetCellCenterWorld(cell)
+                    node
                 );
-
-                node.walkable = !obstacleTilemap.HasTile(cell);
-
-                nodes.Add(cell, node);
             }
         }
 
@@ -132,25 +414,36 @@ namespace TowerDefense.GridMovement
 
                         Vector3Int neighbourCell =
                             node.cell +
-                            new Vector3Int(x, y, 0);
+                            new Vector3Int(
+                                x,
+                                y,
+                                0
+                            );
 
                         if (nodes.TryGetValue(
                                 neighbourCell,
                                 out GridNode neighbour))
                         {
-                            node.neighbours.Add(neighbour);
+                            node.neighbours.Add(
+                                neighbour
+                            );
                         }
                     }
                 }
             }
         }
 
-        // ───────────────── NODE ACCESS ─────────────────
+        // =========================================================
+        // NODE ACCESS
+        // =========================================================
 
-        public GridNode GetNode(Vector3 worldPosition)
+        public GridNode GetNode(
+            Vector3 worldPosition)
         {
             Vector3Int cell =
-                groundTilemap.WorldToCell(worldPosition);
+                groundTilemap.WorldToCell(
+                    worldPosition
+                );
 
             nodes.TryGetValue(
                 cell,
@@ -160,7 +453,8 @@ namespace TowerDefense.GridMovement
             return node;
         }
 
-        public GridNode GetNode(Vector3Int cell)
+        public GridNode GetNode(
+            Vector3Int cell)
         {
             nodes.TryGetValue(
                 cell,
@@ -175,11 +469,13 @@ namespace TowerDefense.GridMovement
             return nodes.Values;
         }
 
-        // ───────────────── GRID UPDATE ─────────────────
+        // =========================================================
+        // GRID UPDATE
+        // =========================================================
 
         public void NotifyGridChanged()
         {
-            foreach (var node in nodes.Values)
+            foreach (GridNode node in nodes.Values)
             {
                 node.neighbours.Clear();
             }

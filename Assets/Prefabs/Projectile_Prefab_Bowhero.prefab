@@ -290,12 +290,13 @@ MonoBehaviour:
   hideTilCollision: 0
   canFindNewTarget: 0
   speed: 7
-  mode: 3
+  mode: 0
   aoeRadius: 1.5
   aoeVfxPrefab: {fileID: 0}
   dotDuration: 3
   dotInterval: 0.5
   dotDamagePerTick: 5
+  chainDamage: 10
   chainCount: 3
   chainDamageFalloff: 0.2
   chainRadius: 3
@@ -310,6 +311,7 @@ MonoBehaviour:
   blackHoleVfxPrefab: {fileID: 0}
   stickyDelay: 2
   stickyAoeRadius: 1.5
+  stickyAoeDamage: 5
   chainLinkRadius: 4
   chainSlowAmount: 0.4
   chainLinkDamage: 5

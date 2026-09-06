@@ -80,7 +80,17 @@ namespace TowerDefense
 
             currentTower.SetHighlighted(true);
             currentTower.SetInteraction(true);
+            
+            if (currentTower is Wall wallGroup)
+            {
+                if (!wallGroup.IsBuilt)
+                {
+                    wallGroup.SetUnbuiltVisual();
+                }
+            }
 
+            
+            InteractWithCurrentTower();
             Debug.Log(tower.towerName + " ist in Range");
         }
 
@@ -94,12 +104,49 @@ namespace TowerDefense
             currentTower.SetIsSelected(false);
 
             currentTower = null;
+            
+            if (currentTower is Wall wallGroup)
+            {
+                if (!wallGroup.IsBuilt)
+                {
+                    wallGroup.SetUnbuiltVisual();
+                }
+            }
 
             SetInteraction(false);
 
             TowerHeroManager.instance.DeselectTower();
         }
+        public void InteractWithCurrentTower()
+        {
+            if (currentTower == null)
+                return;
+            
+            if (currentTower is Wall wallGroup)
+            {
+                if (!wallGroup.IsBuilt)
+                {
 
+                    Debug.Log(
+                        wallGroup.towerName +
+                        " ist eine unbebaute WallGroup und kann gebaut werden."
+                    );
+                    wallGroup.Build();
+
+                }
+                else
+                {
+                    Debug.Log(
+                        wallGroup.towerName +
+                        " ist eine gebaute WallGroup."
+                    );
+                }
+
+                return;
+            }
+
+            // normale Tower-Interaktion
+        }
         // ------------------------------------------------------------------
         // ANIMATION
         // ------------------------------------------------------------------

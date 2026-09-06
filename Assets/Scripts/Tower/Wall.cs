@@ -1,57 +1,292 @@
-﻿using TowerDefense.GridMovement;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using TowerDefense.GridMovement;
 
 namespace TowerDefense
 {
     public class Wall : Tower
     {
-        [Header("Wall Settings")]
-        [SerializeField] private int buildCost = 25;
+        [Header("Wall Settings")] [SerializeField]
+        private int buildCost = 25;
 
-        [Header("Wall Visual")]
-        [Tooltip("16 Sprites entsprechend der 4-Bit-Nachbarschaft.")]
-        [SerializeField] private Sprite[] wallSprites = new Sprite[16];
-        private Vector3Int wallCellPosition;
-        
-        [Header("Spike Settings")]
-        [SerializeField] private int spikeDamage = 0;
+        [Header("Wall Visual")] [Tooltip("16 Sprites entsprechend der 4-Bit-Nachbarschaft.")] [SerializeField]
+        private Sprite[] wallSprites = new Sprite[16];
+
+        [Tooltip("Material für eine noch nicht gebaute Wall.")] [SerializeField]
+        private Material unbuiltMaterial;
+
+        [Tooltip("Material für eine gebaute Wall.")] [SerializeField]
+        private Material builtMaterial;
+
+        [Header("Wall Segment")] [SerializeField]
+        private int sortingOrder = 100;
+
+        [Header("Spike Settings")] [SerializeField]
+        private int spikeDamage = 0;
+
         [SerializeField] private float spikeCooldown = 1f;
+
         [SerializeField] private bool hasSpikes = false;
 
         private float spikeTimer;
 
-        private bool isBuilt = true;
+        // Alle Zellen, auf denen diese WallGroup liegt.
+        private readonly HashSet<Vector3Int> wallCells = new();
+
+        // SpriteRenderer der einzelnen visuellen Segmente.
+        private readonly Dictionary<
+            Vector3Int,
+            SpriteRenderer
+        > wallRenderers = new();
+
+        private bool isBuilt = false;
 
         public bool IsBuilt => isBuilt;
+
         public int BuildCost => buildCost;
 
-        // ───────────────── INIT ─────────────────
+        public IReadOnlyCollection<Vector3Int> WallCells =>
+            wallCells;
+
+        // =========================================================
+        // INIT
+        // =========================================================
 
         protected override void Awake()
         {
             base.Awake();
 
-            if (wallSprites == null || wallSprites.Length != 16)
+            placementType = PlacementType.Wall;
+
+            if (wallSprites == null ||
+                wallSprites.Length != 16)
             {
                 Debug.LogError(
-                    $"Wall '{name}': Es müssen genau 16 Wall-Sprites vorhanden sein!",
+                    $"WallGroup '{name}': " +
+                    "Es müssen genau 16 Wall-Sprites zugewiesen werden!",
+                    this
+                );
+            }
+
+            if (unbuiltMaterial == null)
+            {
+                Debug.LogError(
+                    $"WallGroup '{name}': " +
+                    "Kein Unbuilt Material zugewiesen!",
+                    this
+                );
+            }
+
+            if (builtMaterial == null)
+            {
+                Debug.LogError(
+                    $"WallGroup '{name}': " +
+                    "Kein Built Material zugewiesen!",
                     this
                 );
             }
         }
 
-        private void Start()
+        /// <summary>
+        /// Erstellt die visuellen Wall-Segmente aus den
+        /// Zellen der WallTilemap.
+        ///
+        /// Die Grid-Zellen werden NICHT hier blockiert.
+        /// Das übernimmt der GridManager.
+        /// </summary>
+        public void Initialize(
+            List<Vector3Int> cells,
+            Tilemap groundTilemap)
         {
+            if (cells == null || cells.Count == 0)
+            {
+                Debug.LogWarning(
+                    $"WallGroup '{name}': Keine Wall-Zellen übergeben.",
+                    this
+                );
+
+                return;
+            }
+
+            wallCells.Clear();
+            wallRenderers.Clear();
+
+            foreach (Vector3Int cell in cells)
+            {
+                if (wallCells.Contains(cell))
+                    continue;
+
+                wallCells.Add(cell);
+
+                Vector3 worldPosition =
+                    groundTilemap.GetCellCenterWorld(cell);
+
+                Vector3 localPosition =
+                    worldPosition - transform.position;
+
+                CreateWallSegment(
+                    cell,
+                    localPosition
+                );
+                
+
+            }
+
+            // =========================================================
+            // WALL IST NOCH NICHT GEBAUT
+            // =========================================================
+
+            isBuilt = false;
+
             blocksPath = false;
+
             placementType = PlacementType.Wall;
 
-            if (!isBuilt)
-                return;
+            // Ungebautes Material
+            SetMaterial(unbuiltMaterial);
 
+            // Wall-Sprites anhand der WallTilemap-Nachbarn
+            RefreshVisual();
         }
 
+        private void CreateWallSegment(
+            Vector3Int cell,
+            Vector3 localPosition)
+        {
+            GameObject segment =
+                new GameObject(
+                    $"WallSegment_{cell.x}_{cell.y}"
+                );
+
+            segment.transform.SetParent(transform);
+            segment.transform.localPosition = localPosition;
+
+            WallSegment wall = segment.AddComponent<WallSegment>();
+            wall.Initialize(this, cell);
+
+            SpriteRenderer renderer =
+                segment.AddComponent<SpriteRenderer>();
+
+            renderer.sortingOrder = sortingOrder;
+            renderer.sortingLayerName = "Details";
+
+            wallRenderers.Add(cell, renderer);
+
+            BoxCollider2D col =
+                segment.AddComponent<BoxCollider2D>();
+            col.size = Vector2.one; 
+
+            TowerHeroManager.instance.walls.Add(segment);
+            //TowerHeroManager.instance.RegisterTower(wall);
+
+        }
+        public void RemoveWallSegment(Vector3Int cell)
+        {
+            if (!wallCells.Remove(cell))
+                return;
+
+            GridManager.Instance.RemoveWallGroup(
+                new[] { cell }
+            );
+
+            wallRenderers.Remove(cell);
+        }
+        // =========================================================
+        // BUILD
+        // =========================================================
+
+        /// <summary>
+        /// Baut die komplette WallGroup.
+        ///
+        /// Die Grid-Zellen sind zu diesem Zeitpunkt bereits
+        /// blockiert. Deshalb wird hier KEIN PlaceWall()
+        /// mehr aufgerufen.
+        /// </summary>
+        public void Build()
+        {
+            if (isBuilt)
+                return;
+
+
+            if (LevelManager.instance == null)
+            {
+                Debug.LogError(
+                    "WallGroup: LevelManager.instance ist null!",
+                    this
+                );
+
+                return;
+            }
+
+            if (LevelManager.instance.cur_coins < buildCost)
+            {
+                Debug.Log(
+                    $"Nicht genug Coins für WallGroup '{name}'. " +
+                    $"Benötigt: {buildCost}"
+                );
+
+                return;
+            }
+
+            // =========================================================
+            // PRÜFEN, OB ALLE ZELLEN BEBAUBAR SIND
+            // =========================================================
+
+            if (!GridManager.Instance.CanPlaceWallGroup(wallCells))
+            {
+                Debug.Log(
+                    $"WallGroup '{name}' kann nicht gebaut werden."
+                );
+
+                return;
+            }
+
+            // =========================================================
+            // BEZAHLEN
+            // =========================================================
+
+            LevelManager.instance.cur_coins -= buildCost;
+
+            // =========================================================
+            // GRID BLOCKIEREN
+            // =========================================================
+
+            GridManager.Instance.PlaceWallGroup(
+                wallCells
+            );
+
+            // =========================================================
+            // WALL ALS GEBAUT INITIALISIEREN
+            // =========================================================
+
+            
+            InitializeBuiltWall();
+
+            TowerUI.Instance.UpdateUI();
+
+            Debug.Log(
+                $"WallGroup '{name}' wurde gebaut."
+            );
+        }
+
+        // =========================================================
+        // INITIALIZE BUILT WALL
+        // =========================================================
+
+        /// <summary>
+        /// Wechselt die WallGroup vom geplanten Zustand
+        /// in den tatsächlich gebauten Zustand.
+        ///
+        /// WICHTIG:
+        /// Das Grid wurde bereits beim Start durch
+        /// GridManager.PlaceWall() blockiert.
+        /// </summary>
         public void InitializeBuiltWall()
         {
+            if (isBuilt)
+                return;
+
             isBuilt = true;
 
             blocksPath = true;
@@ -59,26 +294,136 @@ namespace TowerDefense
 
             currentHealth = statHealthPoints;
 
-            GridNode node =
-                GridManager.Instance.GetNode(transform.position);
+            // Normales Wall-Material
+            SetMaterial(
+                builtMaterial
+            );
 
-            if (node == null)
+            // Gebaute Wall-Sprites
+            RefreshVisual();
+
+            // Das Grid wurde bereits blockiert.
+            // Wir müssen es hier nicht erneut ändern.
+        }
+
+        // =========================================================
+        // MATERIAL
+        // =========================================================
+
+        private void SetMaterial(
+            Material material)
+        {
+            if (material == null)
+                return;
+
+            foreach (
+                SpriteRenderer renderer
+                in wallRenderers.Values)
             {
-                Debug.LogError(
-                    $"Wall '{name}': Position {transform.position} liegt nicht auf dem Grid!",
-                    this
-                );
+                renderer.sharedMaterial =
+                    material;
+            }
+        }
 
-                isBuilt = false;
+        public void SetUnbuiltVisual()
+        {
+            if (isBuilt)
+                return;
+            sr.enabled = false;
+            SetMaterial(unbuiltMaterial);
+        }
+        // =========================================================
+        // VISUAL
+        // =========================================================
+
+        public void RefreshVisual()
+        {
+            if (wallSprites == null ||
+                wallSprites.Length != 16)
+            {
                 return;
             }
 
-            wallCellPosition = node.cell;
+            foreach (
+                KeyValuePair<
+                    Vector3Int,
+                    SpriteRenderer
+                > pair
+                in wallRenderers)
+            {
+                Vector3Int cell =
+                    pair.Key;
 
-            GridManager.Instance.PlaceWall(transform.position);
+                SpriteRenderer renderer =
+                    pair.Value;
 
-            RefreshVisualsAroundWall();
+                int mask =
+                    CalculateNeighbourMask(
+                        cell
+                    );
+
+                Sprite sprite =
+                    wallSprites[mask];
+
+                if (sprite != null)
+                {
+                    renderer.sprite =
+                        sprite;
+                }
+            }
         }
+
+        // =========================================================
+        // NEIGHBOURS
+        // =========================================================
+
+        /// <summary>
+        /// Bit 0 = oben
+        /// Bit 1 = rechts
+        /// Bit 2 = unten
+        /// Bit 3 = links
+        /// </summary>
+        private int CalculateNeighbourMask(
+            Vector3Int cell)
+        {
+            int mask = 0;
+
+            if (ContainsCell(
+                    cell + Vector3Int.up))
+            {
+                mask |= 1;
+            }
+
+            if (ContainsCell(
+                    cell + Vector3Int.right))
+            {
+                mask |= 2;
+            }
+
+            if (ContainsCell(
+                    cell + Vector3Int.down))
+            {
+                mask |= 4;
+            }
+
+            if (ContainsCell(
+                    cell + Vector3Int.left))
+            {
+                mask |= 8;
+            }
+
+            return mask;
+        }
+
+        private bool ContainsCell(
+            Vector3Int cell)
+        {
+            return wallCells.Contains(cell);
+        }
+
+        // =========================================================
+        // UPDATE
+        // =========================================================
 
         private void Update()
         {
@@ -88,220 +433,87 @@ namespace TowerDefense
             HandleSpikeDamage();
         }
 
-        // ───────────────── BUILD ─────────────────
-
-        public void Build()
-        {
-            if (isBuilt)
-                return;
-
-            if (LevelManager.instance.cur_coins < buildCost)
-                return;
-
-            if (!GridManager.Instance.CanPlaceWall(transform.position))
-                return;
-
-            LevelManager.instance.cur_coins -= buildCost;
-
-            InitializeBuiltWall();
-
-            TowerUI.Instance.UpdateUI();
-        }
-
-        // ───────────────── WALL VISUAL ─────────────────
-
-        /// <summary>
-        /// Berechnet anhand der vier direkten Nachbarn,
-        /// welches Sprite für diese Wall verwendet werden soll.
-        /// </summary>
-        public void RefreshVisual()
-        {
-            if (!isBuilt)
-                return;
-
-            if (wallSprites == null || wallSprites.Length != 16)
-                return;
-
-            int mask = CalculateNeighbourMask();
-
-            Sprite sprite = wallSprites[mask];
-
-            //Debug.Log("Sprite:" + mask + " |" + wallSprites[mask]);
-            if (sprite != null)
-                sr.sprite = sprite;
-        }
-
-        /// <summary>
-        /// Berechnet die 4-Bit-Nachbarschaft:
-        ///
-        /// Bit 0 = oben
-        /// Bit 1 = rechts
-        /// Bit 2 = unten
-        /// Bit 3 = links
-        ///
-        /// Dadurch entstehen 16 mögliche Kombinationen.
-        /// </summary>
-        private int CalculateNeighbourMask()
-        {
-            int mask = 0;
-
-            if (IsWallAtCell(wallCellPosition + Vector3Int.up))
-                mask |= 1;
-
-            if (IsWallAtCell(wallCellPosition + Vector3Int.right))
-                mask |= 2;
-
-            if (IsWallAtCell(wallCellPosition + Vector3Int.down))
-                mask |= 4;
-
-            if (IsWallAtCell(wallCellPosition + Vector3Int.left))
-                mask |= 8;
-
-            return mask;
-        }
-        /// <summary>
-        /// Prüft, ob sich auf einer bestimmten Grid-Zelle
-        /// eine gebaute Wall befindet.
-        /// </summary>
-        private bool IsWallAtCell(Vector3Int cell)
-        {
-            GridNode node = GridManager.Instance.GetNode(cell);
-
-            if (node == null)
-                return false;
-
-            Vector3 worldPosition = node.worldPosition;
-
-            Collider2D[] colliders =
-                Physics2D.OverlapPointAll(worldPosition);
-
-            foreach (Collider2D collider in colliders)
-            {
-                Wall wall = collider.GetComponent<Wall>();
-
-                if (wall != null && wall.IsBuilt)
-                    return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Aktualisiert diese Wall und alle direkten Nachbarn.
-        /// </summary>
-        private void RefreshVisualsAroundWall()
-        {
-            RefreshVisual();
-
-            RefreshWallAtCell(wallCellPosition + Vector3Int.up);
-            RefreshWallAtCell(wallCellPosition + Vector3Int.right);
-            RefreshWallAtCell(wallCellPosition + Vector3Int.down);
-            RefreshWallAtCell(wallCellPosition + Vector3Int.left);
-        }
-
-        private void RefreshWallAtCell(Vector3Int cell)
-        {
-            GridNode node =
-                GridManager.Instance.GetNode(cell);
-
-            if (node == null)
-                return;
-
-            Collider2D[] colliders =
-                Physics2D.OverlapPointAll(node.worldPosition);
-
-            foreach (Collider2D collider in colliders)
-            {
-                Wall wall = collider.GetComponent<Wall>();
-
-                if (wall != null && wall.IsBuilt)
-                {
-                    wall.RefreshVisual();
-                }
-            }
-        }
-
-        // ───────────────── UPGRADES ─────────────────
-
-        /// <summary>
-        /// Wird vom Upgrade-System aufgerufen.
-        /// Der RuleTile-Parameter bleibt hier absichtlich nicht mehr nötig,
-        /// da die Visualisierung jetzt über wallSprites erfolgt.
-        /// </summary>
-        public void RefreshWallUpgradeVisual()
-        {
-            RefreshVisualsAroundWall();
-        }
-
-        // ───────────────── SPIKES ─────────────────
+        // =========================================================
+        // SPIKES
+        // =========================================================
 
         private void HandleSpikeDamage()
         {
-            if (!hasSpikes || spikeDamage <= 0)
+            if (!hasSpikes ||
+                spikeDamage <= 0)
+            {
                 return;
+            }
 
-            spikeTimer -= Time.deltaTime;
+            spikeTimer -=
+                Time.deltaTime;
 
             if (spikeTimer > 0f)
                 return;
 
-            spikeTimer = spikeCooldown;
+            spikeTimer =
+                spikeCooldown;
 
             DamageEnemiesOnWall();
         }
 
         private void DamageEnemiesOnWall()
         {
-            Collider2D[] hits =
-                Physics2D.OverlapCircleAll(
-                    transform.position,
-                    0.5f
-                );
-
-            foreach (var hit in hits)
+            foreach (Vector3Int cell in wallCells)
             {
-                Enemy enemy = hit.GetComponent<Enemy>();
+                GridNode node =
+                    GridManager.Instance.GetNode(
+                        cell
+                    );
 
-                if (enemy != null)
-                    enemy.TakeDamage(spikeDamage);
+                if (node == null)
+                    continue;
+
+                Collider2D[] hits =
+                    Physics2D.OverlapCircleAll(
+                        node.worldPosition,
+                        0.5f
+                    );
+
+                foreach (Collider2D hit in hits)
+                {
+                    Enemy enemy =
+                        hit.GetComponent<Enemy>();
+
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(
+                            spikeDamage
+                        );
+                    }
+                }
             }
         }
 
-        // ───────────────── TOWER ─────────────────
+        // =========================================================
+        // TOWER
+        // =========================================================
 
-        public override void Attack((GameObject, int) target)
+        public override void Attack(
+            (GameObject, int) target)
         {
             // Walls greifen nicht aktiv an.
         }
 
-        // ───────────────── DESTROY ─────────────────
+        // =========================================================
+        // DESTROY
+        // =========================================================
 
         protected override void DestroyTower()
         {
-            if (!isBuilt)
+            if (wallCells.Count > 0)
             {
-                base.DestroyTower();
-                return;
+                GridManager.Instance.RemoveWallGroup(
+                    wallCells
+                );
             }
 
-            GridNode node =
-                GridManager.Instance.GetNode(transform.position);
-
-            Vector3Int cell = node != null
-                ? node.cell
-                : Vector3Int.zero;
-
-            GridManager.Instance.RemoveWall(transform.position);
-
-            // Wall selbst deaktivieren, damit sie beim
-            // Neuberechnen nicht mehr als Nachbar erkannt wird.
             isBuilt = false;
-
-            // Nachbarn müssen jetzt ihre Verbindung verlieren.
-            RefreshWallAtCell(cell + Vector3Int.up);
-            RefreshWallAtCell(cell + Vector3Int.right);
-            RefreshWallAtCell(cell + Vector3Int.down);
-            RefreshWallAtCell(cell + Vector3Int.left);
 
             base.DestroyTower();
         }
