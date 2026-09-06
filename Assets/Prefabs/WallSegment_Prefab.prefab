@@ -106,7 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a635cfd397a4818ba870b035b8e3fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerInteractionArea
-  tower: {fileID: 0}
 --- !u!58 &1630263472352645955
 CircleCollider2D:
   m_ObjectHideFlags: 0

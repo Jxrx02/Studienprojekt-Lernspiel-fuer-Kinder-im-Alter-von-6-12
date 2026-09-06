@@ -42,17 +42,23 @@ namespace TowerDefense
         [SerializeField] public float interactionrange;
 
         [SerializeField] public int damage;
+
         [Range(0.1f, 50f)]
         [SerializeField] public float timeInBetweenShots;
+
         [SerializeField] public float attackSpeedMultiplier = 1f;
-        
+
         [Header("Visuals")]
         [SerializeField] public SpriteRenderer rangeIndicator;
         [SerializeField] private Vector3 rangeIndicatorOffset;
+
         [SerializeField] public SpriteRenderer interactionIndicator;
         [SerializeField] private Vector3 interactionIndicatorOffset;
+
         [SerializeField] public Material outlineMaterial;
+
         [SerializeField] public TargetType targetPreference = TargetType.Nearest;
+
         private Material notOutlinedMaterial;
         protected internal SpriteAnim spriteAnim;
         protected SpriteRenderer sr;
@@ -77,11 +83,12 @@ namespace TowerDefense
         [HideInInspector] public int level = 1;
         [HideInInspector] public int experience;
         [HideInInspector] public int requiredExperience;
-        public LevelConfig levelConfig;
-        
-        [HideInInspector] public Boolean isAttacking =false;
-        public GameObject projectilePrefab;
 
+        public LevelConfig levelConfig;
+
+        [HideInInspector] public Boolean isAttacking = false;
+        public GameObject projectilePrefab;
+    
         [Header("Targeting")]
         protected Boolean isSelected;
         protected Boolean isHighlighted; 

@@ -29,7 +29,7 @@ MonoBehaviour:
   tenacity: 1
   movementSpeed: 1
   xpDrop: 40
-  attackRange: 1
+  attackRange: 3
   attackCooldown: 1
   attackDamage: 1
   isMeele: 1
