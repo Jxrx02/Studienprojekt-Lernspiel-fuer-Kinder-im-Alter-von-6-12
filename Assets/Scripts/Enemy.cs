@@ -207,10 +207,9 @@ namespace TowerDefense
             if (isAttacking)
                 return;
 
+            WallSegment wallSegment = attackTarget.GetComponent<WallSegment>();
 
-            Wall wall = attackTarget.GetComponent<Wall>();
-
-            if (wall == null)
+            if (wallSegment == null)
             {
                 attackTarget = null;
                 CalculatePath();
@@ -262,14 +261,15 @@ namespace TowerDefense
                 return;
             
 
-            Wall wall = attackTarget.GetComponent<Wall>();
+            WallSegment wallSegment = attackTarget.GetComponent<WallSegment>();
 
-            if (wall == null)
+            if (wallSegment == null)
                 return;
 
             if (enemyConfig.isMeele)
             {
-                wall.TakeDamage(enemyConfig.attackDamage);
+                wallSegment.TakeDamage(enemyConfig.attackDamage);
+                Debug.Log("meeleattack: " + wallSegment + " dmg " + enemyConfig.attackDamage);
             }
             else
             {
@@ -278,7 +278,7 @@ namespace TowerDefense
                     .Init((attackTarget, 0), enemyConfig.attackDamage);
             }
 
-            if (wall.currentHealth <= 0)
+            if (wallSegment.currentHealth <= 0)
             {
                 attackTarget = null;
                 currentPath = null;

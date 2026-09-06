@@ -71,10 +71,10 @@ public class TowerShop : MonoBehaviour
                 levelManager.heroFielded = true;
             }
             
-            if (selectedTower.TryGetComponent(out Wall wall))
+            if (selectedTower.TryGetComponent(out WallGroup wall))
             {
-                wall.SetIsSelected(false);
-                wall.isAttacking = false;
+               // wall.SetIsSelected(false);
+               // wall.isAttacking = false;
 
                 //wall.InitializeBuiltWall();
             }
@@ -97,7 +97,7 @@ public class TowerShop : MonoBehaviour
         bool valid = false;
 
         // ───────── WALL VALIDATION ─────────
-        if (towerComp is Wall)
+        if (towerComp is WallSegment)
         {
             // ───────── SNAP ─────────
             selectedTower.transform.position = GridManager.Instance.SnapToGrid(mousePosition);
@@ -134,7 +134,7 @@ public class TowerShop : MonoBehaviour
             return;
 
 
-        if (tower is Wall)
+        if (tower is WallSegment)
         {
             Vector3 pos = tower.transform.position;
 

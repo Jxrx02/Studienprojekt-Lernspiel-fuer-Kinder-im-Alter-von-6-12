@@ -65,7 +65,7 @@ namespace TowerDefense
 
         public void RegisterTower(GameObject tower)
         {
-            if (tower.GetComponent<Tower>() is Wall)
+            if (tower.GetComponent<Tower>() is WallSegment)
             {
                 if (!walls.Contains(tower.gameObject))
                 {
@@ -83,7 +83,7 @@ namespace TowerDefense
         }
         public void UnRegisterTower(GameObject tower)
         {
-            if (tower.GetComponent<Tower>() is Wall)
+            if (tower.GetComponent<Tower>() is WallSegment)
             {
                 if (walls.Contains(tower.gameObject))
                 {

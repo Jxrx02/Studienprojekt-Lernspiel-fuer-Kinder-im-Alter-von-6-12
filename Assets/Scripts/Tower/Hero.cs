@@ -17,7 +17,7 @@ namespace TowerDefense
         private Tower currentTower;
 
         private bool interactionMode = false;
-        private bool hasReachedTargetPosition;
+        //private bool hasReachedTargetPosition;
 
         [Header("Weapons")]
         [SerializeField] private Projectile[] equippedProjectiles;
@@ -81,9 +81,11 @@ namespace TowerDefense
             currentTower.SetHighlighted(true);
             currentTower.SetInteraction(true);
             
-            if (currentTower is Wall wallGroup)
+            if (currentTower is WallSegment wall)
             {
-                if (!wallGroup.IsBuilt)
+                WallGroup wallGroup = wall.WallGroup;
+
+                if (!wallGroup.IsBuilt && !wallGroup.IsDestroyed)
                 {
                     wallGroup.SetUnbuiltVisual();
                 }
@@ -103,10 +105,11 @@ namespace TowerDefense
             currentTower.SetInteraction(false);
             currentTower.SetIsSelected(false);
 
-            currentTower = null;
             
-            if (currentTower is Wall wallGroup)
+            if (currentTower is WallSegment wall)
             {
+                WallGroup wallGroup = wall.WallGroup;
+
                 if (!wallGroup.IsBuilt)
                 {
                     wallGroup.SetUnbuiltVisual();
@@ -122,28 +125,35 @@ namespace TowerDefense
             if (currentTower == null)
                 return;
             
-            if (currentTower is Wall wallGroup)
+            if (currentTower is WallSegment wall)
             {
+                WallGroup wallGroup = wall.WallGroup;
+
+                if (wallGroup.IsDestroyed)
+                {
+                    wallGroup.Repair();
+                    Debug.Log("WAll repariert");
+
+                    return;
+                }
                 if (!wallGroup.IsBuilt)
                 {
-
                     Debug.Log(
-                        wallGroup.towerName +
+                        
                         " ist eine unbebaute WallGroup und kann gebaut werden."
                     );
                     wallGroup.Build();
-
-                }
-                else
+                }      else
                 {
                     Debug.Log(
-                        wallGroup.towerName +
                         " ist eine gebaute WallGroup."
                     );
                 }
 
                 return;
             }
+            
+
 
             // normale Tower-Interaktion
         }
@@ -213,7 +223,7 @@ namespace TowerDefense
                             transform.position,
                             targetPosition) > 0.15f)
                     {
-                        hasReachedTargetPosition = false;
+                        //hasReachedTargetPosition = false;
 
                         Vector2 direction =
                             targetPosition - (Vector2)transform.position;

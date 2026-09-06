@@ -329,7 +329,7 @@ namespace TowerDefense
             if (target.Item1 != null)
             {
                 target.Item1.GetComponent<Enemy>()?.TakeDamage(damage);
-                target.Item1.GetComponent<Wall>()?.TakeDamage(damage);
+                target.Item1.GetComponent<WallSegment>()?.TakeDamage(damage);
             }
         }
 
@@ -352,7 +352,7 @@ namespace TowerDefense
                 if (Vector3.Distance(center, go.transform.position) <= radius)
                 {
                     go.GetComponent<Enemy>()?.TakeDamage(dmg);
-                    go.GetComponent<Wall>()?.TakeDamage(dmg);
+                    go.GetComponent<WallSegment>()?.TakeDamage(dmg);
                 }
             }
         }
@@ -373,7 +373,7 @@ namespace TowerDefense
                 if (elapsed >= nextTick)
                 {
                     enemy.GetComponent<Enemy>()?.TakeDamage(dotDamagePerTick);
-                    enemy.GetComponent<Wall>()?.TakeDamage(dotDamagePerTick);
+                    enemy.GetComponent<WallSegment>()?.TakeDamage(dotDamagePerTick);
 
                     nextTick += dotInterval;
                 }
@@ -415,9 +415,9 @@ namespace TowerDefense
                     if (enemy != null)
                         enemy.TakeDamage(currentDamage);
 
-                    Wall wall = current.GetComponent<Wall>();
-                    if (wall != null)
-                        wall.TakeDamage(currentDamage);
+                    WallSegment wallSegment = current.GetComponent<WallSegment>();
+                    if (wallSegment != null)
+                        wallSegment.TakeDamage(currentDamage);
                 }
 
                 // Wenn das aktuelle Ziel durch den Schaden zerstört wurde,
@@ -558,7 +558,7 @@ namespace TowerDefense
             if (target.Item1 != null)
             {
                 target.Item1.GetComponent<Enemy>()?.TakeDamage(damage);
-                target.Item1.GetComponent<Wall>()?.TakeDamage(damage);
+                target.Item1.GetComponent<WallSegment>()?.TakeDamage(damage);
 
                 remainingPierce--;
             }

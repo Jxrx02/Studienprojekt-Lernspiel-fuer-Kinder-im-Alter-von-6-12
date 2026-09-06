@@ -34,8 +34,8 @@ namespace TowerDefense
         [SerializeField] public bool blocksPath = false;
 
         [Header("Health")]
-        [SerializeField] public float statHealthPoints;
-        public float currentHealth;
+        [SerializeField] public int statHealthPoints;
+        public int currentHealth;
 
         [Header("Combat Stats")]
         [SerializeField] public float range;
@@ -477,10 +477,10 @@ namespace TowerDefense
                 GameObject oldProjectilePrefab = projectilePrefab;  
                 projectilePrefab               = lvl.projectile;
                 
-                if (this is Wall wall)
+               /* if (this is WallGroup wall)
                 {
                  //   wall.ApplyWallTile(lvl.wallTile);
-                }
+                }*/
                 
                 if (statDiffDisplay != null)
                 {
@@ -561,7 +561,7 @@ namespace TowerDefense
 
         public void EnterTowerRange(Tower tower)
         {
-            
+            //TowerSynergy
         }
         public void ExitTowerRange(Tower tower)
         {

@@ -4,6 +4,33 @@ using UnityEngine.Tilemaps;
 
 namespace TowerDefense.GridMovement
 {
+    /*
+     GridManager
+    │
+    ├── kennt WallTilemap
+    ├── kennt WallSegment-Prefab
+    └── erstellt WallGroup
+
+    WallGroup
+        │
+        ├── ist nur Container
+        ├── kennt ihre WallSegments
+        ├── kennt die gemeinsamen Wall-Zellen
+        └── verwaltet Build/Unbuild der Gruppe
+
+    WallSegment : Wall : Tower
+        │
+        ├── eigenes Sprite
+        ├── eigener SpriteRenderer
+        ├── eigenes Built-Material
+        ├── eigenes Unbuilt-Material
+        ├── eigene Sorting-Einstellungen
+        ├── eigener Collider
+        ├── eigene Tower-Stats
+        └── kennt seine WallGroup + Cell
+
+     */
+
     public class GridManager : MonoBehaviour
     {
         public static GridManager Instance;
@@ -17,7 +44,7 @@ namespace TowerDefense.GridMovement
         [SerializeField]
         private Tilemap wallTilemap;
 
-        [Header("Wall")] [SerializeField] private Wall wallGroupPrefab;
+        [Header("Wall")] [SerializeField] private WallSegment wallSegmentPrefab;
 
         private Dictionary<Vector3Int, GridNode> nodes = new();
 
@@ -242,7 +269,7 @@ namespace TowerDefense.GridMovement
 
             return true;
         }
-        
+
         /// <summary>
         /// Liest beim Start alle Tiles aus der WallTilemap
         /// und erzeugt daraus eine einzige WallGroup.
@@ -262,10 +289,10 @@ namespace TowerDefense.GridMovement
                 return;
             }
 
-            if (wallGroupPrefab == null)
+            if (wallSegmentPrefab == null)
             {
                 Debug.LogError(
-                    "GridManager: Kein WallGroup-Prefab zugewiesen!",
+                    "GridManager: Kein WallSegment-Prefab zugewiesen!",
                     this
                 );
 
@@ -306,7 +333,7 @@ namespace TowerDefense.GridMovement
             }
 
             // =========================================================
-            // MITTELPUNKT DER WALL BERECHNEN
+            // MITTELPUNKT DER WALLGRUPPE
             // =========================================================
 
             Vector3Int minCell = wallCells[0];
@@ -330,31 +357,28 @@ namespace TowerDefense.GridMovement
                 (minWorld + maxWorld) * 0.5f;
 
             // =========================================================
-            // WALLGROUP ERSTELLEN
+            // LEERES WALLGROUP-GAMEOBJECT ERSTELLEN
             // =========================================================
 
-            Wall wallGroup =
-                Instantiate(
-                    wallGroupPrefab,
-                    wallGroupCenter,
-                    Quaternion.identity
-                );
+            GameObject groupObject =
+                new GameObject("WallGroup");
 
-            wallGroup.name = "WallGroup";
+            groupObject.transform.position =
+                wallGroupCenter;
+
+            WallGroup wallGroup =
+                groupObject.AddComponent<WallGroup>();
 
             wallGroup.Initialize(
                 wallCells,
-                groundTilemap
+                groundTilemap,
+                wallSegmentPrefab
             );
 
             // =========================================================
-            // WICHTIG:
-            // KEIN PlaceWall()!
-            //
-            // Die Nodes bleiben walkable.
+            // WALLTILEMAP NUR ALS EDITOR-VORLAGE
             // =========================================================
 
-            // WallTilemap wird nur als Editor-Vorlage verwendet.
             wallTilemap.gameObject.SetActive(false);
 
             Debug.Log(

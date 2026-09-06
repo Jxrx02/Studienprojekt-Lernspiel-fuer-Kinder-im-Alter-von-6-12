@@ -17,6 +17,10 @@ public static class Actions
     public static Action onWaveSpawnComplete;
     public static Action onWaveCleared;
 
+    public static Action <WallGroup> onWallBuilt;
+    public static Action <WallGroup> onWallDestroyed;
+    public static Action <WallGroup> onWallRepair;
+
     public static Action onPlayerDeath;
     
     public static Action onGridChanged;
